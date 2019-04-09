@@ -21,4 +21,6 @@ ADD_EXECUTABLE (
   poscas
   common.hpp common.cpp
   core.hpp main.core.cpp opt.core.cpp
+  keras.hpp proc.keras.cpp
+  log.hpp soc.log.cpp csi.log.cpp
 )
