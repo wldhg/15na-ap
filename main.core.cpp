@@ -3,6 +3,7 @@
 
 #include "common.hpp"
 #include "core.hpp"
+#include "log.hpp"
 
 using std::endl;
 using std::size_t;
@@ -47,6 +48,9 @@ int main(int argc, char **argv)
         terminate("Model name is duplicated: " + model + " & " + arg);
     }
   }
+
+  // Start get log and analyze
+  startLog();
 
   return 0;
 }
