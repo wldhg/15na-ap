@@ -36,14 +36,15 @@ ELSE ()
   SET ( CN_NETLINK_USERS 11 )
 ENDIF ()
 
-
-# Generate `.hpp`s from header template
+# Generate `.hpp`s from header template and update .gitignore
+SET ( CMAKE_HPL_IGNORES "# Source files configured by CMake" )
 SET ( POSCA_HEMPLATES poscas.hpl csi/csi.hpl )
 FOREACH ( POSCA_HEMPLATE ${POSCA_HEMPLATES} )
   STRING ( REPLACE .hpl .hpp POSCA_HPP ${POSCA_HEMPLATE} )
+  STRING ( CONCAT CMAKE_HPL_IGNORES ${CMAKE_HPL_IGNORES} "\nsrc/${POSCA_HPP}" )
   CONFIGURE_FILE ( ${CMAKE_CURRENT_LIST_DIR}/src/${POSCA_HEMPLATE} ${CMAKE_CURRENT_LIST_DIR}/src/${POSCA_HPP} )
 ENDFOREACH ( POSCA_HEMPLATE )
-
+CONFIGURE_FILE ( ${CMAKE_CURRENT_LIST_DIR}/.gitignore.in ${CMAKE_CURRENT_LIST_DIR}/.gitignore )
 
 # Make dependency on libraries
 SET ( BUILD_TESTING FALSE ) # Block json creating test binaries

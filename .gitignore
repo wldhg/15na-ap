@@ -47,9 +47,9 @@ _deps
 # Posca Server Binary
 bin
 
+# VS Code
+.vscode
+
 # Source files configured by CMake
 src/poscas.hpp
 src/csi/csi.hpp
-
-# VS Code
-.vscode
