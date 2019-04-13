@@ -46,7 +46,7 @@ _deps
 
 # Posca Server
 poscas
-model/*
+model
 
 # VS Code
-.vscode/*
+.vscode

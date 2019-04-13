@@ -1,4 +1,4 @@
-<em> Now Under Development </em>
+<em> <strong>Now Under Development</strong> </em>
 
 # POSCA Server
 
@@ -12,6 +12,8 @@ This is server which does real-time situation classification.
 -   [`frugally-deep`](https://github.com/Dobiasd/frugally-deep/blob/master/INSTALL.md)
 
 ## Preparation
+
+I recommend you to do below in WSL or Linux environment.
 
 1. When you installed `frugally-deep` following above link, you may cloned `frugally-deep` repository. Go on that directory and enter into `keras_export` directory.
 2. Run `python convert_model.py [Your H5 File] [Output JSON Path]`. For example, enter `python convert_model.py model.h5 model.json`.

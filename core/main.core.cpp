@@ -3,20 +3,22 @@
 
 #include "common.hpp"
 #include "core.hpp"
-#include "log.hpp"
 
 using std::endl;
 using std::size_t;
 using std::string;
+using std::atexit;
 
 int main(int argc, char **argv)
 {
 
-  info << "Initializing " << bold << "POSCA" << def << " server..." << endl;
+  $info << "Initializing " << bold << "POSCA" << def << " server..." << endl;
+
+  atexit(_terminate);
 
   // Analyzing arguments
   bool isModelSelected = false;
-  for (int i = 0; i < argc; i++)
+  for (int i = 1; i < argc; i++)
   {
     string arg = c2str(argv[i]);
 
@@ -42,15 +44,27 @@ int main(int argc, char **argv)
     else
     {
       // Model name
-      if (!isModelSelected)
+      if (!isModelSelected) {
         model = arg;
-      else
+        isModelSelected = true;
+      } else
         terminate("Model name is duplicated: " + model + " & " + arg);
     }
   }
 
-  // Start get log and analyze
-  startLog();
+  if (!isModelSelected)
+    terminate("Enter the name of model file");
+
+  $success << "Checked arguments" << endl;
+
+  // Load Keras model
+  $success << "Loaded Keras model from " << model << endl;
+
+  // Load CSI logger
+  $success << "Loaded CSI logger" << endl;
+
+  // Start websocket server
+  $success << "Started websocket server" << endl;
 
   return 0;
 }

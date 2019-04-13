@@ -30,11 +30,11 @@ void procFlagOption(string name)
   if (name.compare("help") == 0)
   {
     showHelpMessage();
-    terminate();
+    exit(0);
   }
   else
   {
-    terminate("Unknown flag name: " + name);
+    terminate("Unknown flag name. Is `=` missed?: " + name);
   }
 }
 void procShortFlagOption(string name)
@@ -42,11 +42,11 @@ void procShortFlagOption(string name)
   if (name.compare("h") == 0)
   {
     showHelpMessage();
-    terminate();
+    exit(0);
   }
   else
   {
-    terminate("Unknown short flag name: " + name);
+    terminate("Unknown short flag name. Is `=` missed?: " + name);
   }
 }
 
@@ -54,11 +54,11 @@ void procDataOption(string name, string value)
 {
   if (name.compare("port") == 0)
   {
-    port = (unsigned short)atoi(value.c_str());
+    setPort((unsigned short)atoi(value.c_str()));
   }
   else if (name.compare("site") == 0)
   {
-    site = value;
+    setSite(value);
   }
   else
   {
@@ -69,11 +69,11 @@ void procShortDataOption(string name, string value)
 {
   if (name.compare("p") == 0)
   {
-    port = (unsigned short)atoi(value.c_str());
+    setPort((unsigned short)atoi(value.c_str()));
   }
   else if (name.compare("s") == 0)
   {
-    site = value;
+    setSite(value);
   }
   else
   {

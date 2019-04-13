@@ -12,18 +12,26 @@ SET ( CMAKE_VERBOSE_MAKEFILE false )
 # Build Options
 # ADD_COMPILE_OPTIONS ( -march=armv7-a )
 SET ( CMAKE_C_FLAGS_DEBUG "-g" )
-SET ( CMAKE_CXX_STANDARD 14 )
+SET ( CMAKE_CXX_STANDARD 17 )
 SET ( CMAKE_CXX_STANDARD_REQUIRED ON )
 
 # Generate `connector_users.log.hpp`
-EXECUTE_PROCESS ( bash connector_users.sh )
+# EXECUTE_PROCESS ( bash connector_users.sh )
 
-# Executables
+# Use subdirectories
+SET ( POSCA_DIRECTORIES core csi keras ws )
+SET ( POSCA_SOURCES common.hpp common.cpp )
+FOREACH ( POSCA_DIR ${POSCA_DIRECTORIES} )
+  INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_SOURCE_DIR}/${POSCA_DIR} )
+  AUX_SOURCE_DIRECTORY ( ${POSCA_DIR} SOURCES_${POSCA_DIR} )
+  FOREACH ( POSCA_SOURCE ${SOURCES_${POSCA_DIR}} )
+    LIST ( APPEND POSCA_SOURCES ${POSCA_SOURCE} )
+  ENDFOREACH ( POSCA_SOURCE )
+ENDFOREACH( POSCA_DIR )
+INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_SOURCE_DIR} )
+
+# Executable
 ADD_EXECUTABLE (
   poscas
-  common.hpp common.cpp
-  core.hpp main.core.cpp opt.core.cpp
-  keras.hpp proc.keras.cpp
-  log.hpp connector_users.log.hpp soc.log.cpp csi.log.cpp
-  ws.hpp server.ws.cpp
+  ${POSCA_SOURCES}
 )
