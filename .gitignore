@@ -45,7 +45,7 @@ CTestTestfile.cmake
 _deps
 
 # Posca Server
-build
+bin
 csi/connector_users.csi.hpp
 
 # VS Code

@@ -6,7 +6,7 @@ CMAKE_POLICY ( SET CMP0048 NEW )
 PROJECT ( "POSCA Server" VERSION 1.0.3 )
 SET ( CMAKE_BUILD_TYPE Release )
 SET ( CMAKE_VERBOSE_MAKEFILE false )
-SET ( CMAKE_BINARY_DIR ${CMAKE_CURRENT_LIST_DIR}/bin )
+SET ( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/bin )
 
 # Build/CXX Options
 # ADD_COMPILE_OPTIONS ( -march=armv7-a )
@@ -32,6 +32,7 @@ IF ( NOT EXISTS ${CMAKE_CURRENT_LIST_DIR}/src/csi/connector_users.csi.hpp )
 ENDIF ()
 
 # Make dependency on libraries
+SET ( BUILD_TESTING FALSE ) # Block json creating test binaries
 FIND_PACKAGE ( Eigen3 3.3 REQUIRED NO_MODULE )
 ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/lib/FunctionalPlus )
 INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/FunctionalPlus/include )
@@ -44,7 +45,7 @@ INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/socket.io-client-cpp/src )
 
 # Link libraries
 LINK_LIBRARIES ( Eigen3::Eigen )
-LINK_LIBRARIES ( FunctionalPlus )
+LINK_LIBRARIES ( fplus )
 LINK_LIBRARIES ( nlohmann_json )
 LINK_LIBRARIES ( pthread )
 LINK_LIBRARIES ( sioclient )
