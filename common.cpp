@@ -3,6 +3,7 @@
 
 #include "common.hpp"
 
+using std::cerr;
 using std::dec;
 using std::endl;
 using std::hash;
@@ -19,7 +20,8 @@ void setPort(unsigned short newPort)
   port = newPort;
   $info << "Set ws port to: " << port << endl;
 }
-void setSite(string newSite) {
+void setSite(string newSite)
+{
   site = string(newSite);
   $info << "Set ws site to: " << site << endl;
 }
@@ -30,24 +32,53 @@ string model = "model";
 // At exit or on error
 bool isErrorExit = false;
 
-void _terminate() {
+void _terminate()
+{
   if (!isErrorExit)
     $info << "POSCA server is ended without any error! Shutting down..." << endl;
   else
     $warn << "Shutting down the program due to the error" << endl;
 }
-void terminate(char const *err) {
-  return terminate((char *) err);
+void terminate(string err, bool callPerror)
+{
+  isErrorExit = true;
+  size_t errHash = hash<string>{}(err);
+  $error << red << "(0x" << hex << errHash << ") " << def << dec;
+  if (callPerror)
+  {
+    perror(err.c_str());
+  }
+  else
+  {
+    cerr << err << endl;
+  }
+  exit(errHash);
+}
+void terminateP(char *err)
+{
+  string str(err);
+  terminate(err, true);
 }
 void terminate(char *err)
 {
   string str(err);
-  return terminate(str);
+  terminate(str, false);
+}
+void terminateP(char const *err)
+{
+  string str(err);
+  terminate(str, true);
+}
+void terminate(char const *err)
+{
+  string str(err);
+  terminate(str, false);
+}
+void terminateP(string err)
+{
+  terminate(err, true);
 }
 void terminate(string err)
 {
-  isErrorExit = true;
-  size_t errHash = hash<string>{}(err);
-  $error << "(0x" << hex << errHash << ") " << dec << err << endl;
-  exit(errHash);
+  terminate(err, false);
 }

@@ -34,6 +34,9 @@ void _terminate();
 void terminate(char *);
 void terminate(char const *);
 void terminate(std::string);
+void terminateP(char *);
+void terminateP(char const *);
+void terminateP(std::string);
 
 void setPort(unsigned short);
 void setSite(std::string);

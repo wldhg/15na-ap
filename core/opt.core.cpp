@@ -1,7 +1,6 @@
 // Widh Jio
 // opt.core.cpp
 
-#include "common.hpp"
 #include "core.hpp"
 
 using std::string;
@@ -25,7 +24,7 @@ void showHelpMessage() {
   cout << endl;
 }
 
-void procFlagOption(string name)
+void core::procFlagOption(string name)
 {
   if (name.compare("help") == 0)
   {
@@ -37,7 +36,7 @@ void procFlagOption(string name)
     terminate("Unknown flag name. Is `=` missed?: " + name);
   }
 }
-void procShortFlagOption(string name)
+void core::procShortFlagOption(string name)
 {
   if (name.compare("h") == 0)
   {
@@ -50,7 +49,7 @@ void procShortFlagOption(string name)
   }
 }
 
-void procDataOption(string name, string value)
+void core::procDataOption(string name, string value)
 {
   if (name.compare("port") == 0)
   {
@@ -65,7 +64,7 @@ void procDataOption(string name, string value)
     terminate("Unknown data name: " + name);
   }
 }
-void procShortDataOption(string name, string value)
+void core::procShortDataOption(string name, string value)
 {
   if (name.compare("p") == 0)
   {

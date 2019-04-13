@@ -1,13 +1,14 @@
 // Widh Jio
 // main.core.cpp
 
-#include "common.hpp"
 #include "core.hpp"
+#include "keras.hpp"
 
 using std::endl;
 using std::size_t;
 using std::string;
 using std::atexit;
+using namespace core;
 
 int main(int argc, char **argv)
 {
@@ -58,6 +59,7 @@ int main(int argc, char **argv)
   $success << "Checked arguments" << endl;
 
   // Load Keras model
+  keras::loadModel(model);
   $success << "Loaded Keras model from " << model << endl;
 
   // Load CSI logger

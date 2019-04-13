@@ -5,18 +5,33 @@ SET ( PROJECT_VERSION_MAJOR 1 )
 SET ( PROJECT_VERSION_MINOR 2 )
 SET ( CMAKE_BUILD_TYPE Release )
 SET ( CMAKE_VERBOSE_MAKEFILE false )
+SET ( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/build )
 
 # Add Libraries
 # LINK_LIBRARIES ( websocketpp )
 
-# Build Options
+# Build/CXX Options
 # ADD_COMPILE_OPTIONS ( -march=armv7-a )
 SET ( CMAKE_C_FLAGS_DEBUG "-g" )
 SET ( CMAKE_CXX_STANDARD 17 )
 SET ( CMAKE_CXX_STANDARD_REQUIRED ON )
 
 # Generate `connector_users.log.hpp`
-# EXECUTE_PROCESS ( bash connector_users.sh )
+IF ( NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/csi/connector_users.csi.hpp )
+  EXECUTE_PROCESS ( COMMAND uname -r
+                    OUTPUT_VARIABLE KERNEL )
+  STRING ( STRIP ${KERNEL} KERNEL )
+  SET ( KERNEL_SOURCE /lib/modules/${KERNEL}/build )
+  IF ( EXISTS ${KERNEL_SOURCE}/include/uapi )
+    SET ( KERNEL_HEADERS ${KERNEL_SOURCE}/include/uapi )
+  ELSEIF ( EXISTS ${KERNEL_SOURCE}/include )
+    SET ( KERNEL_HEADERS ${KERNEL_SOURCE}/include )
+  ELSE ()
+    MESSAGE ( FATAL_ERROR "Kernel headers not found!" )
+  ENDIF ()
+  EXECUTE_PROCESS ( COMMAND bash -c "echo '#undef CN_NETLINK_USERS' > ${CMAKE_CURRENT_SOURCE_DIR}/csi/connector_users.csi.hpp" )
+  EXECUTE_PROCESS ( COMMAND bash -c "grep '#define CN_NETLINK_USERS' ${KERNEL_HEADERS}/linux/connector.h >> ${CMAKE_CURRENT_SOURCE_DIR}/csi/connector_users.csi.hpp" )
+ENDIF ()
 
 # Use subdirectories
 SET ( POSCA_DIRECTORIES core csi keras ws )
