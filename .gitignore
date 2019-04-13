@@ -46,7 +46,7 @@ _deps
 
 # Posca Server
 bin
-csi/connector_users.csi.hpp
+src/csi/connector_users.csi.hpp
 
 # VS Code
 .vscode
