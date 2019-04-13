@@ -15,10 +15,11 @@ SET ( CMAKE_C_FLAGS_DEBUG "-g" )
 SET ( CMAKE_CXX_STANDARD 17 )
 SET ( CMAKE_CXX_STANDARD_REQUIRED ON )
 
-# Generate `connector_users.log.hpp`
-IF ( NOT EXISTS ${CMAKE_CURRENT_LIST_DIR}/src/csi/connector_users.csi.hpp )
-  EXECUTE_PROCESS ( COMMAND uname -r
-                    OUTPUT_VARIABLE KERNEL )
+# Get CN_NETLINK_USERS
+EXECUTE_PROCESS ( COMMAND uname -r
+                  OUTPUT_VARIABLE KERNEL )
+STRING ( FIND ${KERNEL} -Microsoft IS_WSL )
+IF ( ${IS_WSL} EQUAL -1 )
   STRING ( STRIP ${KERNEL} KERNEL )
   SET ( KERNEL_SOURCE /lib/modules/${KERNEL}/build )
   IF ( EXISTS ${KERNEL_SOURCE}/include/uapi )
@@ -28,9 +29,21 @@ IF ( NOT EXISTS ${CMAKE_CURRENT_LIST_DIR}/src/csi/connector_users.csi.hpp )
   ELSE ()
     MESSAGE ( FATAL_ERROR "Kernel headers not found!" )
   ENDIF ()
-  EXECUTE_PROCESS ( COMMAND bash -c "echo '#undef CN_NETLINK_USERS' > ${CMAKE_CURRENT_LIST_DIR}/src/csi/connector_users.csi.hpp" )
-  EXECUTE_PROCESS ( COMMAND bash -c "grep '#define CN_NETLINK_USERS' ${KERNEL_HEADERS}/linux/connector.h >> ${CMAKE_CURRENT_LIST_DIR}/src/csi/connector_users.csi.hpp" )
+  EXECUTE_PROCESS ( COMMAND bash -c "grep '#define CN_NETLINK_USERS' ${KERNEL_HEADERS}/linux/connector.h | cut -f 3"
+                    OUTPUT_VARIABLE CN_NETLINK_USERS )
+ELSE ()
+  MESSAGE ( WARNING "In WSL mode, `CN_NETLINK_USER` will be a DUMMY one. Only use this for development." )
+  SET ( CN_NETLINK_USERS 11 )
 ENDIF ()
+
+
+# Generate `.hpp`s from header template
+SET ( POSCA_HEMPLATES poscas.hpl csi/csi.hpl )
+FOREACH ( POSCA_HEMPLATE ${POSCA_HEMPLATES} )
+  STRING ( REPLACE .hpl .hpp POSCA_HPP ${POSCA_HEMPLATE} )
+  CONFIGURE_FILE ( ${CMAKE_CURRENT_LIST_DIR}/src/${POSCA_HEMPLATE} ${CMAKE_CURRENT_LIST_DIR}/src/${POSCA_HPP} )
+ENDFOREACH ( POSCA_HEMPLATE )
+
 
 # Make dependency on libraries
 SET ( BUILD_TESTING FALSE ) # Block json creating test binaries
@@ -55,7 +68,7 @@ SET ( POSCA_DIRECTORIES . core csi keras ws )
 FOREACH ( POSCA_DIR ${POSCA_DIRECTORIES} )
   INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/src/${POSCA_DIR} )
   AUX_SOURCE_DIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/src/${POSCA_DIR} POSCA_SOURCES )
-ENDFOREACH( POSCA_DIR )
+ENDFOREACH ( POSCA_DIR )
 
 # Executable
 ADD_EXECUTABLE (

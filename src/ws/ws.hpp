@@ -1,7 +1,7 @@
 // Widh Jio
 // ws.hpp
 
-#include <server_wss.hpp>
+#include <server_ws.hpp>
 
 #include "poscas.hpp"
 

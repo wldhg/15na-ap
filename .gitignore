@@ -44,9 +44,12 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
-# Posca Server
+# Posca Server Binary
 bin
-src/csi/connector_users.csi.hpp
+
+# Source files configured by CMake
+src/poscas.hpp
+src/csi/csi.hpp
 
 # VS Code
 .vscode

@@ -3,7 +3,7 @@
 # POSCA Server
 
 This is server which does real-time situation classification.\
-I recommend you to do below in WSL or Linux environment.
+I recommend you to do below in Linux environment.
 
 ## Requirements
 

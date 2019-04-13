@@ -18,6 +18,10 @@ void keras::loadModel(string model) {
   }
 }
 
+void keras::loadDummyModel() {
+
+}
+
 void keras::predict() {
 
 }

@@ -11,6 +11,9 @@ using std::hex;
 using std::size_t;
 using std::string;
 
+// POSCAS flags
+bool wannaSkipKeras = false;
+
 // Websocket server configuration
 unsigned short port = 7654;
 string site = "localhost";

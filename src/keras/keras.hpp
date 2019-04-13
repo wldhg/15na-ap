@@ -12,6 +12,7 @@ namespace keras
 {
 
 void loadModel(std::string model);
+void loadDummyModel();
 void predict();
 }
 

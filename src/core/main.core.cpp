@@ -3,6 +3,7 @@
 
 #include "core.hpp"
 #include "keras.hpp"
+#include "ws.hpp"
 
 using std::endl;
 using std::size_t;
@@ -59,13 +60,18 @@ int main(int argc, char **argv)
   $success << "Checked arguments" << endl;
 
   // Load Keras model
-  keras::loadModel(model);
+  if (wannaSkipKeras) {
+    keras::loadDummyModel();
+  } else {
+    keras::loadModel(model);
+  }
   $success << "Loaded Keras model from " << model << endl;
 
   // Load CSI logger
   $success << "Loaded CSI logger" << endl;
 
   // Start websocket server
+  ws::openWSChannel();
   $success << "Started websocket server" << endl;
 
   return 0;

@@ -3,6 +3,9 @@
 
 #include "poscas.hpp"
 
+#undef CN_NETLINK_USERS
+#define CN_NETLINK_USERS @CN_NETLINK_USERS@
+
 #ifndef POSCA_CSI
 #define POSCA_CSI
 

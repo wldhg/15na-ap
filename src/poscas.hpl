@@ -8,6 +8,8 @@
 #ifndef POSCA_COMMON
 #define POSCA_COMMON
 
+#define $version "@CMAKE_PROJECT_VERSION@"
+
 inline std::string c2str(char *chars)
 {
   std::string str(chars);
@@ -37,6 +39,8 @@ void terminate(std::string);
 void terminateP(char *);
 void terminateP(char const *);
 void terminateP(std::string);
+
+extern bool wannaSkipKeras;
 
 void setPort(unsigned short);
 void setSite(std::string);
