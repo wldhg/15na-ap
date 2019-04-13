@@ -11,6 +11,7 @@ I recommend you to do below in WSL or Linux environment.
 -   **CMake 3.7+**
 -   **GCC 4.9+**
 -   **Boost C++**: `boost`, `boost_sytem`, `boost_date_time`, `boost_random`
+-   **Eigen3**
 
 ## Preparation
 

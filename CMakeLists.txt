@@ -1,12 +1,12 @@
-# Project Configuration
-PROJECT ( "POSCA Server" )
+# CMake Configuration
 CMAKE_MINIMUM_REQUIRED ( VERSION 3.8 )
-SET ( PROJECT_VERSION_MAJOR 1 )
-SET ( PROJECT_VERSION_MINOR 0 )
-SET ( PROJECT_VERSION_PATCH 3 )
+CMAKE_POLICY ( SET CMP0048 NEW )
+
+# Project Configuration
+PROJECT ( "POSCA Server" VERSION 1.0.3 )
 SET ( CMAKE_BUILD_TYPE Release )
 SET ( CMAKE_VERBOSE_MAKEFILE false )
-SET ( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/bin )
+SET ( CMAKE_BINARY_DIR ${CMAKE_CURRENT_LIST_DIR}/bin )
 
 # Build/CXX Options
 # ADD_COMPILE_OPTIONS ( -march=armv7-a )
@@ -32,11 +32,20 @@ IF ( NOT EXISTS ${CMAKE_CURRENT_LIST_DIR}/src/csi/connector_users.csi.hpp )
 ENDIF ()
 
 # Make dependency on libraries
+FIND_PACKAGE ( Eigen3 3.3 REQUIRED NO_MODULE )
+ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/lib/FunctionalPlus )
+INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/FunctionalPlus/include )
+ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/lib/json )
+INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/json/include )
 ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/lib/frugally-deep )
+INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/frugally-deep/include )
 ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/lib/socket.io-client-cpp )
+INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/socket.io-client-cpp/src )
 
 # Link libraries
-LINK_LIBRARIES ( frugally-deep )
+LINK_LIBRARIES ( Eigen3::Eigen )
+LINK_LIBRARIES ( FunctionalPlus )
+LINK_LIBRARIES ( nlohmann_json )
 LINK_LIBRARIES ( pthread )
 LINK_LIBRARIES ( sioclient )
 
