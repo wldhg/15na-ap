@@ -2,25 +2,24 @@
 
 # POSCA Server
 
-This is server which does real-time situation classification.
+This is server which does real-time situation classification.\
+I recommend you to do below in WSL or Linux environment.
 
 ## Requirements
 
--   Python 3.6 & `keras` or `keras-gpu`
--   CMake 3.7+
--   GCC 4.9+
--   [`frugally-deep`](https://github.com/Dobiasd/frugally-deep/blob/master/INSTALL.md)
+-   **Python 3.6** & **`keras`** or **`keras-gpu`**
+-   **CMake 3.7+**
+-   **GCC 4.9+**
+-   **Boost C++**: `boost`, `boost_sytem`, `boost_date_time`, `boost_random`
 
 ## Preparation
-
-I recommend you to do below in WSL or Linux environment.
 
 1. When you installed `frugally-deep` following above link, you may cloned `frugally-deep` repository. Go on that directory and enter into `keras_export` directory.
 2. Run `python convert_model.py [Your H5 File] [Output JSON Path]`. For example, enter `python convert_model.py model.h5 model.json`.
 
 ## How To Build
 
-1. `git clone https://github.com/widh/posca-server`
+1. `git clone --recurse-submodules https://github.com/widh/posca-server`
 2. `cd posca-server`
 3. `cmake .`
 4. `make`
