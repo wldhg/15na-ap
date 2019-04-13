@@ -1,7 +1,7 @@
 // Widh Jio
 // core.hpp
 
-#include "common.hpp"
+#include "poscas.hpp"
 
 #ifndef POSCA_CORE
 #define POSCA_CORE

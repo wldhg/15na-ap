@@ -1,7 +1,7 @@
 // Widh Jio
-// common.cpp
+// poscas.cpp
 
-#include "common.hpp"
+#include "poscas.hpp"
 
 using std::cerr;
 using std::dec;

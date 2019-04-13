@@ -1,9 +1,9 @@
 // Widh Jio
 // ws.hpp
 
-#include <sio_client.h>
+#include <server_wss.hpp>
 
-#include "common.hpp"
+#include "poscas.hpp"
 
 #ifndef POSCA_WS
 #define POSCA_WS

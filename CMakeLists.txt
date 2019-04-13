@@ -1,6 +1,7 @@
 # CMake Configuration
 CMAKE_MINIMUM_REQUIRED ( VERSION 3.8 )
 CMAKE_POLICY ( SET CMP0048 NEW )
+CMAKE_POLICY ( SET CMP0077 OLD )
 
 # Project Configuration
 PROJECT ( "POSCA Server" VERSION 1.0.3 )
@@ -40,15 +41,14 @@ ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/lib/json )
 INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/json/include )
 ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/lib/frugally-deep )
 INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/frugally-deep/include )
-ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/lib/socket.io-client-cpp )
-INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/socket.io-client-cpp/src )
+ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/lib/Simple-WebSocket-Server )
+INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/Simple-WebSocket-Server )
 
 # Link libraries
 LINK_LIBRARIES ( Eigen3::Eigen )
 LINK_LIBRARIES ( fplus )
 LINK_LIBRARIES ( nlohmann_json )
-LINK_LIBRARIES ( pthread )
-LINK_LIBRARIES ( sioclient )
+LINK_LIBRARIES ( simple-websocket-server )
 
 # Use subdirectories
 SET ( POSCA_DIRECTORIES . core csi keras ws )

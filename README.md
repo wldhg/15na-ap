@@ -8,15 +8,12 @@ I recommend you to do below in WSL or Linux environment.
 ## Requirements
 
 -   **Python 3.6** & **`keras`** or **`keras-gpu`**
--   **CMake 3.7+**
--   **GCC 4.9+**
--   **Boost C++**: `boost`, `boost_sytem`, `boost_date_time`, `boost_random`
+-   **CMake 3.8+**
+-   **GCC/G++ 7+**
+-   **Boost C++**: `system`, `thread`, `coroutine`, `context`
+-   **Boost.Asio**
+-   **OpenSSL Library**
 -   **Eigen3**
-
-## Preparation
-
-1. When you installed `frugally-deep` following above link, you may cloned `frugally-deep` repository. Go on that directory and enter into `keras_export` directory.
-2. Run `python convert_model.py [Your H5 File] [Output JSON Path]`. For example, enter `python convert_model.py model.h5 model.json`.
 
 ## How To Build
 
@@ -29,7 +26,9 @@ Then, there must be a binary executable file named `poscas`.
 
 ## How To Run
 
-Create `model` directory on root directory of the clone of this repository. Copy your JSONified model file (`(MODEL NAME).json`) into `model` directory. And you can run POSCA server by typing `./poscas (MODEL NAME)`. For more options and detailed instructions, type `./poscas --help`.
+1. After build `poscas`, you may have `frugally-deep` directory in `lib`. Go on that directory and enter into `keras_export` directory.
+2. Run `python convert_model.py [Your H5 File] [Output JSON Path]`. For example, enter `python convert_model.py model.h5 model.json`.
+3. Copy your JSONified model file (`(MODEL NAME).json`) into `bin` directory, where ELF binary `poscas` exists. And you can run POSCA server by typing `./poscas (MODEL NAME).json`. For more options and detailed instructions, type `./poscas --help`.
 
 ## License
 

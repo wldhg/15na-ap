@@ -3,7 +3,7 @@
 
 #include <fdeep/fdeep.hpp>
 
-#include "common.hpp"
+#include "poscas.hpp"
 
 #ifndef POSCA_KERAS
 #define POSCA_KERAS
