@@ -1,6 +1,8 @@
 // Widh Jio
 // poscas.cpp
 
+#include <cerrno>
+
 #include "poscas.hpp"
 
 using std::cerr;
@@ -37,7 +39,9 @@ bool isErrorExit = false;
 
 void _terminate()
 {
-  if (!isErrorExit)
+  if (!isErrorExit && errno != 0)
+    terminateP("On-exit error detected");
+  else if (!isErrorExit)
     $info << "POSCA server is ended without any error! Shutting down..." << endl;
   else
     $warn << "Shutting down the program due to the error" << endl;

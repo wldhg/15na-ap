@@ -11,9 +11,16 @@
 namespace keras
 {
 
-void loadModel(std::string model);
-void loadDummyModel();
+fdeep::model* loadModel(std::string model);
+fdeep::model* loadDummyModel();
 void predict();
+
+enum ch {
+  SITDOWN,
+  STANDUP,
+  TOGOOD,
+  TOBAD,
+}; // Changes
 }
 
 #endif

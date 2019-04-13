@@ -31,6 +31,7 @@ inline std::ostream &def(std::ostream &o) { return o << "\e[0m"; }
 #define $debug std::cout << bold << blue << "[Debug] " << def
 #define $success std::cout << bold << green << "[Success] " << def
 #define $error std::cerr << bold << red << "[Error] " << def
+#define $ns(a) pink << "<" << a << "> " << def
 
 void _terminate();
 void terminate(char *);
