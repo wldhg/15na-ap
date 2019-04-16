@@ -65,7 +65,7 @@ int main(int argc, char **argv)
   }
 
   // Load CSI logger
-  $success << "Loaded CSI logger" << endl;
+  csi::openSocket();
 
   // Start websocket server
   const WSServer& server = ws::openChannel();

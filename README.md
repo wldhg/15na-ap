@@ -20,9 +20,9 @@ I recommend you to do below in Linux environment.
 1. `git clone --recurse-submodules https://github.com/widh/posca-server`
 2. `cd posca-server`
 3. `cmake .`
-4. `make`
+4. `sudo make`
 
-Then, there must be a binary executable file named `poscas`.
+Then, there must be a binary executable file named `poscas` in `bin` directory.
 
 ## How To Run
 
