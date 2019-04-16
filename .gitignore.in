@@ -45,7 +45,10 @@ CTestTestfile.cmake
 _deps
 
 # Posca Server Binary
-bin
+bin/
+
+# CMake External Projects
+tmp/
 
 # VS Code
 .vscode
