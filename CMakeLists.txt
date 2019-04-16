@@ -2,6 +2,7 @@
 CMAKE_MINIMUM_REQUIRED ( VERSION 3.8 )
 CMAKE_POLICY ( SET CMP0048 NEW )
 CMAKE_POLICY ( SET CMP0077 OLD )
+INCLUDE ( ${CMAKE_ROOT}/Modules/ExternalProject.cmake )
 
 # Project Configuration
 PROJECT ( "POSCA Server" VERSION 1.0.3 )
@@ -47,21 +48,30 @@ ENDFOREACH ( POSCA_HEMPLATE )
 CONFIGURE_FILE ( ${CMAKE_CURRENT_LIST_DIR}/.gitignore.in ${CMAKE_CURRENT_LIST_DIR}/.gitignore )
 
 # Make dependency on libraries
-SET ( BUILD_TESTING FALSE ) # Block json creating test binaries
 FIND_PACKAGE ( Eigen3 3.3 REQUIRED NO_MODULE )
-ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/lib/FunctionalPlus )
-INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/FunctionalPlus/include )
-ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/lib/json )
-INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/json/include )
-ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/lib/frugally-deep )
-INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/frugally-deep/include )
+EXTERNALPROJECT_ADD ( FunctionalPlus
+  SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/lib/FunctionalPlus
+  BINARY_DIR ${CMAKE_CURRENT_LIST_DIR}/lib/FunctionalPlus
+  CMAKE_ARGS -DFPLUS_BUILD_UNITTEST=OFF -DFPLUS_BUILD_EXAMPLES=OFF )
+EXTERNALPROJECT_ADD ( nlohmann_json
+  SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/lib/json
+  BINARY_DIR ${CMAKE_CURRENT_LIST_DIR}/lib/json
+  CMAKE_ARGS -DBUILD_TESTING=FALSE )
+EXTERNALPROJECT_ADD ( frugally-deep
+  SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/lib/frugally-deep
+  BINARY_DIR ${CMAKE_CURRENT_LIST_DIR}/lib/frugally-deep
+  CMAKE_ARGS -DFDEEP_BUILD_UNITTEST=OFF
+  BUILD_COMMAND ""
+  INSTALL_COMMAND "" )
+ADD_DEPENDENCIES ( frugally-deep nlohmann_json FunctionalPlus )
 ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/lib/Simple-WebSocket-Server )
+INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/FunctionalPlus/include )
+INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/json/include )
+INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/frugally-deep/include )
 INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/Simple-WebSocket-Server )
 
 # Link libraries
 LINK_LIBRARIES ( Eigen3::Eigen )
-LINK_LIBRARIES ( fplus )
-LINK_LIBRARIES ( nlohmann_json )
 LINK_LIBRARIES ( simple-websocket-server )
 
 # Use subdirectories
@@ -76,3 +86,4 @@ ADD_EXECUTABLE (
   poscas
   ${POSCA_SOURCES}
 )
+ADD_DEPENDENCIES ( poscas frugally-deep simple-websocket-server )
