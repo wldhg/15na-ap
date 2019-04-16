@@ -1,1 +1,0 @@
-cmd='/usr/bin/cmake;-DFDEEP_BUILD_UNITTEST=OFF;-GUnix Makefiles;<SOURCE_DIR><SOURCE_SUBDIR>'
