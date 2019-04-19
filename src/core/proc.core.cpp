@@ -6,7 +6,7 @@
 
 #include "core.hpp"
 
-void core::startSyaa(fdeep::model* model, WSServer* server)
+void core::startSyaaAP(fdeep::model* model, WSServer* server)
 {
   std::thread([=]() {
     for(;;)

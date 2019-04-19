@@ -5,7 +5,7 @@ CMAKE_POLICY ( SET CMP0077 OLD )
 INCLUDE ( ${CMAKE_ROOT}/Modules/ExternalProject.cmake )
 
 # Project Configuration
-PROJECT ( "Syaa Server" VERSION 1.0.0 )
+PROJECT ( "Syaa AP" VERSION 1.0.0 )
 SET ( CMAKE_BUILD_TYPE Release )
 SET ( CMAKE_VERBOSE_MAKEFILE false )
 SET ( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/bin )
@@ -82,5 +82,5 @@ FOREACH ( SYAA_DIR ${SYAA_DIRECTORIES} )
 ENDFOREACH ( SYAA_DIR )
 
 # Executable
-ADD_EXECUTABLE ( syaa ${SYAA_SOURCES} )
-ADD_DEPENDENCIES ( syaa frugally-deep simple-websocket-server )
+ADD_EXECUTABLE ( syaa-ap ${SYAA_SOURCES} )
+ADD_DEPENDENCIES ( syaa-ap frugally-deep simple-websocket-server )

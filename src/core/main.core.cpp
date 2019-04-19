@@ -11,7 +11,7 @@ using namespace core;
 
 int main(int argc, char **argv)
 {
-  $info << "Initializing " << bold << "Syaa" << def << " server..." << endl;
+  $info << "Initializing " << bold << "Syaa" << def << " AP program..." << endl;
 
   atexit(_terminate);
 
@@ -71,7 +71,7 @@ int main(int argc, char **argv)
   const WSServer& server = ws::openChannel();
 
   // Start Sea server
-  startSyaa(m, (WSServer*) &server);
+  startSyaaAP(m, (WSServer*) &server);
 
   return 0;
 }
