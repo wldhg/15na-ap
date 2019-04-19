@@ -3,10 +3,10 @@
 
 #include <linux/connector.h>
 
-#include "poscas.hpp"
+#include "syaa.hpp"
 
-#ifndef POSCA_CSI
-#define POSCA_CSI
+#ifndef SYAA_CSI
+#define SYAA_CSI
 
 #undef CN_NETLINK_USERS
 #define CN_NETLINK_USERS @CN_NETLINK_USERS@
@@ -14,8 +14,8 @@
 #define CN_IDX_IWLAGN (CN_NETLINK_USERS + 0xf)
 #define CN_VAL_IWLAGN 0x1
 
-#define POSCA_WINDOW 2000
-#define POSCA_SLIDE 200
+#define SYAA_WINDOW 2000
+#define SYAA_SLIDE 200
 
 namespace csi
 {

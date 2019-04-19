@@ -1,12 +1,12 @@
 // Widh Jio
 // core.hpp
 
-#include "poscas.hpp"
+#include "syaa.hpp"
 #include "keras.hpp"
 #include "ws.hpp"
 
-#ifndef POSCA_CORE
-#define POSCA_CORE
+#ifndef SYAA_CORE
+#define SYAA_CORE
 
 namespace core
 {
@@ -16,7 +16,7 @@ void procShortFlagOption(std::string);
 void procDataOption(std::string, std::string);
 void procShortDataOption(std::string, std::string);
 
-void startPoscas(fdeep::model*, WSServer*);
+void startSyaa(fdeep::model *, WSServer *);
 
 } // namespace core
 

@@ -3,24 +3,23 @@
 
 #include <fdeep/fdeep.hpp>
 
-#include "poscas.hpp"
+#include "syaa.hpp"
 
-#ifndef POSCA_KERAS
-#define POSCA_KERAS
+#ifndef SYAA_KERAS
+#define SYAA_KERAS
 
 namespace keras
 {
 
-fdeep::model* loadModel(std::string model);
-fdeep::model* loadDummyModel();
+fdeep::model *loadModel(std::string model);
+fdeep::model *loadDummyModel();
 void predict();
 
-enum ch {
-  SITDOWN,
-  STANDUP,
-  TOGOOD,
-  TOBAD,
+enum ch
+{
+  WAKEUP,
+  SYNCOPE,
 }; // Changes
-}
+} // namespace keras
 
 #endif

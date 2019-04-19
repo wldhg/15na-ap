@@ -44,7 +44,7 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
-# Posca Server Binary
+# Syaa Server Binary
 bin/
 
 # CMake External Projects
@@ -54,5 +54,5 @@ tmp/
 .vscode
 
 # Source files configured by CMake
-src/poscas.hpp
+src/syaa.hpp
 src/csi/csi.hpp

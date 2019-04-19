@@ -44,7 +44,7 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
-# Posca Server Binary
+# Syaa Server Binary
 bin/
 
 # CMake External Projects

@@ -9,7 +9,7 @@ using std::endl;
 
 void showHelpMessage() {
   cout << endl;
-  cout << bold << "poscas" << def << " [OPTION...] MODEL" << endl;
+  cout << bold << "syaa" << def << " [OPTION...] MODEL" << endl;
   cout << endl;
   cout << "[OPTION] General Options" << endl;
   cout << "\t-p=<PORT>, --port=<PORT>   Set specific port which is used in websocket." << endl;
@@ -17,18 +17,18 @@ void showHelpMessage() {
   cout << "\t-s=<ADDR>, --site=<ADDR>   Set specific site name which is used in" << endl;
   cout << "\t                           websocket. (Default: localhost)" << endl;
   cout << "\t-h, --help                 Show this help message." << endl;
-  cout << "\t-v, --version              Show POSCA Server version." << endl;
+  cout << "\t-v, --version              Show Syaa Server version." << endl;
   cout << endl;
   cout << "[OPTION] Detailed Options" << endl;
   cout << "\t--skip-keras               Skip loading Keras model. Use dummy model instead." << endl;
   cout << endl;
   cout << "MODEL" << endl;
-  cout << "\tKeras model used in the server. (e.g. GreatModel.json)" << endl;
+  cout << "\tKeras model used in the server. (e.g. TheGreatModel.json)" << endl;
   cout << endl;
 }
 
 void showVersionMessage() {
-  $info << bold << "POSCA Server " << def << gray << "Version " << $version << def << endl;
+  $info << bold << "Syaa Server " << def << gray << "Version " << $version << def << endl;
 }
 
 void core::procFlagOption(string name)

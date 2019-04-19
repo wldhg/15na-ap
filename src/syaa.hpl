@@ -5,8 +5,8 @@
 #include <cstdlib>
 #include <string>
 
-#ifndef POSCA_COMMON
-#define POSCA_COMMON
+#ifndef SYAA_COMMON
+#define SYAA_COMMON
 
 #define $version "@CMAKE_PROJECT_VERSION@"
 

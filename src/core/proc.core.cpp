@@ -6,7 +6,7 @@
 
 #include "core.hpp"
 
-void core::startPoscas(fdeep::model* model, WSServer* server)
+void core::startSyaa(fdeep::model* model, WSServer* server)
 {
   std::thread([=]() {
     for(;;)

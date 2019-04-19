@@ -11,7 +11,7 @@ using namespace core;
 
 int main(int argc, char **argv)
 {
-  $info << "Initializing " << bold << "POSCA" << def << " server..." << endl;
+  $info << "Initializing " << bold << "Syaa" << def << " server..." << endl;
 
   atexit(_terminate);
 
@@ -70,8 +70,8 @@ int main(int argc, char **argv)
   // Start websocket server
   const WSServer& server = ws::openChannel();
 
-  // Start Poscas service
-  startPoscas(m, (WSServer*) &server);
+  // Start Sea server
+  startSyaa(m, (WSServer*) &server);
 
   return 0;
 }

@@ -3,7 +3,7 @@
 
 #include <cerrno>
 
-#include "poscas.hpp"
+#include "syaa.hpp"
 
 using std::cerr;
 using std::dec;
@@ -13,7 +13,7 @@ using std::hex;
 using std::size_t;
 using std::string;
 
-// POSCAS flags
+// Syaa program flags
 bool wannaSkipKeras = false;
 
 // Websocket server configuration
@@ -42,7 +42,7 @@ void _terminate()
   if (!isErrorExit && errno != 0)
     terminateP("On-exit error detected");
   else if (!isErrorExit)
-    $info << "POSCA server is ended without any error! Shutting down..." << endl;
+    $info << "Syaa server is ended without any error! Shutting down..." << endl;
   else
     $warn << "Shutting down the program due to the error" << endl;
 }
