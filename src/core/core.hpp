@@ -16,7 +16,7 @@ void procShortFlagOption(std::string);
 void procDataOption(std::string, std::string);
 void procShortDataOption(std::string, std::string);
 
-void startSyaaAP(fdeep::model *, WSServer *);
+//void startSyaaAP(fdeep::model *, WSServer *);
 
 } // namespace core
 

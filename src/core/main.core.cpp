@@ -65,13 +65,13 @@ int main(int argc, char **argv)
   }
 
   // Load CSI logger
-  csi::openSocket();
+  //csi::openSocket();
 
   // Start websocket server
-  const WSServer& server = ws::openChannel();
+  ws::init();
 
   // Start Sea server
-  startSyaaAP(m, (WSServer*) &server);
+  //startSyaaAP(m, (WSServer*) &server);
 
   return 0;
 }

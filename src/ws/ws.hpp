@@ -1,22 +1,31 @@
 // Widh Jio
 // ws.hpp
 
-#include <server_ws.hpp>
+#include <sio_client.h>
+#include <mutex>
+#include <condition_variable>
 
-#include "poscas.hpp"
+#include "syaa.hpp"
 #include "keras.hpp"
 
 #ifndef POSCA_WS
 #define POSCA_WS
 
-typedef SimpleWeb::SocketServer<SimpleWeb::WS> WSServer;
-typedef std::shared_ptr<WSServer::Connection> Connection;
-
 namespace ws
 {
+extern std::mutex it;
+extern std::condition_variable_any cond;
+extern bool connOK;
+extern std::string url;
+extern sio::socket::ptr soc;
 
-const WSServer& openChannel();
-void broadcast(WSServer&, keras::ch);
-}
+extern sio::client cli;
+
+void bindEvents(sio::client *);
+
+void init();
+void con2Central();
+//void broadcast(void, keras::ch);
+} // namespace ws
 
 #endif

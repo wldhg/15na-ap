@@ -44,7 +44,7 @@ ENDFOREACH ( SYAA_HEMPLATE )
 CONFIGURE_FILE ( ${CMAKE_CURRENT_LIST_DIR}/.gitignore.in ${CMAKE_CURRENT_LIST_DIR}/.gitignore )
 
 # Make dependency on libraries
-SET ( BUILD_TESTING OFF ) # To block Simple-WebSocket-Server build test binaries
+SET ( BUILD_TESTING OFF ) # To block nlohmann_json build test binaries
 FIND_PACKAGE ( Eigen3 3.3 REQUIRED NO_MODULE )
 EXTERNALPROJECT_ADD ( FunctionalPlus
   SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/lib/FunctionalPlus
@@ -64,18 +64,19 @@ EXTERNALPROJECT_ADD ( frugally-deep
   BUILD_COMMAND ""
   INSTALL_COMMAND "" )
 ADD_DEPENDENCIES ( frugally-deep nlohmann_json FunctionalPlus )
-ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/lib/Simple-WebSocket-Server )
+ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/lib/socket.io )
 INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/FunctionalPlus/include )
 INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/json/include )
 INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/frugally-deep/include )
-INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/Simple-WebSocket-Server )
+INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/socket.io/src )
 
 # Link libraries
 LINK_LIBRARIES ( Eigen3::Eigen )
-LINK_LIBRARIES ( simple-websocket-server )
+LINK_LIBRARIES ( sioclient )
+LINK_LIBRARIES ( pthread )
 
 # Use subdirectories
-SET ( SYAA_DIRECTORIES . core csi keras ws )
+SET ( SYAA_DIRECTORIES . core keras ws )
 FOREACH ( SYAA_DIR ${SYAA_DIRECTORIES} )
   INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/src/${SYAA_DIR} )
   AUX_SOURCE_DIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/src/${SYAA_DIR} SYAA_SOURCES )
@@ -83,4 +84,4 @@ ENDFOREACH ( SYAA_DIR )
 
 # Executable
 ADD_EXECUTABLE ( syaa-ap ${SYAA_SOURCES} )
-ADD_DEPENDENCIES ( syaa-ap frugally-deep simple-websocket-server )
+ADD_DEPENDENCIES ( syaa-ap frugally-deep sioclient )

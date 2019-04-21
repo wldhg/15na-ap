@@ -16,7 +16,6 @@ using std::thread;
 // Global Variables
 size_t bufSize = 4096;
 int soc = -1;
-window 
 
 void csi::openSocket() {
   // Initialize socket variables
@@ -51,7 +50,7 @@ void csi::openSocket() {
       if (recv(soc, buf, sizeof(buf), 0) == -1) {
         terminateP("Socket Receive Error");
       }
-      cmsg = NLMSG_DATA(buf);
+      // cmsg = NLMSG_DATA(buf);
     }
   });
   thCapture.detach();

@@ -6,7 +6,7 @@
 
 #include "core.hpp"
 
-void core::startSyaaAP(fdeep::model* model, WSServer* server)
+/*void core::startSyaaAP(fdeep::model* model, WSServer* server)
 {
   std::thread([=]() {
     for(;;)
@@ -16,4 +16,4 @@ void core::startSyaaAP(fdeep::model* model, WSServer* server)
       ws::broadcast(*server, keras::ch::SITDOWN);
     }
   }).join();
-}
+}*/

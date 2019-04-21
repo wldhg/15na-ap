@@ -11,19 +11,19 @@ void showHelpMessage() {
   cout << endl;
   cout << bold << "syaa-ap" << def << " [OPTION...] MODEL" << endl;
   cout << endl;
-  cout << "[OPTION] General Options" << endl;
+  cout << "[OPTION]" << endl;
   cout << "\t-p=<PORT>, --port=<PORT>   Set specific port which is used in websocket." << endl;
-  cout << "\t                           (Default: 7654)" << endl;
+  cout << "\t                           (Default: 11900)" << endl;
   cout << "\t-s=<ADDR>, --site=<ADDR>   Set specific site name which is used in" << endl;
   cout << "\t                           websocket. (Default: localhost)" << endl;
+  cout << "\t-http, --use-http          Set websocket to use http protocol instead of" << endl;
+  cout << "\t                           https." << endl;
+  cout << "\t--skip-keras               Skip loading Keras model. Use dummy model instead." << endl;
   cout << "\t-h, --help                 Show this help message." << endl;
   cout << "\t-v, --version              Show Syaa AP program version." << endl;
   cout << endl;
-  cout << "[OPTION] Detailed Options" << endl;
-  cout << "\t--skip-keras               Skip loading Keras model. Use dummy model instead." << endl;
-  cout << endl;
   cout << "MODEL" << endl;
-  cout << "\tKeras model used in the AP. (e.g. TheGreatModel.json)" << endl;
+  cout << "\tPath to the Keras model used in the AP. (e.g. TheGreatModel.json)" << endl;
   cout << endl;
 }
 
@@ -46,6 +46,10 @@ void core::procFlagOption(string name)
     wannaSkipKeras = true;
     $info << "Loading Keras model will be skiped. But you should enter dummy model name. Predictor will answer random values." << endl;
   }
+  else if (name.compare("use-http") == 0)
+  {
+    setProtocol(string("http"));
+  }
   else
   {
     terminate("Unknown flag name. Is `=` missed?: " + name);
@@ -62,6 +66,9 @@ void core::procShortFlagOption(string name)
   {
     showVersionMessage();
     exit(0);
+  }
+  else if (name.compare("http") == 0) {
+    setProtocol(string("http"));
   }
   else
   {

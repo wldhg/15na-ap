@@ -11,8 +11,7 @@ I recommend you to do below in Linux environment.
 -   **Python 3.6** & **`keras`** or **`keras-gpu`**
 -   **CMake 3.8+**
 -   **GCC/G++ 7+**
--   **Boost C++**: `system`, `thread`, `coroutine`, `context`
--   **Boost.Asio**
+-   **Boost C++**: `boost`, `boost_sytem`, `boost_date_time`, `boost_random`
 -   **OpenSSL Library**
 -   **Eigen3**
 

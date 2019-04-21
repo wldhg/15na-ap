@@ -45,8 +45,10 @@ extern bool wannaSkipKeras;
 
 void setPort(unsigned short);
 void setSite(std::string);
+void setProtocol(std::string);
 extern unsigned short port;
 extern std::string site;
+extern std::string protocol;
 
 extern std::string model;
 
