@@ -19,8 +19,9 @@ void onConnected()
 
 void onClose(sio::client::close_reason const &reason)
 {
-  $info << $ns("ws") << "Socket closed with code " << reason << ". Retrying..." << endl;
+  $info << $ns("ws") << "Socket closed with code " << reason << "." << endl;
   if (reason != sio::client::close_reason::close_reason_normal) {
+    $info << $ns("ws") << "Retrying to connect..." << endl;
     con2Central();
   }
 }
