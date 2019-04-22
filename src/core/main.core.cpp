@@ -57,21 +57,17 @@ int main(int argc, char **argv)
   $success << "Checked arguments" << endl;
 
   // Load Keras model
-  fdeep::model* m = NULL;
   if (wannaSkipKeras) {
-    m = keras::loadDummyModel();
+    keras::loadDummyModel();
   } else {
-    m = keras::loadModel(model);
+    keras::loadModel(model);
   }
-
-  // Load CSI logger
-  //csi::openSocket();
 
   // Start websocket server
   ws::init();
 
-  // Start Sea server
-  //startSyaaAP(m, (WSServer*) &server);
+  // Open linux connector socket
+  csi::openSocket();
 
   return 0;
 }

@@ -42,4 +42,5 @@ void ws::bindListeners(sio::client *cli)
 void ws::bindEvents(sio::socket::ptr soc)
 {
   // Bind "on" events
+  // NOTE: This part is not used for now, but used later for authentication
 }

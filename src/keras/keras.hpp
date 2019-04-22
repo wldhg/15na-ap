@@ -2,6 +2,7 @@
 // keras.hpp
 
 #include <fdeep/fdeep.hpp>
+#include <vector>
 
 #include "syaa.hpp"
 
@@ -13,13 +14,15 @@ namespace keras
 
 fdeep::model *loadModel(std::string model);
 fdeep::model *loadDummyModel();
-void predict();
+void predict(std::vector<double>&);
 
 enum ch
 {
   WAKEUP,
   SYNCOPE,
 }; // Changes
+
+extern fdeep::model *m;
 } // namespace keras
 
 #endif

@@ -6,7 +6,6 @@
 #include <condition_variable>
 
 #include "syaa.hpp"
-#include "keras.hpp"
 
 #ifndef POSCA_WS
 #define POSCA_WS

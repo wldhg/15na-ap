@@ -2,6 +2,7 @@
 // window.csi.cpp
 
 #include "csi.hpp"
+#include "keras.hpp"
 
 using std::thread;
 
@@ -31,6 +32,7 @@ void csi::pushPacket(csi::BBPacket* packet) {
         // Convert these things to CSI array
         CSIVector& csis = csi::getCSIVector(tmpStore);
         // Do Keras
+        keras::predict(csis);
         // Free values
         for (unsigned short i = 0; i < SYAA_SLIDE; i++) {
           free(tmpStore.at(i));
