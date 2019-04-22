@@ -2,6 +2,13 @@
 // csi.hpp
 
 #include <linux/connector.h>
+#include <cstdint>
+#include <tuple>
+#include <array>
+#include <queue>
+#include <complex>
+#include <vector>
+#include <thread>
 
 #include "syaa.hpp"
 
@@ -10,16 +17,43 @@
 
 #undef CN_NETLINK_USERS
 #define CN_NETLINK_USERS @CN_NETLINK_USERS@
-
 #define CN_IDX_IWLAGN (CN_NETLINK_USERS + 0xf)
 #define CN_VAL_IWLAGN 0x1
 
-#define SYAA_WINDOW 2000
-#define SYAA_SLIDE 200
+#define SYAA_WINDOW @SYAA_WINDOW@
+#define SYAA_SLIDE @SYAA_SLIDE@
+
+typedef std::queue<csi::BBPacket*> PacketQueue;
+typedef std::vector<csi::BBPacket*> PacketVector;
+
+typedef std::vector<std::vector<std::array<std::complex<double>, 30>>> CSISingleComplex;
+typedef std::vector<std::vector<std::array<double, 30>>> CSISingleAmp;
+typedef std::vector<std::vector<std::array<double, 30>>> CSISinglePha;
+typedef std::tuple<std::array<CSISingleAmp, SYAA_WINDOW>, std::array<CSISinglePha, SYAA_WINDOW>> CSIData;
+typedef std::vector<double> CSIVector;
 
 namespace csi
 {
-  void openSocket();
-}
+
+struct BBPacket
+{
+  uint32_t timestamp_low;
+  uint16_t bfee_count;
+  uint16_t reserved;
+  uint8_t Nrx, Ntx;
+  int8_t rssiA, rssiB, rssiC;
+  int8_t noise;
+  uint8_t agc, antenna_sel;
+  uint16_t len;
+  uint16_t fake_rate_n_flags;
+  uint8_t payload[0];
+} __attribute__((packed));
+
+extern PacketQueue pacStore;
+
+void openSocket();
+void pushPacket(BBPacket*);
+CSIVector& getCSIVector(PacketVector&);
+} // namespace csi
 
 #endif

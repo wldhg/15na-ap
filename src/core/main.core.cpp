@@ -36,7 +36,7 @@ int main(int argc, char **argv)
       {
         // Data option
         string name = arg.substr(0, divPosition);
-        string value = arg.substr(divPosition);
+        string value = arg.substr(divPosition + 1);
         (isFullArg ? procDataOption : procShortDataOption)(name, value);
       }
     }

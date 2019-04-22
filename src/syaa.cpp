@@ -17,7 +17,7 @@ using std::string;
 bool wannaSkipKeras = false;
 
 // Websocket server configuration
-unsigned short port = 11900;
+unsigned short port = 443;
 string site = "localhost";
 string protocol = "https";
 
@@ -31,7 +31,8 @@ void setSite(string newSite)
   site = string(newSite);
   $info << "Set ws site to: " << site << endl;
 }
-void setProtocol(string newProtocol) {
+void setProtocol(string newProtocol)
+{
   protocol = string(newProtocol);
   $info << "Set ws protocol to: " << protocol << endl;
 }
@@ -51,7 +52,7 @@ void _terminate()
   else
     $warn << "Shutting down the program due to the error" << endl;
 }
-void terminate(string err, bool callPerror)
+void terminate(string err, bool callPerror, bool dontExit)
 {
   isErrorExit = true;
   size_t errHash = hash<string>{}(err);
@@ -64,33 +65,49 @@ void terminate(string err, bool callPerror)
   {
     cerr << err << endl;
   }
-  exit(errHash);
+  if (!dontExit) {
+    exit(errHash);
+  }
 }
 void terminateP(char *err)
 {
   string str(err);
-  terminate(err, true);
+  terminate(err, true, false);
 }
 void terminate(char *err)
 {
   string str(err);
-  terminate(str, false);
+  terminate(str, false, false);
 }
 void terminateP(char const *err)
 {
   string str(err);
-  terminate(str, true);
+  terminate(str, true, false);
 }
 void terminate(char const *err)
 {
   string str(err);
-  terminate(str, false);
+  terminate(str, false, false);
 }
 void terminateP(string err)
 {
-  terminate(err, true);
+  terminate(err, true, false);
 }
 void terminate(string err)
 {
-  terminate(err, false);
+  terminate(err, false, false);
+}
+void errorP(string err)
+{
+  terminate(err, true, true);
+}
+void errorP(char const* err)
+{
+  string str(err);
+  terminate(str, true, true);
+}
+void errorP(char* err)
+{
+  string str(err);
+  terminate(str, true, true);
 }

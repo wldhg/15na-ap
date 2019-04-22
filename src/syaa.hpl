@@ -40,6 +40,9 @@ void terminate(std::string);
 void terminateP(char *);
 void terminateP(char const *);
 void terminateP(std::string);
+void errorP(char *);
+void errorP(char const *);
+void errorP(std::string);
 
 extern bool wannaSkipKeras;
 

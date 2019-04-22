@@ -2,9 +2,9 @@
 
 #include "ws.hpp"
 
-using std::unique_lock;
-using std::mutex;
 using std::endl;
+using std::mutex;
+using std::unique_lock;
 
 using namespace ws;
 
@@ -17,10 +17,12 @@ void onConnected()
   lock.unlock();
 }
 
-void onClose(sio::client::close_reason const& reason)
+void onClose(sio::client::close_reason const &reason)
 {
-  $info << $ns("ws") << "Socket closed" << reason << ". Retrying..." << endl;
-  con2Central();
+  $info << $ns("ws") << "Socket closed with code " << reason << ". Retrying..." << endl;
+  if (reason != sio::client::close_reason::close_reason_normal) {
+    con2Central();
+  }
 }
 
 void onFail()
@@ -29,9 +31,15 @@ void onFail()
   con2Central();
 }
 
-void ws::bindEvents(sio::client* cli) {
+void ws::bindListeners(sio::client *cli)
+{
   // Bind socket default listeners
   cli->set_open_listener(static_cast<void (*)()>(&onConnected));
   cli->set_close_listener(static_cast<void (*)(const sio::client::close_reason &)>(&onClose));
   cli->set_fail_listener(static_cast<void (*)()>(&onFail));
+}
+
+void ws::bindEvents(sio::socket::ptr soc)
+{
+  // Bind "on" events
 }

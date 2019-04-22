@@ -9,4 +9,4 @@
 	url = https://github.com/nlohmann/json.git
 [submodule "lib/socket.io"]
 	path = lib/socket.io
-	url = https://github.com/socketio/socket.io-client-cpp.git
+	url = https://github.com/widh/socket.io-client-cpp.git

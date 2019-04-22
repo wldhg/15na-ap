@@ -21,11 +21,11 @@ extern sio::socket::ptr soc;
 
 extern sio::client cli;
 
-void bindEvents(sio::client *);
+void bindListeners(sio::client *);
+void bindEvents(sio::socket::ptr);
 
 void init();
 void con2Central();
-//void broadcast(void, keras::ch);
 } // namespace ws
 
 #endif

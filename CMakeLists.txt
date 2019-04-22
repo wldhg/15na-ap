@@ -33,6 +33,10 @@ ENDIF ()
 EXECUTE_PROCESS ( COMMAND bash -c "grep '#define CN_NETLINK_USERS' ${KERNEL_HEADERS}/linux/connector.h | cut -f 3"
                   OUTPUT_VARIABLE CN_NETLINK_USERS )
 
+# Set project parameters
+SET ( SYAA_WINDOW 2000 )
+SET ( SYAA_SLIDE 200 )
+
 # Generate `.hpp`s from header template and update .gitignore
 SET ( CMAKE_HPL_IGNORES "# Source files configured by CMake" )
 SET ( SYAA_HEMPLATES syaa.hpl csi/csi.hpl )
@@ -72,11 +76,11 @@ INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/socket.io/src )
 
 # Link libraries
 LINK_LIBRARIES ( Eigen3::Eigen )
-LINK_LIBRARIES ( sioclient )
+LINK_LIBRARIES ( sioclient_tls )
 LINK_LIBRARIES ( pthread )
 
 # Use subdirectories
-SET ( SYAA_DIRECTORIES . core keras ws )
+SET ( SYAA_DIRECTORIES . core csi keras ws )
 FOREACH ( SYAA_DIR ${SYAA_DIRECTORIES} )
   INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/src/${SYAA_DIR} )
   AUX_SOURCE_DIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/src/${SYAA_DIR} SYAA_SOURCES )
@@ -84,4 +88,4 @@ ENDFOREACH ( SYAA_DIR )
 
 # Executable
 ADD_EXECUTABLE ( syaa-ap ${SYAA_SOURCES} )
-ADD_DEPENDENCIES ( syaa-ap frugally-deep sioclient )
+ADD_DEPENDENCIES ( syaa-ap frugally-deep sioclient_tls )
