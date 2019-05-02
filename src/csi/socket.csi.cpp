@@ -55,16 +55,17 @@ void csi::openSocket()
   thread thCapture([=]() {
     struct cn_msg *cmsg;
     unsigned short windowTenSize = SYAA_WINDOW * 10;
+    $info << $ns("csi") << "Started to receive from socket" << endl;
     for (;;)
     {
       if (recv(soc, buf, sizeof(buf), 0) == -1)
       {
         errorP("Socket Receive Error");
       }
-      $debug << $ns("csi") << "Packet Received" << endl;
       cmsg = (struct cn_msg *)NLMSG_DATA(buf);
       uint16_t len = cmsg->data[0];
       uint8_t code = cmsg->data[2];
+      $debug << $ns("csi") << "Packet Received: Len=" << (int) len << " Code=" << (int) code << endl;
       if (code == 187) {
         // If BFEE_NOTIF packet
         csi::BBPacket *procBuf = (csi::BBPacket *)calloc(sizeof(uint8_t), len - 1);
