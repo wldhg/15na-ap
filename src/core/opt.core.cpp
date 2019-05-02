@@ -19,10 +19,13 @@ void showHelpMessage()
   cout << "\t                           websocket. (Default: localhost)" << endl;
   cout << "\t-http, --use-http          Set websocket to use http protocol instead of" << endl;
   cout << "\t                           https." << endl;
-  cout << "\t--skip-keras               Skip loading Keras model. Use dummy model instead." << endl;
-  cout << "\t--debug-packet             Show detailed information for each packets." << endl;
   cout << "\t-h, --help                 Show this help message." << endl;
   cout << "\t-v, --version              Show Syaa AP program version." << endl;
+  cout << endl;
+  cout << "[DEBUG OPTION]" << endl;
+  cout << "\t--skip-keras               Skip loading Keras model. Use dummy model instead." << endl;
+  cout << "\t--debug-packet             Show detailed information for each packets." << endl;
+  cout << "\t--debug-window             Show detailed process for each windows." << endl;
   cout << endl;
   cout << "MODEL" << endl;
   cout << "\tPath to the Keras model used in the AP. (e.g. TheGreatModel.json)" << endl;
@@ -59,6 +62,11 @@ void core::procFlagOption(string name)
   {
     wannaDebugPacket = true;
     $info << "Each received packets will be debugged." << endl;
+  }
+  else if (name.compare("debug-window") == 0)
+  {
+    wannaDebugWindow = true;
+    $info << "Each windows will be debugged." << endl;
   }
   else
   {

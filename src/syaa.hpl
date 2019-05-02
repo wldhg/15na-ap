@@ -46,6 +46,7 @@ void errorP(std::string);
 
 extern bool wannaSkipKeras;
 extern bool wannaDebugPacket;
+extern bool wannaDebugWindow;
 
 void setPort(unsigned short);
 void setSite(std::string);

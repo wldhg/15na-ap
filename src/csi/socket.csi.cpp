@@ -23,6 +23,10 @@ unsigned short pacCount = 0;
 
 void csi::openSocket()
 {
+  $debug << $ns("csi") << "Prediction window will be " << SYAA_WINDOW << endl;
+  $debug << $ns("csi") << "Window interval (slide) will be " << SYAA_SLIDE << endl;
+  $info << $ns("csi") << "Initializing connector socket..." << endl;
+
   // Create new thread to capture packets
   thread thCapture([=]() {
     // Initialize socket variables
@@ -30,8 +34,6 @@ void csi::openSocket()
     procAddr->nl_family = AF_NETLINK;
     procAddr->nl_pid = getpid();
     procAddr->nl_groups = CN_IDX_IWLAGN;
-
-    $info << $ns("csi") << "Initializing connector socket..." << endl;
 
     // Open socket
     soc = socket(PF_NETLINK, SOCK_DGRAM, NETLINK_CONNECTOR);

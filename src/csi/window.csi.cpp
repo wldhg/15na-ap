@@ -8,8 +8,10 @@ using std::thread;
 using std::mutex;
 
 mutex psMutex;
+mutex wcMutex;
 PacketQueue csi::pacStore;
 unsigned short pacIter = 0;
+unsigned long long windowCount = 0;
 
 void csi::pushPacket(csi::BBPacket* packet) {
 
@@ -27,6 +29,12 @@ void csi::pushPacket(csi::BBPacket* packet) {
     {
       // Create new thread to copy packets and process Keras
       thread thProcKeras([=]() {
+        if (wannaDebugWindow) {
+          wcMutex.lock();
+          unsigned long long currentWindowCount = windowCount++;
+          wcMutex.unlock();
+          $debug << $ns("csi") << "W" << currentWindowCount << ": processing started" << endl;
+        }
         // Gather window & front <SYAA_SLIDE> items of queue
         PacketVector tmpStore;
         psMutex.lock();
@@ -38,6 +46,10 @@ void csi::pushPacket(csi::BBPacket* packet) {
           }
         }
         psMutex.unlock();
+        if (wannaDebugWindow)
+        {
+          $debug << $ns("csi") << "W" << currentWindowCount << ": Packet collected" << endl;
+        }
         // Convert these things to CSI array
         CSIVector& csis = csi::getCSIVector(tmpStore);
         // Do Keras
@@ -45,6 +57,10 @@ void csi::pushPacket(csi::BBPacket* packet) {
         // Free values
         for (unsigned short i = 0; i < SYAA_SLIDE; i++) {
           free(tmpStore.at(i));
+        }
+        if (wannaDebugWindow)
+        {
+          $debug << $ns("csi") << "W" << currentWindowCount << ": Memory unallocated" << endl;
         }
       });
       thProcKeras.detach();
