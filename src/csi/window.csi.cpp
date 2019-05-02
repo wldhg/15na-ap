@@ -6,6 +6,7 @@
 
 using std::thread;
 using std::mutex;
+using std::endl;
 
 mutex psMutex;
 mutex wcMutex;
