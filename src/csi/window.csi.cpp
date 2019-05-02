@@ -29,16 +29,18 @@ void csi::pushPacket(csi::BBPacket* packet) {
     {
       // Create new thread to copy packets and process Keras
       thread thProcKeras([=]() {
-        if (wannaDebugWindow) {
-          wcMutex.lock();
-          unsigned long long currentWindowCount = windowCount++;
-          wcMutex.unlock();
+        wcMutex.lock();
+        unsigned long long currentWindowCount = windowCount++;
+        wcMutex.unlock();
+        if (wannaDebugWindow)
+        {
           $debug << $ns("csi") << "W" << currentWindowCount << ": processing started" << endl;
         }
         // Gather window & front <SYAA_SLIDE> items of queue
         PacketVector tmpStore;
         psMutex.lock();
-        for (unsigned short i = 0; i < SYAA_WINDOW; i++) {
+        for (unsigned short i = 0; i < SYAA_WINDOW; i++)
+        {
           tmpStore.push_back(pacStore.front());
           if (i < SYAA_SLIDE)
           {
@@ -55,7 +57,8 @@ void csi::pushPacket(csi::BBPacket* packet) {
         // Do Keras
         keras::predict(csis);
         // Free values
-        for (unsigned short i = 0; i < SYAA_SLIDE; i++) {
+        for (unsigned short i = 0; i < SYAA_SLIDE; i++)
+        {
           free(tmpStore.at(i));
         }
         if (wannaDebugWindow)
