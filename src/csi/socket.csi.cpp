@@ -59,7 +59,7 @@ void csi::openSocket()
     unsigned short windowTenSize = SYAA_WINDOW * 10;
     for (;;)
     {
-      if (recv(soc, buf, sizeof(buf), 0) == -1)
+      if (recv(soc, buf, bufSize, 0) == -1)
       {
         errorP("Socket Receive Error");
       }
