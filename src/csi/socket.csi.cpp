@@ -61,6 +61,7 @@ void csi::openSocket()
       {
         errorP("Socket Receive Error");
       }
+      $debug << $ns("csi") << "Packet Received" << endl;
       cmsg = (struct cn_msg *)NLMSG_DATA(buf);
       uint16_t len = cmsg->data[0];
       uint8_t code = cmsg->data[2];
