@@ -76,5 +76,5 @@ void csi::openSocket()
       }
     }
   });
-  thCapture.detach();
+  thCapture.join();
 }
