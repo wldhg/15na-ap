@@ -11,10 +11,10 @@
 
 #include "csi.hpp"
 
-using std::endl;
-using std::thread;
-using std::hex;
 using std::dec;
+using std::endl;
+using std::hex;
+using std::thread;
 
 // Global Variables
 size_t bufSize = 4096;
@@ -23,41 +23,40 @@ unsigned short pacCount = 0;
 
 void csi::openSocket()
 {
-  // Initialize socket variables
-  char *buf = (char *)calloc(bufSize, sizeof(char));
-  struct sockaddr_nl *procAddr = new (struct sockaddr_nl);
-  procAddr->nl_family = PF_NETLINK;
-  procAddr->nl_pid = getpid();
-  procAddr->nl_groups = CN_IDX_IWLAGN;
-
-  $info << $ns("csi") << "Initializing connector socket..." << endl;
-
-  // Open socket
-  soc = socket(PF_NETLINK, SOCK_DGRAM, NETLINK_CONNECTOR);
-  if (soc == -1)
-  {
-    terminateP("Socket Open Error");
-  }
-
-  // Bind addresses to the socket
-  if (bind(soc, (struct sockaddr *)procAddr, sizeof(struct sockaddr_nl)) == -1)
-  {
-    terminateP("Socket Bind Error");
-  }
-
-  // Subscribe to netlink group
-  if (setsockopt(soc, 270, NETLINK_ADD_MEMBERSHIP, &procAddr->nl_groups, sizeof(procAddr->nl_groups)))
-  {
-    terminateP("Socket Option Error");
-  }
-
-  $info << $ns("csi") << "Connector successfully binded" << endl;
-
   // Create new thread to capture packets
   thread thCapture([=]() {
+    // Initialize socket variables
+    struct sockaddr_nl *procAddr = new (struct sockaddr_nl);
+    procAddr->nl_family = AF_NETLINK;
+    procAddr->nl_pid = getpid();
+    procAddr->nl_groups = CN_IDX_IWLAGN;
+
+    $info << $ns("csi") << "Initializing connector socket..." << endl;
+
+    // Open socket
+    soc = socket(PF_NETLINK, SOCK_DGRAM, NETLINK_CONNECTOR);
+    if (soc == -1)
+    {
+      terminateP("Socket Open Error");
+    }
+
+    // Bind addresses to the socket
+    if (bind(soc, (struct sockaddr *)procAddr, sizeof(struct sockaddr_nl)) == -1)
+    {
+      terminateP("Socket Bind Error");
+    }
+
+    // Subscribe to netlink group
+    if (setsockopt(soc, 270, NETLINK_ADD_MEMBERSHIP, &procAddr->nl_groups, sizeof(procAddr->nl_groups)))
+    {
+      terminateP("Socket Option Error");
+    }
+
+    $info << $ns("csi") << "Connector successfully binded" << endl;
+
+    char *buf = (char *)calloc(bufSize, sizeof(char));
     struct cn_msg *cmsg;
     unsigned short windowTenSize = SYAA_WINDOW * 10;
-    $info << $ns("csi") << "Started to receive from socket" << endl;
     for (;;)
     {
       if (recv(soc, buf, sizeof(buf), 0) == -1)
@@ -65,9 +64,8 @@ void csi::openSocket()
         errorP("Socket Receive Error");
       }
       cmsg = (struct cn_msg *)NLMSG_DATA(buf);
-      uint16_t len = cmsg->len;
-      uint8_t code = cmsg->data[0];
-      if (code == 187)
+      unsigned short len = cmsg->len;
+      if ((unsigned char)cmsg->data[0] == 187)
       {
         // If BFEE_NOTIF packet
         csi::BBPacket *procBuf = (csi::BBPacket *)calloc(sizeof(uint8_t), len - 1);
@@ -82,13 +80,14 @@ void csi::openSocket()
       }
       if (wannaDebugPacket == true)
       {
-        $debug << $ns("csi") << "Packet Received: Len=" << len << " Code=0x" << hex << code << dec << endl;
+        $debug << $ns("csi") << "Packet Received: Len=" << len << " Code=0x" << hex << (unsigned char)cmsg->data[0] << dec << endl;
       }
     }
   });
   thCapture.join();
 }
 
-void csi::be2lePacket(csi::BBPacket * pkt) {
+void csi::be2lePacket(csi::BBPacket *pkt)
+{
   // Do nothing because csi calculation doesn't use uint16_t or bigger variable.
 }
