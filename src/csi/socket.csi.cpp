@@ -80,7 +80,7 @@ void csi::openSocket()
       }
       if (wannaDebugPacket == true)
       {
-        $debug << $ns("csi") << "Packet Received: Len=" << len << " Code=0x" << hex << (unsigned char)cmsg->data[0] << dec << endl;
+        $debug << $ns("csi") << "Packet Received: Len=" << len << " Code=0x" << hex << (uint8_t)cmsg->data[0] << dec << endl;
       }
     }
   });

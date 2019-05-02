@@ -39,7 +39,7 @@ EXECUTE_PROCESS ( COMMAND bash -c "grep '#define CN_NETLINK_USERS' ${KERNEL_HEAD
                   OUTPUT_VARIABLE CN_NETLINK_USERS )
 
 # Set project parameters
-SET ( SYAA_WINDOW 2000 )
+SET ( SYAA_WINDOW 1880 )
 SET ( SYAA_SLIDE 200 )
 
 # Generate `.hpp`s from header template and update .gitignore

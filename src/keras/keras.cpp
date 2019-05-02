@@ -14,7 +14,7 @@ fdeep::model *keras::m = NULL;
 fdeep::model* keras::loadModel(string model) {
   $info << "Using Keras model named \"" << model << "\"." << endl;
   try {
-    *keras::m = load_model(model.c_str());
+    keras::m = &(load_model(model.c_str()));
   } catch (...) {
     terminateP("Error occured while loading model");
   }
