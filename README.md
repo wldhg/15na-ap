@@ -31,6 +31,11 @@ Then, there must be a binary executable file named `syaa-ap` in `bin` directory.
 2. Run `python convert_model.py [Your H5 File] [Output JSON Path]`. For example, enter `python convert_model.py model.h5 model.json`.
 3. Copy your JSONified model file (`(MODEL NAME).json`) into `bin` directory, where ELF binary `syaa-ap` exists. And you can run Syaa server by typing `./syaa-ap (MODEL NAME).json`. For more options and detailed instructions, type `./syaa-ap --help`.
 
+## Notice
+
+For now, configurations in `CMakeLists.txt` is set for `BPI-R2 (MT7623N, Cortex A7)`.\
+You may change this to fit to your device.
+
 ## License
 
 This program is under **MPL-2.0** license. Read [LICENSE.md](LICENSE.md) for more informations.

@@ -26,7 +26,6 @@ void csi::pushPacket(csi::BBPacket *packet)
     psMutex.lock();
     bool shouldPredict = csi::pacStore.size() >= SYAA_WINDOW;
     psMutex.unlock();
-    $debug << "sized" << endl;
     if (shouldPredict)
     {
       // Create new thread to copy packets and process Keras

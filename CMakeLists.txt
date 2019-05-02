@@ -6,17 +6,21 @@ IF ( NOT ${CMAKE_VERSION} VERSION_LESS "3.13.0" )
 ENDIF ()
 INCLUDE ( ${CMAKE_ROOT}/Modules/ExternalProject.cmake )
 
+# Build/CXX Options
+IF ( NOT ${CMAKE_HOST_SYSTEM_VERSION} MATCHES "BPI-R2" )
+  SET ( CMAKE_C_COMPILER /usr/bin/arm-linux-gnueabihf-gcc )
+  SET ( CMAKE_CXX_COMPILER /usr/bin/arm-linux-gnueabihf-g++ )
+  ADD_COMPILE_OPTIONS ( -march=armv7-a+vfpv4 -mtune=cortex-a7 )
+ENDIF ()
+SET ( CMAKE_C_FLAGS_DEBUG "-g" )
+SET ( CMAKE_CXX_STANDARD 17 )
+SET ( CMAKE_CXX_STANDARD_REQUIRED ON )
+
 # Project Configuration
 PROJECT ( "Syaa AP" VERSION 1.0.0 )
 SET ( CMAKE_BUILD_TYPE Release )
 SET ( CMAKE_VERBOSE_MAKEFILE false )
 SET ( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/bin )
-
-# Build/CXX Options
-# ADD_COMPILE_OPTIONS ( -march=armv7-a )
-SET ( CMAKE_C_FLAGS_DEBUG "-g" )
-SET ( CMAKE_CXX_STANDARD 17 )
-SET ( CMAKE_CXX_STANDARD_REQUIRED ON )
 
 # Get CN_NETLINK_USERS
 EXECUTE_PROCESS ( COMMAND uname -r
