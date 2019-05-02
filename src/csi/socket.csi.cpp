@@ -13,6 +13,8 @@
 
 using std::endl;
 using std::thread;
+using std::hex;
+using std::dec;
 
 // Global Variables
 size_t bufSize = 4096;
@@ -63,13 +65,13 @@ void csi::openSocket()
         errorP("Socket Receive Error");
       }
       cmsg = (struct cn_msg *)NLMSG_DATA(buf);
-      uint16_t len = htons(cmsg->data[0]);
-      uint8_t code = cmsg->data[2];
+      uint16_t len = cmsg->len;
+      uint8_t code = cmsg->data[0];
       if (code == 187)
       {
         // If BFEE_NOTIF packet
         csi::BBPacket *procBuf = (csi::BBPacket *)calloc(sizeof(uint8_t), len - 1);
-        memcpy(procBuf, &(cmsg->data[3]), sizeof(uint8_t) * (len - 1));
+        memcpy(procBuf, &(cmsg->data[1]), sizeof(uint8_t) * (len - 1));
         csi::be2lePacket(procBuf);
         csi::pushPacket(procBuf);
         if (++pacCount % windowTenSize == 0)
@@ -80,7 +82,7 @@ void csi::openSocket()
       }
       if (wannaDebugPacket == true)
       {
-        $debug << $ns("csi") << "Packet Received: Len=" << (int)len << " Code=" << (int)code << endl;
+        $debug << $ns("csi") << "Packet Received: Len=" << len << " Code=0x" << hex << code << dec << endl;
       }
     }
   });
