@@ -3,11 +3,12 @@
 
 #include "core.hpp"
 
-using std::string;
 using std::cout;
 using std::endl;
+using std::string;
 
-void showHelpMessage() {
+void showHelpMessage()
+{
   cout << endl;
   cout << bold << "syaa-ap" << def << " [OPTION...] MODEL" << endl;
   cout << endl;
@@ -19,6 +20,7 @@ void showHelpMessage() {
   cout << "\t-http, --use-http          Set websocket to use http protocol instead of" << endl;
   cout << "\t                           https." << endl;
   cout << "\t--skip-keras               Skip loading Keras model. Use dummy model instead." << endl;
+  cout << "\t--debug-packet             Show detailed information for each packets." << endl;
   cout << "\t-h, --help                 Show this help message." << endl;
   cout << "\t-v, --version              Show Syaa AP program version." << endl;
   cout << endl;
@@ -27,7 +29,8 @@ void showHelpMessage() {
   cout << endl;
 }
 
-void showVersionMessage() {
+void showVersionMessage()
+{
   $info << bold << "Syaa AP Program " << def << gray << "Version " << $version << def << endl;
 }
 
@@ -38,17 +41,24 @@ void core::procFlagOption(string name)
     showHelpMessage();
     exit(0);
   }
-  else if (name.compare("version") == 0) {
+  else if (name.compare("version") == 0)
+  {
     showVersionMessage();
     exit(0);
   }
-  else if (name.compare("skip-keras") == 0) {
+  else if (name.compare("skip-keras") == 0)
+  {
     wannaSkipKeras = true;
     $info << "Loading Keras model will be skiped. But you should enter dummy model name. Predictor will answer random values." << endl;
   }
   else if (name.compare("use-http") == 0)
   {
     setProtocol(string("http"));
+  }
+  else if (name.compare("debug-packet") == 0)
+  {
+    wannaDebugPacket = true;
+    $info << "Each received packets will be debugged." << endl;
   }
   else
   {
@@ -67,7 +77,8 @@ void core::procShortFlagOption(string name)
     showVersionMessage();
     exit(0);
   }
-  else if (name.compare("http") == 0) {
+  else if (name.compare("http") == 0)
+  {
     setProtocol(string("http"));
   }
   else

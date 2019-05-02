@@ -9,6 +9,7 @@
 #include <complex>
 #include <vector>
 #include <thread>
+#include <mutex>
 
 #include "syaa.hpp"
 
@@ -49,13 +50,13 @@ typedef std::vector<csi::BBPacket *> PacketVector;
 
 // CSI Types
 typedef std::array<std::complex<double>, 30> CSITxRxComplex;
-typedef std::vector<CSITxRxComplex> CSITxComplex; // [Nrx][Complex(double), 30]
+typedef std::vector<CSITxRxComplex> CSITxComplex;   // [Nrx][Complex(double), 30]
 typedef std::vector<CSITxComplex> CSISingleComplex; // [Ntx][Nrx][Complex(double), 30]
 typedef std::array<double, 30> CSITxRxDouble;
 typedef std::vector<CSITxRxDouble> CSITxDouble; // [Nrx][double, 30]
-typedef std::vector<CSITxDouble> CSISingleAmp; // [Ntx][Nrx][double, 30]
-typedef std::vector<CSITxDouble> CSISinglePha; // [Ntx][Nrx][double, 30]
-typedef std::tuple<CSISingleAmp&, CSISinglePha&> CSISingleSet;
+typedef std::vector<CSITxDouble> CSISingleAmp;  // [Ntx][Nrx][double, 30]
+typedef std::vector<CSITxDouble> CSISinglePha;  // [Ntx][Nrx][double, 30]
+typedef std::tuple<CSISingleAmp &, CSISinglePha &> CSISingleSet;
 typedef std::tuple<std::array<CSISingleAmp, SYAA_WINDOW>, std::array<CSISinglePha, SYAA_WINDOW>> CSIData;
 typedef std::vector<double> CSIVector;
 
@@ -66,6 +67,7 @@ extern PacketQueue pacStore;
 
 // Functions
 void openSocket();
+void be2lePacket(BBPacket *);
 void pushPacket(BBPacket *);
 CSIVector &getCSIVector(PacketVector &);
 } // namespace csi

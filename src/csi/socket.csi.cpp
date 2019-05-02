@@ -11,8 +11,8 @@
 
 #include "csi.hpp"
 
-using std::thread;
 using std::endl;
+using std::thread;
 
 // Global Variables
 size_t bufSize = 4096;
@@ -63,20 +63,30 @@ void csi::openSocket()
         errorP("Socket Receive Error");
       }
       cmsg = (struct cn_msg *)NLMSG_DATA(buf);
-      uint16_t len = cmsg->data[0];
+      uint16_t len = htons(cmsg->data[0]);
       uint8_t code = cmsg->data[2];
-      $debug << $ns("csi") << "Packet Received: Len=" << (int) len << " Code=" << (int) code << endl;
-      if (code == 187) {
+      if (code == 187)
+      {
         // If BFEE_NOTIF packet
         csi::BBPacket *procBuf = (csi::BBPacket *)calloc(sizeof(uint8_t), len - 1);
         memcpy(procBuf, &(cmsg->data[3]), sizeof(uint8_t) * (len - 1));
+        csi::be2lePacket(procBuf);
         csi::pushPacket(procBuf);
-        if (++pacCount % windowTenSize == 0) {
+        if (++pacCount % windowTenSize == 0)
+        {
           pacCount = 0;
           $debug << $ns("csi") << "W10 Reached" << endl;
         }
       }
+      if (wannaDebugPacket == true)
+      {
+        $debug << $ns("csi") << "Packet Received: Len=" << (int)len << " Code=" << (int)code << endl;
+      }
     }
   });
   thCapture.join();
+}
+
+void csi::be2lePacket(csi::BBPacket * pkt) {
+  // Do nothing because csi calculation doesn't use uint16_t or bigger variable.
 }

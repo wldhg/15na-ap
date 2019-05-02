@@ -15,6 +15,7 @@ using std::string;
 
 // Syaa program flags
 bool wannaSkipKeras = false;
+bool wannaDebugPacket = false;
 
 // Websocket server configuration
 unsigned short port = 443;
