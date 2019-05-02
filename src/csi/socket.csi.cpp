@@ -17,7 +17,7 @@ using std::hex;
 using std::thread;
 
 // Global Variables
-size_t bufSize = 4096;
+size_t bufSize = 11457;
 int soc = -1;
 unsigned short pacCount = 0;
 
@@ -54,7 +54,7 @@ void csi::openSocket()
 
     $info << $ns("csi") << "Connector successfully binded" << endl;
 
-    char *buf = (char *)calloc(bufSize, sizeof(char));
+    char *buf = (char *)malloc(bufSize);
     struct cn_msg *cmsg;
     unsigned short windowTenSize = SYAA_WINDOW * 10;
     for (;;)
@@ -68,8 +68,8 @@ void csi::openSocket()
       if ((unsigned char)cmsg->data[0] == 187)
       {
         // If BFEE_NOTIF packet
-        csi::BBPacket *procBuf = (csi::BBPacket *)calloc(sizeof(uint8_t), len - 1);
-        memcpy(procBuf, &(cmsg->data[1]), sizeof(uint8_t) * (len - 1));
+        csi::BBPacket *procBuf = (csi::BBPacket *)malloc((size_t)len - 1);
+        memcpy(procBuf, &(cmsg->data[1]), len - 1);
         csi::be2lePacket(procBuf);
         csi::pushPacket(procBuf);
         if (++pacCount % windowTenSize == 0)
