@@ -4,9 +4,9 @@
 #include "csi.hpp"
 #include "keras.hpp"
 
-using std::thread;
-using std::mutex;
 using std::endl;
+using std::mutex;
+using std::thread;
 
 mutex psMutex;
 mutex wcMutex;
@@ -14,7 +14,8 @@ PacketQueue csi::pacStore;
 unsigned short pacIter = 0;
 unsigned long long windowCount = 0;
 
-void csi::pushPacket(csi::BBPacket* packet) {
+void csi::pushPacket(csi::BBPacket *packet)
+{
   psMutex.lock();
   pacStore.push(packet);
   psMutex.unlock();
@@ -54,7 +55,7 @@ void csi::pushPacket(csi::BBPacket* packet) {
           $debug << $ns("csi") << "W" << currentWindowCount << ": Packet collected" << endl;
         }
         // Convert these things to CSI array
-        CSIVector& csis = csi::getCSIVector(tmpStore);
+        CSIVector &csis = csi::getCSIVector(tmpStore);
         // Do Keras
         keras::predict(csis);
         // Free values

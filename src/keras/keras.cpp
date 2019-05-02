@@ -4,32 +4,37 @@
 #include "keras.hpp"
 #include "ws.hpp"
 
+using std::endl;
 using std::string;
 using std::vector;
-using std::endl;
 using namespace fdeep;
 
 const fdeep::model *keras::m = NULL;
 
-const fdeep::model* keras::loadModel(string model) {
+const fdeep::model *keras::loadModel(string model)
+{
   $info << "Using Keras model named \"" << model << "\"." << endl;
-  try {
+  try
+  {
     const auto _m = load_model(model.c_str(), false);
     keras::m = &_m;
-  } catch (...) {
+  }
+  catch (...)
+  {
     terminateP("Error occured while loading model");
   }
   $success << "Loaded Keras model from " << model << endl;
   return keras::m;
 }
 
-const fdeep::model* keras::loadDummyModel()
+const fdeep::model *keras::loadDummyModel()
 {
   $success << "Loaded Keras dummy model" << endl;
   return NULL;
 }
 
-void keras::predict(vector<double>& csis) {
+void keras::predict(vector<double> &csis)
+{
   // Convert to float vector
   const vector<float> fCSIs(csis.begin(), csis.end());
   // Convert to tensor5
@@ -39,10 +44,12 @@ void keras::predict(vector<double>& csis) {
   const auto prediction = keras::m->predict({t});
   // Afterprocess
   $debug << $ns("keras") << fdeep::show_tensor5s(prediction) << endl;
-  if (false) { // If syncoped
+  if (false)
+  { // If syncoped
     ws::soc->emit("alert");
   }
-  if (false) { // If waked up
+  if (false)
+  { // If waked up
     ws::soc->emit("discard");
   }
 }

@@ -3,14 +3,16 @@
 
 #include "core.hpp"
 
+using std::atexit;
 using std::endl;
 using std::size_t;
 using std::string;
-using std::atexit;
 using namespace core;
 
 int main(int argc, char **argv)
 {
+  std::cout.setf(std::ios::unitbuf);
+
   $info << "Initializing " << bold << "Syaa" << def << " AP program..." << endl;
 
   atexit(_terminate);
@@ -43,10 +45,12 @@ int main(int argc, char **argv)
     else
     {
       // Model name
-      if (!isModelSelected) {
+      if (!isModelSelected)
+      {
         model = arg;
         isModelSelected = true;
-      } else
+      }
+      else
         terminate("Model name is duplicated: " + model + " & " + arg);
     }
   }
@@ -57,9 +61,12 @@ int main(int argc, char **argv)
   $success << "Checked arguments" << endl;
 
   // Load Keras model
-  if (wannaSkipKeras) {
+  if (wannaSkipKeras)
+  {
     keras::loadDummyModel();
-  } else {
+  }
+  else
+  {
     keras::loadModel(model);
   }
 

@@ -14,7 +14,7 @@ namespace keras
 
 const fdeep::model *loadModel(std::string model);
 const fdeep::model *loadDummyModel();
-void predict(std::vector<double>&);
+void predict(std::vector<double> &);
 
 enum ch
 {
