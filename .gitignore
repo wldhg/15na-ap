@@ -53,10 +53,6 @@ tmp/
 # VS Code
 .vscode
 
-# Model
-model.json
-model.h5
-
 # Source files configured by CMake
 src/syaa.hpp
 src/csi/csi.hpp

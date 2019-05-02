@@ -12,8 +12,8 @@
 namespace keras
 {
 
-fdeep::model *loadModel(std::string model);
-fdeep::model *loadDummyModel();
+const fdeep::model *loadModel(std::string model);
+const fdeep::model *loadDummyModel();
 void predict(std::vector<double>&);
 
 enum ch
@@ -22,7 +22,7 @@ enum ch
   SYNCOPE,
 }; // Changes
 
-extern fdeep::model *m;
+extern const fdeep::model *m;
 } // namespace keras
 
 #endif

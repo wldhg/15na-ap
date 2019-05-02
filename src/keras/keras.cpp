@@ -9,12 +9,13 @@ using std::vector;
 using std::endl;
 using namespace fdeep;
 
-fdeep::model *keras::m = NULL;
+const fdeep::model *keras::m = NULL;
 
-fdeep::model* keras::loadModel(string model) {
+const fdeep::model* keras::loadModel(string model) {
   $info << "Using Keras model named \"" << model << "\"." << endl;
   try {
-    keras::m = &(load_model(model.c_str()));
+    const auto _m = load_model(model.c_str());
+    keras::m = &_m;
   } catch (...) {
     terminateP("Error occured while loading model");
   }
@@ -22,7 +23,7 @@ fdeep::model* keras::loadModel(string model) {
   return keras::m;
 }
 
-fdeep::model* keras::loadDummyModel()
+const fdeep::model* keras::loadDummyModel()
 {
   $success << "Loaded Keras dummy model" << endl;
   return NULL;
