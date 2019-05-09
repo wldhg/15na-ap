@@ -3,7 +3,7 @@
 
 #include <cerrno>
 
-#include "syaa.hpp"
+#include "15na.hpp"
 
 using std::cerr;
 using std::dec;
@@ -13,7 +13,7 @@ using std::hex;
 using std::size_t;
 using std::string;
 
-// Syaa program flags
+// 15na program flags
 bool wannaSkipKeras = false;
 bool wannaDebugPacket = false;
 bool wannaDebugWindow = false;
@@ -50,7 +50,7 @@ void _terminate()
   if (!isErrorExit && errno != 0)
     terminateP("On-exit error detected");
   else if (!isErrorExit)
-    $info << "Syaa server is ended without any error! Shutting down..." << endl;
+    $info << "15na server is ended without any error! Shutting down..." << endl;
   else
     $warn << "Shutting down the program due to the error" << endl;
 }

@@ -37,8 +37,8 @@ void ws::con2Central()
     cond.wait(lock);
   }
   lock.unlock();
-  soc = cli.socket(string("/syaa-ws/in"));
-  $info << $ns("ws") << "Namespace changed to /syaa-ws/in" << endl;
+  soc = cli.socket(string("/15na-ws/in"));
+  $info << $ns("ws") << "Namespace changed to /15na-ws/in" << endl;
   ws::bindEvents(soc);
   $info << $ns("ws") << "Socket session successfully opened" << endl;
 }

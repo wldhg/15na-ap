@@ -4,10 +4,10 @@
 #include <fdeep/fdeep.hpp>
 #include <vector>
 
-#include "syaa.hpp"
+#include "15na.hpp"
 
-#ifndef SYAA_KERAS
-#define SYAA_KERAS
+#ifndef 15na_KERAS
+#define 15na_KERAS
 
 namespace keras
 {

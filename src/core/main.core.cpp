@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 {
   std::cout.setf(std::ios::unitbuf);
 
-  $info << "Initializing " << bold << "Syaa" << def << " AP program..." << endl;
+  $info << "Initializing " << bold << "15na" << def << " AP program..." << endl;
 
   atexit(_terminate);
 

@@ -19,12 +19,12 @@ void csi::pushPacket(csi::BBPacket *packet)
   psMutex.lock();
   pacStore.push(packet);
   psMutex.unlock();
-  if (++pacIter == SYAA_SLIDE)
+  if (++pacIter == 15na_SLIDE)
   {
     // Reset counter
     pacIter = 0;
     psMutex.lock();
-    bool shouldPredict = csi::pacStore.size() >= SYAA_WINDOW;
+    bool shouldPredict = csi::pacStore.size() >= 15na_WINDOW;
     psMutex.unlock();
     if (shouldPredict)
     {
@@ -37,13 +37,13 @@ void csi::pushPacket(csi::BBPacket *packet)
         {
           $debug << $ns("csi") << "W" << currentWindowCount << ": processing started" << endl;
         }
-        // Gather window & front <SYAA_SLIDE> items of queue
+        // Gather window & front <15na_SLIDE> items of queue
         PacketVector tmpStore;
         psMutex.lock();
-        for (unsigned short i = 0; i < SYAA_WINDOW; i++)
+        for (unsigned short i = 0; i < 15na_WINDOW; i++)
         {
           tmpStore.push_back(pacStore.front());
-          if (i < SYAA_SLIDE)
+          if (i < 15na_SLIDE)
           {
             pacStore.pop();
           }
@@ -58,7 +58,7 @@ void csi::pushPacket(csi::BBPacket *packet)
         // Do Keras
         keras::predict(csis);
         // Free values
-        for (unsigned short i = 0; i < SYAA_SLIDE; i++)
+        for (unsigned short i = 0; i < 15na_SLIDE; i++)
         {
           free(tmpStore.at(i));
         }

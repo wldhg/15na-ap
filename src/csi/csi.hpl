@@ -11,18 +11,18 @@
 #include <thread>
 #include <mutex>
 
-#include "syaa.hpp"
+#include "15na.hpp"
 
-#ifndef SYAA_CSI
-#define SYAA_CSI
+#ifndef 15na_CSI
+#define 15na_CSI
 
 #undef CN_NETLINK_USERS
 #define CN_NETLINK_USERS @CN_NETLINK_USERS@
 #define CN_IDX_IWLAGN (CN_NETLINK_USERS + 0xf)
 #define CN_VAL_IWLAGN 0x1
 
-#define SYAA_WINDOW @SYAA_WINDOW@
-#define SYAA_SLIDE @SYAA_SLIDE@
+#define 15na_WINDOW @15na_WINDOW@
+#define 15na_SLIDE @15na_SLIDE@
 
 namespace csi
 {
@@ -57,7 +57,7 @@ typedef std::vector<CSITxRxDouble> CSITxDouble; // [Nrx][double, 30]
 typedef std::vector<CSITxDouble> CSISingleAmp;  // [Ntx][Nrx][double, 30]
 typedef std::vector<CSITxDouble> CSISinglePha;  // [Ntx][Nrx][double, 30]
 typedef std::tuple<CSISingleAmp &, CSISinglePha &> CSISingleSet;
-typedef std::tuple<std::array<CSISingleAmp, SYAA_WINDOW>, std::array<CSISinglePha, SYAA_WINDOW>> CSIData;
+typedef std::tuple<std::array<CSISingleAmp, 15na_WINDOW>, std::array<CSISinglePha, 15na_WINDOW>> CSIData;
 typedef std::vector<double> CSIVector;
 
 namespace csi

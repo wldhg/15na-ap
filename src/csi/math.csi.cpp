@@ -124,7 +124,7 @@ CSISingleAmp &scaleAmp(CSISingleAmp &amp, double scale)
 CSIVector &csi::getCSIVector(PacketVector &store)
 {
   CSIVector *csis = new CSIVector();
-  for (unsigned short i = 0; i < SYAA_WINDOW; i++)
+  for (unsigned short i = 0; i < 15na_WINDOW; i++)
   {
     // Get single complex CSI
     auto rawSingle = getSingleRawCSI(store[i]);

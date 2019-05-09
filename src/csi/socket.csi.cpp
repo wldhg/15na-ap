@@ -23,8 +23,8 @@ unsigned short pacCount = 0;
 
 void csi::openSocket()
 {
-  $debug << $ns("csi") << "Prediction window will be " << SYAA_WINDOW << endl;
-  $debug << $ns("csi") << "Window interval (slide) will be " << SYAA_SLIDE << endl;
+  $debug << $ns("csi") << "Prediction window will be " << 15na_WINDOW << endl;
+  $debug << $ns("csi") << "Window interval (slide) will be " << 15na_SLIDE << endl;
   $info << $ns("csi") << "Initializing connector socket..." << endl;
 
   // Create new thread to capture packets
@@ -58,7 +58,7 @@ void csi::openSocket()
 
     char *buf = (char *)malloc(bufSize);
     struct cn_msg *cmsg;
-    unsigned short windowTenSize = SYAA_WINDOW * 10;
+    unsigned short windowTenSize = 15na_WINDOW * 10;
     for (;;)
     {
       if (recv(soc, buf, bufSize, 0) == -1)

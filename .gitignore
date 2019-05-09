@@ -44,7 +44,7 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
-# Syaa Server Binary
+# 15na Server Binary
 bin/
 
 # CMake External Projects
@@ -58,5 +58,5 @@ tmp/
 .vscode
 
 # Source files configured by CMake
-src/syaa.hpp
+src/15na.hpp
 src/csi/csi.hpp

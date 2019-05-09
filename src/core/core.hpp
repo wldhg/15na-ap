@@ -1,13 +1,13 @@
 // Widh Jio
 // core.hpp
 
-#include "syaa.hpp"
+#include "15na.hpp"
 #include "csi.hpp"
 #include "keras.hpp"
 #include "ws.hpp"
 
-#ifndef SYAA_CORE
-#define SYAA_CORE
+#ifndef 15na_CORE
+#define 15na_CORE
 
 namespace core
 {

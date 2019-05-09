@@ -10,7 +10,7 @@ using std::string;
 void showHelpMessage()
 {
   cout << endl;
-  cout << bold << "syaa-ap" << def << " [OPTION...] MODEL" << endl;
+  cout << bold << "15na-ap" << def << " [OPTION...] MODEL" << endl;
   cout << endl;
   cout << "[OPTION]" << endl;
   cout << "\t-p=<PORT>, --port=<PORT>   Set specific port which is used in websocket." << endl;
@@ -20,7 +20,7 @@ void showHelpMessage()
   cout << "\t-http, --use-http          Set websocket to use http protocol instead of" << endl;
   cout << "\t                           https." << endl;
   cout << "\t-h, --help                 Show this help message." << endl;
-  cout << "\t-v, --version              Show Syaa AP program version." << endl;
+  cout << "\t-v, --version              Show 15na AP program version." << endl;
   cout << endl;
   cout << "[DEBUG OPTION]" << endl;
   cout << "\t--skip-keras               Skip loading Keras model. Use dummy model instead." << endl;
@@ -34,7 +34,7 @@ void showHelpMessage()
 
 void showVersionMessage()
 {
-  $info << bold << "Syaa AP Program " << def << gray << "Version " << $version << def << endl;
+  $info << bold << "15na AP Program " << def << gray << "Version " << $version << def << endl;
 }
 
 void core::procFlagOption(string name)
