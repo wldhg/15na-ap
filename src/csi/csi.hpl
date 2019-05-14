@@ -3,73 +3,34 @@
 
 #include <linux/connector.h>
 #include <cstdint>
-#include <tuple>
-#include <array>
 #include <queue>
-#include <complex>
-#include <vector>
 #include <thread>
+#include <tuple>
 #include <mutex>
 
 #include "15na.hpp"
 
-#ifndef 15na_CSI
-#define 15na_CSI
+#ifndef IRONA_CSI
+#define IRONA_CSI
 
 #undef CN_NETLINK_USERS
 #define CN_NETLINK_USERS @CN_NETLINK_USERS@
 #define CN_IDX_IWLAGN (CN_NETLINK_USERS + 0xf)
 #define CN_VAL_IWLAGN 0x1
 
-#define 15na_WINDOW @15na_WINDOW@
-#define 15na_SLIDE @15na_SLIDE@
+#define IRONA_WINDOW @IRONA_WINDOW@
+
+typedef std::tuple<unsigned short, uint8_t *> Packet;
+typedef std::queue<Packet> PacketQueue;
 
 namespace csi
 {
-
-// Define BBPacket first
-struct BBPacket
-{
-  uint32_t timestamp_low;
-  uint16_t bfee_count;
-  uint16_t reserved;
-  uint8_t Nrx, Ntx;
-  int8_t rssiA, rssiB, rssiC;
-  int8_t noise;
-  uint8_t agc, antenna_sel;
-  uint16_t len;
-  uint16_t fake_rate_n_flags;
-  uint8_t payload[0];
-} __attribute__((packed));
-
-} // namespace csi
-
-// Packet Types
-typedef std::queue<csi::BBPacket *> PacketQueue;
-typedef std::vector<csi::BBPacket *> PacketVector;
-
-// CSI Types
-typedef std::array<std::complex<double>, 30> CSITxRxComplex;
-typedef std::vector<CSITxRxComplex> CSITxComplex;   // [Nrx][Complex(double), 30]
-typedef std::vector<CSITxComplex> CSISingleComplex; // [Ntx][Nrx][Complex(double), 30]
-typedef std::array<double, 30> CSITxRxDouble;
-typedef std::vector<CSITxRxDouble> CSITxDouble; // [Nrx][double, 30]
-typedef std::vector<CSITxDouble> CSISingleAmp;  // [Ntx][Nrx][double, 30]
-typedef std::vector<CSITxDouble> CSISinglePha;  // [Ntx][Nrx][double, 30]
-typedef std::tuple<CSISingleAmp &, CSISinglePha &> CSISingleSet;
-typedef std::tuple<std::array<CSISingleAmp, 15na_WINDOW>, std::array<CSISinglePha, 15na_WINDOW>> CSIData;
-typedef std::vector<double> CSIVector;
-
-namespace csi
-{
-// Public Packet Store
+// Public Packet & Length Store
 extern PacketQueue pacStore;
 
 // Functions
 void openSocket();
-void be2lePacket(BBPacket *);
-void pushPacket(BBPacket *);
-CSIVector &getCSIVector(PacketVector &);
+void pushPacket(unsigned short, uint8_t *);
 } // namespace csi
 
 #endif

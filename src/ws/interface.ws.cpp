@@ -1,5 +1,5 @@
 // Widh Jio
-// server.ws.cpp
+// interface.ws.cpp
 
 #include "ws.hpp"
 

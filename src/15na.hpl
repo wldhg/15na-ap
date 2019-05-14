@@ -5,8 +5,8 @@
 #include <cstdlib>
 #include <string>
 
-#ifndef 15na_COMMON
-#define 15na_COMMON
+#ifndef IRONA_COMMON
+#define IRONA_COMMON
 
 #define $version "@CMAKE_PROJECT_VERSION@"
 

@@ -3,11 +3,10 @@
 
 #include "15na.hpp"
 #include "csi.hpp"
-#include "keras.hpp"
 #include "ws.hpp"
 
-#ifndef 15na_CORE
-#define 15na_CORE
+#ifndef IRONA_CORE
+#define IRONA_CORE
 
 namespace core
 {

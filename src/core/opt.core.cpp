@@ -10,11 +10,11 @@ using std::string;
 void showHelpMessage()
 {
   cout << endl;
-  cout << bold << "15na-ap" << def << " [OPTION...] MODEL" << endl;
+  cout << bold << "15na-ap" << def << " [OPTION...]" << endl;
   cout << endl;
   cout << "[OPTION]" << endl;
   cout << "\t-p=<PORT>, --port=<PORT>   Set specific port which is used in websocket." << endl;
-  cout << "\t                           (Default: 11900)" << endl;
+  cout << "\t                           (Default: 443)" << endl;
   cout << "\t-s=<ADDR>, --site=<ADDR>   Set specific site name which is used in" << endl;
   cout << "\t                           websocket. (Default: localhost)" << endl;
   cout << "\t-http, --use-http          Set websocket to use http protocol instead of" << endl;
@@ -23,12 +23,8 @@ void showHelpMessage()
   cout << "\t-v, --version              Show 15na AP program version." << endl;
   cout << endl;
   cout << "[DEBUG OPTION]" << endl;
-  cout << "\t--skip-keras               Skip loading Keras model. Use dummy model instead." << endl;
   cout << "\t--debug-packet             Show detailed information for each packets." << endl;
   cout << "\t--debug-window             Show detailed process for each windows." << endl;
-  cout << endl;
-  cout << "MODEL" << endl;
-  cout << "\tPath to the Keras model used in the AP. (e.g. TheGreatModel.json)" << endl;
   cout << endl;
 }
 
@@ -48,11 +44,6 @@ void core::procFlagOption(string name)
   {
     showVersionMessage();
     exit(0);
-  }
-  else if (name.compare("skip-keras") == 0)
-  {
-    wannaSkipKeras = true;
-    $info << "Loading Keras model will be skiped. But you should enter dummy model name. Predictor will answer random values." << endl;
   }
   else if (name.compare("use-http") == 0)
   {

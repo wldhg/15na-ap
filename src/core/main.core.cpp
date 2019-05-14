@@ -44,31 +44,11 @@ int main(int argc, char **argv)
     }
     else
     {
-      // Model name
-      if (!isModelSelected)
-      {
-        model = arg;
-        isModelSelected = true;
-      }
-      else
-        terminate("Model name is duplicated: " + model + " & " + arg);
+      $warn << "Ignored argument: " << arg << endl;
     }
   }
 
-  if (!isModelSelected)
-    terminate("Enter the name of model file");
-
   $success << "Checked arguments" << endl;
-
-  // Load Keras model
-  if (wannaSkipKeras)
-  {
-    keras::loadDummyModel();
-  }
-  else
-  {
-    keras::loadModel(model);
-  }
 
   // Start websocket server
   ws::init();

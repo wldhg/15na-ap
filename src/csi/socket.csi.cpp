@@ -23,8 +23,7 @@ unsigned short pacCount = 0;
 
 void csi::openSocket()
 {
-  $debug << $ns("csi") << "Prediction window will be " << 15na_WINDOW << endl;
-  $debug << $ns("csi") << "Window interval (slide) will be " << 15na_SLIDE << endl;
+  $debug << $ns("csi") << "Sending window size will be " << IRONA_WINDOW << endl;
   $info << $ns("csi") << "Initializing connector socket..." << endl;
 
   // Create new thread to capture packets
@@ -58,7 +57,6 @@ void csi::openSocket()
 
     char *buf = (char *)malloc(bufSize);
     struct cn_msg *cmsg;
-    unsigned short windowTenSize = 15na_WINDOW * 10;
     for (;;)
     {
       if (recv(soc, buf, bufSize, 0) == -1)
@@ -70,14 +68,13 @@ void csi::openSocket()
       if ((unsigned char)cmsg->data[0] == 187)
       {
         // If BFEE_NOTIF packet
-        csi::BBPacket *procBuf = (csi::BBPacket *)malloc((size_t)len - 1);
-        memcpy(procBuf, &(cmsg->data[1]), len - 1);
-        csi::be2lePacket(procBuf);
-        csi::pushPacket(procBuf);
-        if (++pacCount % windowTenSize == 0)
+        uint8_t *procBuf = (uint8_t *)malloc((size_t)len);
+        memcpy(procBuf, &(cmsg->data[0]), len);
+        csi::pushPacket(htons(len), procBuf);
+        if (++pacCount % IRONA_WINDOW == 0)
         {
           pacCount = 0;
-          $debug << $ns("csi") << "W10 Reached" << endl;
+          $debug << $ns("csi") << "A Window Reached" << endl;
         }
       }
       if (wannaDebugPacket == true)
@@ -87,9 +84,4 @@ void csi::openSocket()
     }
   });
   thCapture.join();
-}
-
-void csi::be2lePacket(csi::BBPacket *pkt)
-{
-  // Do nothing because csi calculation doesn't use uint16_t or bigger variable.
 }

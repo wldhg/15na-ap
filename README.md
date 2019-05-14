@@ -1,20 +1,16 @@
-<em> <strong>Now Under Development</strong> </em>
-
 # 15na AP App
 
 <i>15na Access Point Program</i>
 
-This is a program which does real-time situation classification.\
+This is a program sends `BFEE_NOTIF` packets to `15na-server`.\
 I recommend you to do below in Linux environment.
 
 ## Requirements
 
--   **Python 3.6** & **`keras`** or **`keras-gpu`**
 -   **CMake 3.8+**
 -   **GCC/G++ 7+**
 -   **Boost C++**: `boost`, `boost_sytem`, `boost_date_time`, `boost_random`
 -   **OpenSSL Library**
--   **Eigen3**
 
 ## How To Build
 
@@ -24,12 +20,6 @@ I recommend you to do below in Linux environment.
 4. `sudo make`
 
 Then, there must be a binary executable file named `15na-ap` in `bin` directory.
-
-## How To Run
-
-1. After build `15na-ap`, you may have `frugally-deep` directory in `lib`. Go on that directory and enter into `keras_export` directory.
-2. Run `python convert_model.py [Your H5 File] [Output JSON Path]`. For example, enter `python convert_model.py model.h5 model.json`.
-3. Copy your JSONified model file (`(MODEL NAME).json`) into `bin` directory, where ELF binary `15na-ap` exists. And you can run 15na server by typing `./15na-ap (MODEL NAME).json`. For more options and detailed instructions, type `./15na-ap --help`.
 
 ## Notice
 

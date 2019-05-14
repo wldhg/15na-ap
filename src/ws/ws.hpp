@@ -3,6 +3,7 @@
 
 #include <sio_client.h>
 #include <mutex>
+#include <vector>
 #include <condition_variable>
 
 #include "15na.hpp"
@@ -24,6 +25,7 @@ void bindListeners(sio::client *);
 void bindEvents(sio::socket::ptr);
 
 void init();
+void send(uint8_t *);
 void con2Central();
 } // namespace ws
 
