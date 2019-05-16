@@ -20,10 +20,11 @@ using std::thread;
 size_t bufSize = 11457;
 int soc = -1;
 unsigned short pacCount = 0;
+unsigned short csi::ioPacketLength = IRONA_SEND_CNT + IRONA_WINDOW_CNT - IRONA_SLIDE_CNT;
 
 void csi::openSocket()
 {
-  $debug << $ns("csi") << "Sending window size will be " << IRONA_WINDOW << endl;
+  $debug << $ns("csi") << "Sending window size will be " << csi::ioPacketLength << endl;
   $info << $ns("csi") << "Initializing connector socket..." << endl;
 
   // Create new thread to capture packets
@@ -71,7 +72,7 @@ void csi::openSocket()
         uint8_t *procBuf = (uint8_t *)malloc((size_t)len);
         memcpy(procBuf, cmsg->data, len);
         csi::pushPacket(len, procBuf);
-        if (++pacCount % IRONA_WINDOW == 0)
+        if (++pacCount % IRONA_SEND_CNT == 0)
         {
           pacCount = 0;
           $debug << $ns("csi") << "A Window Reached" << endl;

@@ -2,7 +2,6 @@
 // window.csi.cpp
 
 #include <cstring>
-#include <arpa/inet.h>
 
 #include "csi.hpp"
 #include "ws.hpp"
@@ -25,13 +24,14 @@ void csi::pushPacket(unsigned short len, uint8_t *bytes)
   stMutex.lock();
   pacStore.push(Packet(len, bytes));
   windowAllSize += len + 2;
-  if (++pacIter == IRONA_WINDOW)
+  if (++pacIter == csi::ioPacketLength)
   {
     // Reset counter
     unsigned long long tempWinAllSize = windowAllSize;
-    windowAllSize = 0;
+    // NOTE: Decreasing windowAllSize will be proceeded in below (i < IRONA_SEND_CNT)
+    // NOTE: This could enlarge csis size, there will be no error, and will be successfully free-ed.
+    pacIter -= IRONA_SEND_CNT;
     stMutex.unlock();
-    pacIter = 0;
     // Create new thread to copy packets
     thread thProcSend([=]() {
       wcMutex.lock();
@@ -45,14 +45,17 @@ void csi::pushPacket(unsigned short len, uint8_t *bytes)
       uint8_t *csis = (uint8_t *)malloc(tempWinAllSize);
       stMutex.lock();
       unsigned long long cursor = 0;
-      for (unsigned short i = 0; i < IRONA_WINDOW; i++)
+      for (unsigned short i = 0; i < csi::ioPacketLength; i++)
       {
         uint16_t len = get<0>(pacStore.front());
         csis[cursor] = (len >> 8) & 0b0000000011111111;
         csis[cursor + 1] = len & 0b0000000011111111;
         memcpy(&(csis[cursor + 2]), get<1>(pacStore.front()), len);
-        free(get<1>(pacStore.front()));
-        pacStore.pop();
+        if (i < IRONA_SEND_CNT) {
+          free(get<1>(pacStore.front()));
+          pacStore.pop();
+          windowAllSize -= len;
+        }
         cursor += len + 2;
       }
       stMutex.unlock();

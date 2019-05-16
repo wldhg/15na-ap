@@ -7,6 +7,7 @@
 #include <thread>
 #include <tuple>
 #include <mutex>
+#include <cmath>
 
 #include "15na.hpp"
 
@@ -18,7 +19,9 @@
 #define CN_IDX_IWLAGN (CN_NETLINK_USERS + 0xf)
 #define CN_VAL_IWLAGN 0x1
 
-#define IRONA_WINDOW @IRONA_WINDOW@
+#define IRONA_SEND_CNT @IRONA_SEND_CNT@
+#define IRONA_SLIDE_CNT @IRONA_SLIDE_CNT@
+#define IRONA_WINDOW_CNT @IRONA_WINDOW_CNT@
 
 typedef std::tuple<unsigned short, uint8_t *> Packet;
 typedef std::queue<Packet> PacketQueue;
@@ -27,6 +30,9 @@ namespace csi
 {
 // Public Packet & Length Store
 extern PacketQueue pacStore;
+
+// Sending packet count
+extern unsigned short ioPacketLength;
 
 // Functions
 void openSocket();

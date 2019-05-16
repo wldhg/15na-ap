@@ -17,7 +17,7 @@ SET ( CMAKE_CXX_STANDARD 17 )
 SET ( CMAKE_CXX_STANDARD_REQUIRED ON )
 
 # Project Configuration
-PROJECT ( "15na AP" VERSION 1.1.2 )
+PROJECT ( "15na AP" VERSION 1.1.3 )
 SET ( CMAKE_BUILD_TYPE Release )
 SET ( CMAKE_VERBOSE_MAKEFILE false )
 SET ( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/bin )
@@ -43,7 +43,9 @@ EXECUTE_PROCESS ( COMMAND bash -c "grep '#define CN_NETLINK_USERS' ${KERNEL_HEAD
                   OUTPUT_VARIABLE CN_NETLINK_USERS )
 
 # Set project parameters
-SET ( IRONA_WINDOW 4700 )
+SET ( IRONA_SEND_CNT 4700 )
+SET ( IRONA_WINDOW_CNT 2820 )
+SET ( IRONA_SLIDE_CNT 470 )
 
 # Generate `.hpp`s from header template and update .gitignore
 SET ( CMAKE_HPL_IGNORES "# Source files configured by CMake" )
