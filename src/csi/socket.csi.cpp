@@ -69,8 +69,8 @@ void csi::openSocket()
       {
         // If BFEE_NOTIF packet
         uint8_t *procBuf = (uint8_t *)malloc((size_t)len);
-        memcpy(procBuf, &(cmsg->data[0]), len);
-        csi::pushPacket(htons(len), procBuf);
+        memcpy(procBuf, cmsg->data, len);
+        csi::pushPacket(len, procBuf);
         if (++pacCount % IRONA_WINDOW == 0)
         {
           pacCount = 0;

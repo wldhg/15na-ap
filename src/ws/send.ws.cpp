@@ -11,8 +11,8 @@ using std::string;
 using std::vector;
 using namespace ws;
 
-void ws::send(uint8_t *bytes) {
-  string msg = string((const char *)bytes, 215 * IRONA_WINDOW);
+void ws::send(unsigned long long len, uint8_t *bytes) {
+  string msg = string((const char *)bytes, len);
   soc->emit("neww", sio::binary_message::create(make_shared<string>(msg)));
   $success << $ns("ws") << "A packet sent: " << msg.length() << endl;
   free(bytes);

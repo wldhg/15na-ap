@@ -25,7 +25,7 @@ void bindListeners(sio::client *);
 void bindEvents(sio::socket::ptr);
 
 void init();
-void send(uint8_t *);
+void send(unsigned long long, uint8_t *);
 void con2Central();
 } // namespace ws
 
