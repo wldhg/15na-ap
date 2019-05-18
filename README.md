@@ -17,7 +17,7 @@ I recommend you to do below in Linux environment.
 1. `git clone --recurse-submodules https://github.com/widh/15na-ap.git`
 2. `cd 15na-ap`
 3. `cmake .`
-4. `sudo make`
+4. `make`
 
 Then, there must be a binary executable file named `15na-ap` in `bin` directory.
 
