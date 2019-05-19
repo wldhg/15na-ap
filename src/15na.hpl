@@ -9,7 +9,6 @@
 #define IRONA_COMMON
 
 #define $version "@PROJECT_VERSION@"
-#define $sioProtocol "@IRONA_PROTOCOL@"
 
 inline std::string c2str(char *chars)
 {

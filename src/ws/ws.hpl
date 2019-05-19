@@ -11,6 +11,8 @@
 #ifndef POSCA_WS
 #define POSCA_WS
 
+#define $sioProtocol "@IRONA_PROTOCOL@"
+
 namespace ws
 {
 extern std::mutex it;

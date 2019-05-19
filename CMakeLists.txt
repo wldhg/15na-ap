@@ -17,7 +17,7 @@ SET ( CMAKE_CXX_STANDARD 17 )
 SET ( CMAKE_CXX_STANDARD_REQUIRED ON )
 
 # Project Configuration
-PROJECT ( "15na AP" VERSION 1.1.4 )
+PROJECT ( "15na AP" VERSION 1.1.5 )
 SET ( CMAKE_BUILD_TYPE Release )
 SET ( CMAKE_VERBOSE_MAKEFILE false )
 SET ( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/bin )
@@ -46,7 +46,7 @@ EXECUTE_PROCESS ( COMMAND bash -c "grep '#define CN_NETLINK_USERS' ${KERNEL_HEAD
 SET ( IRONA_SEND_CNT 4700 )
 SET ( IRONA_WINDOW_CNT 2820 )
 SET ( IRONA_SLIDE_CNT 470 )
-SET ( IRONA_TLS ON )
+SET ( IRONA_TLS OFF )
 
 # Automatic variable conversion
 IF ( IRONA_TLS )
@@ -57,7 +57,7 @@ ENDIF ()
 
 # Generate `.hpp`s from header template and update .gitignore
 SET ( CMAKE_HPL_IGNORES "# Source files configured by CMake" )
-SET ( IRONA_HEMPLATES 15na.hpl csi/csi.hpl )
+SET ( IRONA_HEMPLATES 15na.hpl csi/csi.hpl ws/ws.hpl )
 FOREACH ( IRONA_HEMPLATE ${IRONA_HEMPLATES} )
   STRING ( REPLACE .hpl .hpp IRONA_HPP ${IRONA_HEMPLATE} )
   STRING ( CONCAT CMAKE_HPL_IGNORES ${CMAKE_HPL_IGNORES} "\nsrc/${IRONA_HPP}" )

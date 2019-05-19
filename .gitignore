@@ -60,3 +60,4 @@ tmp/
 # Source files configured by CMake
 src/15na.hpp
 src/csi/csi.hpp
+src/ws/ws.hpp
