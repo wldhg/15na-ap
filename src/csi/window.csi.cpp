@@ -54,7 +54,7 @@ void csi::pushPacket(unsigned short len, uint8_t *bytes)
         if (i < IRONA_SEND_CNT) {
           free(get<1>(pacStore.front()));
           pacStore.pop();
-          windowAllSize -= len;
+          windowAllSize -= len + 2;
         }
         cursor += len + 2;
       }
