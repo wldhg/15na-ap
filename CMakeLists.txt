@@ -46,6 +46,14 @@ EXECUTE_PROCESS ( COMMAND bash -c "grep '#define CN_NETLINK_USERS' ${KERNEL_HEAD
 SET ( IRONA_SEND_CNT 4700 )
 SET ( IRONA_WINDOW_CNT 2820 )
 SET ( IRONA_SLIDE_CNT 470 )
+SET ( IRONA_TLS ON )
+
+# Automatic variable conversion
+IF ( IRONA_TLS )
+  SET ( IRONA_PROTOCOL "https" )
+ELSE ()
+  SET ( IRONA_PROTOCOL "http" )
+ENDIF ()
 
 # Generate `.hpp`s from header template and update .gitignore
 SET ( CMAKE_HPL_IGNORES "# Source files configured by CMake" )
@@ -63,7 +71,11 @@ ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/lib/socket.io )
 INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/socket.io/src )
 
 # Link libraries
-LINK_LIBRARIES ( sioclient_tls )
+IF ( IRONA_TLS )
+  LINK_LIBRARIES ( sioclient_tls )
+ELSE ()
+  LINK_LIBRARIES ( sioclient )
+ENDIF ()
 LINK_LIBRARIES ( pthread )
 
 # Use subdirectories
@@ -75,4 +87,8 @@ ENDFOREACH ( IRONA_DIR )
 
 # Executable
 ADD_EXECUTABLE ( 15na-ap ${IRONA_SOURCES} )
-ADD_DEPENDENCIES ( 15na-ap sioclient_tls )
+IF ( IRONA_TLS )
+  ADD_DEPENDENCIES ( 15na-ap sioclient_tls )
+ELSE ()
+  ADD_DEPENDENCIES ( 15na-ap sioclient )
+ENDIF ()

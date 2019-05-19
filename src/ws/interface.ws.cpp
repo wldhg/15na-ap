@@ -23,7 +23,7 @@ string ws::url;
 void ws::init()
 {
   bindListeners(&cli);
-  url = protocol + "://" + site + ":" + to_string(port) + "/";
+  url = $sioProtocol + site + ":" + to_string(port) + "/";
   $info << $ns("ws") << "Trying to connect to " << url << " ..." << endl;
   con2Central();
 }

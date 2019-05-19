@@ -21,7 +21,6 @@ bool wannaDebugWindow = false;
 // Websocket server configuration
 unsigned short port = 443;
 string site = "localhost";
-string protocol = "https";
 
 void setPort(unsigned short newPort)
 {
@@ -32,11 +31,6 @@ void setSite(string newSite)
 {
   site = string(newSite);
   $info << "Set ws site to: " << site << endl;
-}
-void setProtocol(string newProtocol)
-{
-  protocol = string(newProtocol);
-  $info << "Set ws protocol to: " << protocol << endl;
 }
 
 // Keras configuration

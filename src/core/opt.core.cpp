@@ -17,8 +17,6 @@ void showHelpMessage()
   cout << "\t                           (Default: 443)" << endl;
   cout << "\t-s=<ADDR>, --site=<ADDR>   Set specific site name which is used in" << endl;
   cout << "\t                           websocket. (Default: localhost)" << endl;
-  cout << "\t-http, --use-http          Set websocket to use http protocol instead of" << endl;
-  cout << "\t                           https." << endl;
   cout << "\t-h, --help                 Show this help message." << endl;
   cout << "\t-v, --version              Show 15na AP program version." << endl;
   cout << endl;
@@ -44,10 +42,6 @@ void core::procFlagOption(string name)
   {
     showVersionMessage();
     exit(0);
-  }
-  else if (name.compare("use-http") == 0)
-  {
-    setProtocol(string("http"));
   }
   else if (name.compare("debug-packet") == 0)
   {
@@ -75,10 +69,6 @@ void core::procShortFlagOption(string name)
   {
     showVersionMessage();
     exit(0);
-  }
-  else if (name.compare("http") == 0)
-  {
-    setProtocol(string("http"));
   }
   else
   {

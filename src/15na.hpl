@@ -8,7 +8,8 @@
 #ifndef IRONA_COMMON
 #define IRONA_COMMON
 
-#define $version "@CMAKE_PROJECT_VERSION@"
+#define $version "@PROJECT_VERSION@"
+#define $sioProtocol "@IRONA_PROTOCOL@"
 
 inline std::string c2str(char *chars)
 {
@@ -50,10 +51,8 @@ extern bool wannaDebugWindow;
 
 void setPort(unsigned short);
 void setSite(std::string);
-void setProtocol(std::string);
 extern unsigned short port;
 extern std::string site;
-extern std::string protocol;
 
 extern std::string model;
 
