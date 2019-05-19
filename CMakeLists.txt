@@ -50,9 +50,9 @@ SET ( IRONA_TLS OFF )
 
 # Automatic variable conversion
 IF ( IRONA_TLS )
-  SET ( IRONA_PROTOCOL "https" )
+  SET ( IRONA_PROTOCOL "https://" )
 ELSE ()
-  SET ( IRONA_PROTOCOL "http" )
+  SET ( IRONA_PROTOCOL "http://" )
 ENDIF ()
 
 # Generate `.hpp`s from header template and update .gitignore
