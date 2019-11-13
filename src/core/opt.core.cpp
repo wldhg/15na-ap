@@ -13,18 +13,16 @@ void showHelpMessage()
   cout << endl;
   cout << bold << "15na-ap" << def << " [OPTION...]" << endl;
   cout << endl;
-  cout << "[OPTION]" << endl;
-  cout << "\t-p=<PORT>, --port=<PORT>   Set specific port which is used in socket.io" << endl;
-  cout << "\t                           communication. (Default: " << $sioPortString << ")" << endl;
-  cout << "\t-n=<ADDR>, --name=<ADDR>   Set specific" << $sioProtocolName << " server name which is used" << endl;
-  cout << "\t                           in socket.io. (Default: localhost)" << endl;
-  cout << "\t-ns=<NS>, --namespace=<NS> Set socket.io namespace. (Default: 15na-ws/in)" << endl;
-  cout << "\t-h, --help                 Show this help message." << endl;
-  cout << "\t-v, --version              Show 15na AP program version." << endl;
+  cout << "[OPTIONS]" << endl;
+  cout << "  -p=<PORT>, --port=<PORT>      Set specific port which is used in socket.io communication. (Default: " << $sioPortString << ")" << endl;
+  cout << "  -n=<ADDR>, --name=<ADDR>      Set specific" << $sioProtocolName << " server name which is used in socket.io. (Default: localhost)" << endl;
+  cout << "  -ns=<NS>, --namespace=<NS>    Set socket.io namespace. (Default: 15na-ws/in)" << endl;
+  cout << "  -h, --help                    Show this help message." << endl;
+  cout << "  -v, --version                 Show 15na AP program version." << endl;
   cout << endl;
-  cout << "[DEBUG OPTION]" << endl;
-  cout << "\t--debug-packet             Show detailed information for each packets." << endl;
-  cout << "\t--debug-window             Show detailed process for each windows." << endl;
+  cout << "[DEBUG OPTIONS]" << endl;
+  cout << "  --debug-packet                Show detailed information for each packets." << endl;
+  cout << "  --debug-window                Show detailed process for each windows." << endl;
   cout << endl;
 }
 
