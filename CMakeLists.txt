@@ -54,10 +54,10 @@ SET ( IRONA_TLS ON )
 
 # Automatic variable conversion
 IF ( IRONA_TLS )
-  SET ( IRONA_PROTOCOL "https://" )
+  SET ( IRONA_PROTOCOL "https" )
   SET ( IRONA_PORT "443" )
 ELSE ()
-  SET ( IRONA_PROTOCOL "http://" )
+  SET ( IRONA_PROTOCOL "http" )
   SET ( IRONA_PORT "80" )
 ENDIF ()
 

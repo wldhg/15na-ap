@@ -13,7 +13,7 @@
 #define IRONA_WS
 
 #define $sioProtocolName "@IRONA_PROTOCOL@"
-#define $sioProtocol "@IRONA_PROTOCOL@:\/\/"
+#define $sioProtocol "@IRONA_PROTOCOL@://"
 #define $sioPortString "@IRONA_PORT@"
 #define $sioPort @IRONA_PORT@
 
