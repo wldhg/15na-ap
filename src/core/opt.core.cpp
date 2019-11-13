@@ -11,7 +11,10 @@ using std::string;
 void showHelpMessage()
 {
   cout << endl;
-  cout << bold << "15na-ap" << def << " [OPTION...]" << endl;
+  cout << bold << "15na-ap" << def << " AP_ID [OPTION...]" << endl;
+  cout << endl;
+  cout << "[AP ID]" <<endl;
+  cout << "  Distinguishable ID string for specify this access point." << endl;
   cout << endl;
   cout << "[OPTIONS]" << endl;
   cout << "  -p=<PORT>, --port=<PORT>      Set specific port which is used in socket.io communication. (Default: " << $sioPortString << ")" << endl;
@@ -113,4 +116,9 @@ void core::procShortDataOption(string name, string value)
   {
     terminate("Unknown short data name: " + name);
   }
+}
+
+void core::procAPName(string name)
+{
+  setAPName(name);
 }

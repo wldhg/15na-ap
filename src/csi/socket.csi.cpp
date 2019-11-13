@@ -18,7 +18,7 @@ using std::hex;
 using std::thread;
 
 // Global Variables
-size_t bufSize = 11457;
+size_t bufSize = 11460;
 int soc = -1;
 unsigned short pacCount = 0;
 unsigned short csi::ioPacketLength = IRONA_SEND_CNT + IRONA_WINDOW_CNT - IRONA_SLIDE_CNT;

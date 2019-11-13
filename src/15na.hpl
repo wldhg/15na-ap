@@ -46,17 +46,16 @@ void errorP(char *);
 void errorP(char const *);
 void errorP(std::string);
 
-extern bool wannaSkipKeras;
 extern bool wannaDebugPacket;
 extern bool wannaDebugWindow;
 
 void setPort(unsigned short);
 void setSite(std::string);
 void setNamespace(std::string);
+void setAPName(std::string);
 extern unsigned short port;
 extern std::string site;
 extern std::string ns;
-
-extern std::string model;
+extern std::string apName;
 
 #endif

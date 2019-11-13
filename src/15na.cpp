@@ -22,6 +22,7 @@ bool wannaDebugWindow = false;
 unsigned short port = $port;
 string site = "localhost";
 string ns = "15na-ws/in";
+string apName = "";
 
 void setPort(unsigned short newPort)
 {
@@ -37,6 +38,14 @@ void setNamespace(string newNamespace)
 {
   ns = string(newNamespace);
   $info << "Set ws namespace to: " << ns << endl;
+}
+void setAPName(string concatName)
+{
+  if (apName.length() > 0) {
+    apName += " " + concatName;
+  } else {
+    apName += concatName;
+  }
 }
 
 // At exit or on error

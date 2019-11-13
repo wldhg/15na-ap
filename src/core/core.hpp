@@ -16,6 +16,7 @@ void procFlagOption(std::string);
 void procShortFlagOption(std::string);
 void procDataOption(std::string, std::string);
 void procShortDataOption(std::string, std::string);
+void procAPName(std::string);
 
 } // namespace core
 

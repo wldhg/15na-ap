@@ -14,12 +14,12 @@ int main(int argc, char **argv)
 {
   std::cout.setf(std::ios::unitbuf);
 
-  $info << "Initializing " << bold << "IRONA" << def << " AP program..." << endl;
+  $info << "Initializing " << bold << "IRONA AP Program" << def << endl;
 
   atexit(_terminate);
 
   // Analyzing arguments
-  bool isModelSelected = false;
+  bool isAPNamed = false;
   for (int i = 1; i < argc; i++)
   {
     string arg = c2str(argv[i]);
@@ -45,11 +45,16 @@ int main(int argc, char **argv)
     }
     else
     {
-      $warn << "Ignored argument: " << arg << endl;
+      isAPNamed = true;
+      procAPName(arg);
     }
   }
 
-  $success << "Checked arguments" << endl;
+  if (isAPNamed) {
+    $success << "Checked arguments" << endl;
+  } else {
+    terminate("No AP ID provided");
+  }
 
   // Start websocket server
   ws::init();

@@ -45,5 +45,24 @@ void ws::bindListeners(sio::client *cli)
 void ws::bindEvents(sio::socket::ptr soc)
 {
   // Bind "on" events
-  // NOTE: This part is not used for now, but used later for authentication
+  soc->on("regResult", [&](sio::event &data) {
+    sio::message msg = data.get_message();
+    if (sio::message::flag::flag_string == msg.get_flag()) {
+      std::string str = msg.get_string();
+      if (str == "true") {
+        $success << "This AP is successfully registered to the central server" << endl;
+      } else {
+        $error << str << endl;
+      }
+    } else {
+      $error << "Register result reception error occured" << endl;
+    }
+  });
+}
+
+void ws::registerAP(sio::socket::ptr soc)
+{
+  // Emit registration
+  // TODO: Authentication based on keypair
+  soc->emit("reg", apName);
 }
