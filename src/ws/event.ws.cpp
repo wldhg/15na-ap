@@ -46,7 +46,7 @@ void ws::bindEvents(sio::socket::ptr soc)
 {
   // Bind "on" events
   soc->on("regResult", [&](sio::event &data) {
-    sio::message msg = data.get_message();
+    sio::message msg = *data.get_message();
     if (sio::message::flag::flag_string == msg.get_flag()) {
       std::string str = msg.get_string();
       if (str == "true") {
