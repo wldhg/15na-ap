@@ -2,7 +2,7 @@
 
 <i>IRONA CSI Uploader for Access Points</i>
 
-This is a program sends `BFEE_NOTIF` packets to `15na-central`.\
+This is a program sends `BFEE_NOTIF` packets to [`15na-server`](https://github.com/widh/15na-server).\
 This does not include a function of injecting `BFEE_NOTIF` packets.\
 This works on Linux environment.
 
