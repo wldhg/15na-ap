@@ -23,9 +23,10 @@ Then, there may be a executable file named `15na-ap` in `bin` directory.
 
 ## Notice
 
-For now, configurations in `CMakeLists.txt` is set for `BPI-R2 (MT7623N, Cortex A7)`.\
-You may change this to fit to your device.
+IRONA AP is tested and optimized on `BPI-R2 (MT7623N, Cortex A7)`.
 
 ## License
 
 This program is under **MPL-2.0** license. Read [LICENSE.md](LICENSE.md) for more informations.
+
+`socket.io-client-cpp` is licensed under [MIT License](https://github.com/socketio/socket.io-client-cpp/blob/master/LICENSE).

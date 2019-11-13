@@ -1,4 +1,5 @@
-// Widh Jio
+/* IRONA AP Program is subject to the terms of the Mozilla Public License 2.0.
+ * You can obtain a copy of MPL at LICENSE.md of root directory. */
 // opt.core.cpp
 
 #include "core.hpp"
@@ -13,10 +14,11 @@ void showHelpMessage()
   cout << bold << "15na-ap" << def << " [OPTION...]" << endl;
   cout << endl;
   cout << "[OPTION]" << endl;
-  cout << "\t-p=<PORT>, --port=<PORT>   Set specific port which is used in websocket." << endl;
-  cout << "\t                           (Default: " << $sioPortString << ")" << endl;
+  cout << "\t-p=<PORT>, --port=<PORT>   Set specific port which is used in socket.io" << endl;
+  cout << "\t                           communication. (Default: " << $sioPortString << ")" << endl;
   cout << "\t-n=<ADDR>, --name=<ADDR>   Set specific" << $sioProtocolName << " server name which is used" << endl;
-  cout << "\t                           in websocket. (Default: localhost)" << endl;
+  cout << "\t                           in socket.io. (Default: localhost)" << endl;
+  cout << "\t-ns=<NS>, --namespace=<NS> Set socket.io namespace. (Default: 15na-ws/in)"
   cout << "\t-h, --help                 Show this help message." << endl;
   cout << "\t-v, --version              Show 15na AP program version." << endl;
   cout << endl;
@@ -86,6 +88,10 @@ void core::procDataOption(string name, string value)
   {
     setSite(value);
   }
+  else if (name.compare("namespace") == 0)
+  {
+    setNamespace(value);
+  }
   else
   {
     terminate("Unknown data name: " + name);
@@ -100,6 +106,10 @@ void core::procShortDataOption(string name, string value)
   else if (name.compare("n") == 0)
   {
     setSite(value);
+  }
+  else if (name.compare("ns") == 0)
+  {
+    setNamespace(value);
   }
   else
   {

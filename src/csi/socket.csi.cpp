@@ -1,6 +1,7 @@
-// Widh Jio
-// socket.csi.cpp
+/* IRONA AP Program is subject to the terms of the Mozilla Public License 2.0.
+ * You can obtain a copy of MPL at LICENSE.md of root directory. */
 // Motivated by `github:dhalperi/linux-80211n-csitool-supplementary`
+// socket.csi.cpp
 
 #include <unistd.h>
 #include <arpa/inet.h>

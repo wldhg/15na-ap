@@ -1,5 +1,6 @@
-// Widh Jio
-// poscas.cpp
+/* IRONA AP Program is subject to the terms of the Mozilla Public License 2.0.
+ * You can obtain a copy of MPL at LICENSE.md of root directory. */
+// 15na.cpp
 
 #include <cerrno>
 
@@ -14,13 +15,13 @@ using std::size_t;
 using std::string;
 
 // 15na program flags
-bool wannaSkipKeras = false;
 bool wannaDebugPacket = false;
 bool wannaDebugWindow = false;
 
 // Websocket server configuration
 unsigned short port = $port;
 string site = "localhost";
+string ns = "15na-ws/in";
 
 void setPort(unsigned short newPort)
 {
@@ -32,9 +33,11 @@ void setSite(string newSite)
   site = string(newSite);
   $info << "Set ws site name to: " << site << endl;
 }
-
-// Keras configuration
-string model = "model";
+void setNamespace(string newNamespace)
+{
+  ns = string(newNamespace);
+  $info << "Set ws namespace to: " << ns << endl;
+}
 
 // At exit or on error
 bool isErrorExit = false;

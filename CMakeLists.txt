@@ -1,3 +1,6 @@
+# IRONA AP Program is subject to the terms of the Mozilla Public License 2.0.
+# You can obtain a copy of MPL at LICENSE.md of root directory.
+
 # CMake Configuration
 CMAKE_MINIMUM_REQUIRED ( VERSION 3.8 )
 CMAKE_POLICY ( SET CMP0048 NEW )

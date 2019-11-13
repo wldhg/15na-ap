@@ -1,4 +1,5 @@
-// Widh Jio
+/* IRONA AP Program is subject to the terms of the Mozilla Public License 2.0.
+ * You can obtain a copy of MPL at LICENSE.md of root directory. */
 // interface.ws.cpp
 
 #include "ws.hpp"
@@ -37,8 +38,8 @@ void ws::con2Central()
     cond.wait(lock);
   }
   lock.unlock();
-  soc = cli.socket(string("/15na-ws/in"));
-  $info << $ns("ws") << "Namespace changed to /15na-ws/in" << endl;
+  soc = cli.socket(string("/") + ns);
+  $info << $ns("ws") << "Namespace changed to /" << ns << endl;
   ws::bindEvents(soc);
   $info << $ns("ws") << "Socket session successfully opened" << endl;
 }
