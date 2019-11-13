@@ -24,7 +24,9 @@ Then, there may be a executable file named `15na-ap` in `bin` directory.
 
 ## Notice
 
-IRONA AP is tested and optimized on `BPI-R2 (MT7623N, Cortex A7)`.
+This application is based on [dhalperi's CSI tool](https://dhalperi.github.io/linux-80211n-csitool/).
+So to use this app, Dan Halperin's CSI tool driver & firmware must be installed and wlan driver must be loaded with flag `connector_log=0x1`.\
+My own test device is BPI-R2. Customized kernel & tools for BPI-R2 is available on [BPI-R2-CSITool-Kernel](https://github.com/widh/BPI-R2-CSITool-Kernel) and [BPI-R2-CSITool-DataCollector](https://github.com/widh/BPI-R2-CSITool-DataCollector).
 
 ## License
 
