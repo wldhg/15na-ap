@@ -3,14 +3,15 @@
 <i>IRONA CSI Uploader for Access Points</i>
 
 This is a program sends `BFEE_NOTIF` packets to `15na-central`.\
+This does not include a function of injecting `BFEE_NOTIF` packets.\
 This works on Linux environment.
 
 ## Requirements
 
 -   **CMake 3.8+**
 -   **GCC/G++ 7+**
--   **Boost C++**: `boost`, `boost_sytem`, `boost_date_time`, `boost_random`
--   **OpenSSL Library**
+-   **Boost C++**: `boost`, `boost_sytem`, `boost_date_time`, `boost_random` (for `socket.io-client-cpp`)
+-   **OpenSSL Library** (for `socket.io-client-cpp`)
 
 ## How To Build
 
