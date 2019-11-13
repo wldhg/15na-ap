@@ -11,7 +11,10 @@
 #ifndef POSCA_WS
 #define POSCA_WS
 
-#define $sioProtocol "@IRONA_PROTOCOL@"
+#define $sioProtocolName "@IRONA_PROTOCOL@"
+#define $sioProtocol "@IRONA_PROTOCOL@:\/\/"
+#define $sioPortString "@IRONA_PORT@"
+#define $sioPort @IRONA_PORT@
 
 namespace ws
 {

@@ -14,9 +14,9 @@ void showHelpMessage()
   cout << endl;
   cout << "[OPTION]" << endl;
   cout << "\t-p=<PORT>, --port=<PORT>   Set specific port which is used in websocket." << endl;
-  cout << "\t                           (Default: 443)" << endl;
-  cout << "\t-s=<ADDR>, --site=<ADDR>   Set specific site name which is used in" << endl;
-  cout << "\t                           websocket. (Default: localhost)" << endl;
+  cout << "\t                           (Default: " << $sioPortString << ")" << endl;
+  cout << "\t-n=<ADDR>, --name=<ADDR>   Set specific" << $sioProtocolName << " server name which is used" << endl;
+  cout << "\t                           in websocket. (Default: localhost)" << endl;
   cout << "\t-h, --help                 Show this help message." << endl;
   cout << "\t-v, --version              Show 15na AP program version." << endl;
   cout << endl;
@@ -28,7 +28,7 @@ void showHelpMessage()
 
 void showVersionMessage()
 {
-  $info << bold << "15na AP Program " << def << gray << "Version " << $version << def << endl;
+  $info << bold << "IRONA AP Program " << def << gray << "Version " << $version << def << endl;
 }
 
 void core::procFlagOption(string name)
@@ -82,7 +82,7 @@ void core::procDataOption(string name, string value)
   {
     setPort((unsigned short)atoi(value.c_str()));
   }
-  else if (name.compare("site") == 0)
+  else if (name.compare("name") == 0)
   {
     setSite(value);
   }
@@ -97,7 +97,7 @@ void core::procShortDataOption(string name, string value)
   {
     setPort((unsigned short)atoi(value.c_str()));
   }
-  else if (name.compare("s") == 0)
+  else if (name.compare("n") == 0)
   {
     setSite(value);
   }

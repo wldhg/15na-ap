@@ -14,6 +14,6 @@ using namespace ws;
 void ws::send(unsigned long long len, uint8_t *bytes) {
   string msg = string((const char *)bytes, len);
   soc->emit("neww", sio::binary_message::create(make_shared<string>(msg)));
-  $success << $ns("ws") << "A packet sent: " << msg.length() << endl;
+  $success << $ns("ws") << "An window sent: " << msg.length() << endl;
   free(bytes);
 }

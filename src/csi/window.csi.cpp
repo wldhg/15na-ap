@@ -28,8 +28,8 @@ void csi::pushPacket(unsigned short len, uint8_t *bytes)
   {
     // Reset counter
     unsigned long long tempWinAllSize = windowAllSize;
-    // NOTE: Decreasing windowAllSize will be proceeded in below (i < IRONA_SEND_CNT)
-    // NOTE: This could enlarge csis size, there will be no error, and will be successfully free-ed.
+    // NOTE: Decreasing windowAllSize will be processed at below (i < IRONA_SEND_CNT)
+    // NOTE: This could enlarge the size of csis, there will be no error, and will be successfully deleted.
     pacIter -= IRONA_SEND_CNT;
     stMutex.unlock();
     // Create new thread to copy packets

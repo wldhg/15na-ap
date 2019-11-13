@@ -39,19 +39,19 @@ void csi::openSocket()
     soc = socket(PF_NETLINK, SOCK_DGRAM, NETLINK_CONNECTOR);
     if (soc == -1)
     {
-      terminateP("Socket Open Error");
+      terminateP("Socket socket() Error");
     }
 
     // Bind addresses to the socket
     if (bind(soc, (struct sockaddr *)procAddr, sizeof(struct sockaddr_nl)) == -1)
     {
-      terminateP("Socket Bind Error");
+      terminateP("Socket bind() Error");
     }
 
     // Subscribe to netlink group
     if (setsockopt(soc, 270, NETLINK_ADD_MEMBERSHIP, &procAddr->nl_groups, sizeof(procAddr->nl_groups)))
     {
-      terminateP("Socket Option Error");
+      terminateP("Socket setsockopt() Error");
     }
 
     $info << $ns("csi") << "Connector successfully binded" << endl;
@@ -62,7 +62,8 @@ void csi::openSocket()
     {
       if (recv(soc, buf, bufSize, 0) == -1)
       {
-        errorP("Socket Receive Error");
+        errorP("Socket recv() Error");
+        continue;
       }
       cmsg = (struct cn_msg *)NLMSG_DATA(buf);
       unsigned short len = cmsg->len;
@@ -75,7 +76,7 @@ void csi::openSocket()
         if (++pacCount % IRONA_SEND_CNT == 0)
         {
           pacCount = 0;
-          $debug << $ns("csi") << "A Window Reached" << endl;
+          $debug << $ns("csi") << "Reached to a new window size (not actual slide)" << endl;
         }
       }
       if (wannaDebugPacket == true)

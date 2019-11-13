@@ -15,10 +15,10 @@ using namespace ws;
 
 mutex ws::it;
 condition_variable_any ws::cond;
-bool ws::connOK = false;
 sio::client ws::cli;
 socket::ptr ws::soc;
 string ws::url;
+bool ws::connOK = false;
 
 void ws::init()
 {

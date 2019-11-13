@@ -12,12 +12,13 @@ IF ( NOT ${CMAKE_HOST_SYSTEM_VERSION} MATCHES "BPI-R2" )
   SET ( CMAKE_CXX_COMPILER /usr/bin/arm-linux-gnueabihf-g++ )
   ADD_COMPILE_OPTIONS ( -march=armv7-a+vfpv4 -mtune=cortex-a7 )
 ENDIF ()
+ADD_COMPILE_OPTIONS ( -O3 )
 SET ( CMAKE_C_FLAGS_DEBUG "-g" )
 SET ( CMAKE_CXX_STANDARD 17 )
 SET ( CMAKE_CXX_STANDARD_REQUIRED ON )
 
 # Project Configuration
-PROJECT ( "15na AP" VERSION 1.1.5 )
+PROJECT ( "IRONA AP" VERSION 1.1.5 )
 SET ( CMAKE_BUILD_TYPE Release )
 SET ( CMAKE_VERBOSE_MAKEFILE false )
 SET ( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/bin )
@@ -51,8 +52,10 @@ SET ( IRONA_TLS ON )
 # Automatic variable conversion
 IF ( IRONA_TLS )
   SET ( IRONA_PROTOCOL "https://" )
+  SET ( IRONA_PORT "443" )
 ELSE ()
   SET ( IRONA_PROTOCOL "http://" )
+  SET ( IRONA_PORT "80" )
 ENDIF ()
 
 # Generate `.hpp`s from header template and update .gitignore

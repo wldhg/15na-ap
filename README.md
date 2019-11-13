@@ -1,9 +1,9 @@
 # 15na AP App
 
-<i>15na Access Point Program</i>
+<i>IRONA CSI Uploader for Access Points</i>
 
-This is a program sends `BFEE_NOTIF` packets to `15na-server`.\
-I recommend you to do below in Linux environment.
+This is a program sends `BFEE_NOTIF` packets to `15na-central`.\
+This works on Linux environment.
 
 ## Requirements
 
@@ -19,7 +19,7 @@ I recommend you to do below in Linux environment.
 3. `cmake .`
 4. `make`
 
-Then, there must be a binary executable file named `15na-ap` in `bin` directory.
+Then, there may be a executable file named `15na-ap` in `bin` directory.
 
 ## Notice
 

@@ -19,7 +19,7 @@ bool wannaDebugPacket = false;
 bool wannaDebugWindow = false;
 
 // Websocket server configuration
-unsigned short port = 443;
+unsigned short port = $port;
 string site = "localhost";
 
 void setPort(unsigned short newPort)
@@ -30,7 +30,7 @@ void setPort(unsigned short newPort)
 void setSite(string newSite)
 {
   site = string(newSite);
-  $info << "Set ws site to: " << site << endl;
+  $info << "Set ws site name to: " << site << endl;
 }
 
 // Keras configuration
@@ -44,9 +44,9 @@ void _terminate()
   if (!isErrorExit && errno != 0)
     terminateP("On-exit error detected");
   else if (!isErrorExit)
-    $info << "15na server is ended without any error! Shutting down..." << endl;
+    $info << "The program is ended without any error! Shutting down..." << endl;
   else
-    $warn << "Shutting down the program due to the error" << endl;
+    $warn << "Shutting down the program due to an error" << endl;
 }
 void terminate(string err, bool callPerror, bool dontExit)
 {
