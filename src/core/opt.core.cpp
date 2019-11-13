@@ -18,7 +18,7 @@ void showHelpMessage()
   cout << "\t                           communication. (Default: " << $sioPortString << ")" << endl;
   cout << "\t-n=<ADDR>, --name=<ADDR>   Set specific" << $sioProtocolName << " server name which is used" << endl;
   cout << "\t                           in socket.io. (Default: localhost)" << endl;
-  cout << "\t-ns=<NS>, --namespace=<NS> Set socket.io namespace. (Default: 15na-ws/in)"
+  cout << "\t-ns=<NS>, --namespace=<NS> Set socket.io namespace. (Default: 15na-ws/in)" << endl;
   cout << "\t-h, --help                 Show this help message." << endl;
   cout << "\t-v, --version              Show 15na AP program version." << endl;
   cout << endl;
