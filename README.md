@@ -32,4 +32,6 @@ My own test device is BPI-R2. Customized kernel & tools for BPI-R2 is available 
 
 This program is under **MPL-2.0** license. Read [LICENSE.md](LICENSE.md) for more informations.
 
-`socket.io-client-cpp` is licensed under [MIT License](https://github.com/socketio/socket.io-client-cpp/blob/master/LICENSE).
+`socket.io-client-cpp` is licensed under [MIT license](https://github.com/socketio/socket.io-client-cpp/blob/master/LICENSE).
+
+`rapidjson` is licensed under [their own license](https://github.com/Tencent/rapidjson/blob/master/license.txt).
