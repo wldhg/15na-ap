@@ -50,10 +50,6 @@ bin/
 # CMake External Projects
 tmp/
 
-# Models
-*.json
-*.h5
-
 # VS Code
 .vscode
 

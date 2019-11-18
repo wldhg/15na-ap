@@ -4,7 +4,7 @@
 
 #include <linux/connector.h>
 #include <cstdint>
-#include <queue>
+#include <list>
 #include <thread>
 #include <tuple>
 #include <mutex>
@@ -20,20 +20,22 @@
 #define CN_IDX_IWLAGN (CN_NETLINK_USERS + 0xf)
 #define CN_VAL_IWLAGN 0x1
 
-#define IRONA_SEND_CNT @IRONA_SEND_CNT@
-#define IRONA_SLIDE_CNT @IRONA_SLIDE_CNT@
-#define IRONA_WINDOW_CNT @IRONA_WINDOW_CNT@
+#define IRONA_PPS @IRONA_ACTUAL_PPS_APPROX@
+#define IRONA_SEND @IRONA_SEND_SECONDS@
+#define IRONA_SLIDE @IRONA_SLIDE_SECONDS@
+#define IRONA_WINDOW @IRONA_WINDOW_SECONDS@
 
 typedef std::tuple<unsigned short, uint8_t *> Packet;
-typedef std::queue<Packet> PacketQueue;
+typedef std::list<Packet> PacketList;
 
 namespace csi
 {
 // Public Packet & Length Store
-extern PacketQueue pacStore;
+extern PacketList pacStore;
 
 // Sending packet count
-extern unsigned short ioPacketLength;
+extern unsigned short ioWindowPkts;
+extern unsigned short ioSlidePkts;
 
 // Functions
 void openSocket();

@@ -20,12 +20,13 @@ using std::thread;
 // Global Variables
 size_t bufSize = 11460;
 int soc = -1;
-unsigned short pacCount = 0;
-unsigned short csi::ioPacketLength = IRONA_SEND_CNT + IRONA_WINDOW_CNT - IRONA_SLIDE_CNT;
+unsigned short csi::ioWindowPkts = (unsigned short) (IRONA_SEND * IRONA_PPS + 0.5);
+unsigned short csi::ioSlidePkts = (unsigned short) ((IRONA_SEND - IRONA_WINDOW + IRONA_SLIDE) * IRONA_PPS + 0.5);
 
 void csi::openSocket()
 {
-  $debug << $ns("csi") << "Sending window size will be " << csi::ioPacketLength << endl;
+  $debug << $ns("csi") << "In one window, " << csi::ioWindowPkts << " packets will be included." << endl;
+  $debug << $ns("csi") << "Each windows has " << csi::ioSlidePkts << " of packet interval." << endl;
   $info << $ns("csi") << "Initializing connector socket..." << endl;
 
   // Create new thread to capture packets
@@ -74,11 +75,6 @@ void csi::openSocket()
         uint8_t *procBuf = (uint8_t *)malloc((size_t)len);
         memcpy(procBuf, cmsg->data, len);
         csi::pushPacket(len, procBuf);
-        if (++pacCount % IRONA_SEND_CNT == 0)
-        {
-          pacCount = 0;
-          $debug << $ns("csi") << "Reached to a new window size (not actual slide)" << endl;
-        }
       }
       if (wannaDebugPacket == true)
       {
