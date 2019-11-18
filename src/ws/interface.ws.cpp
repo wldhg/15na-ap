@@ -40,7 +40,7 @@ void ws::con2Central()
   lock.unlock();
   soc = cli.socket(string("/") + ns);
   $info << $ns("ws") << "Namespace changed to /" << ns << endl;
-  ws::bindEvents(soc);
-  ws::registerAP(soc);
+  ws::bindEvents();
+  ws::registerAP();
   $info << $ns("ws") << "Socket session successfully opened" << endl;
 }

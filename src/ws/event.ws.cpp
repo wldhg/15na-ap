@@ -41,12 +41,13 @@ void ws::bindListeners(sio::client *cli)
   cli->set_open_listener(static_cast<void (*)()>(&onConnected));
   cli->set_close_listener(static_cast<void (*)(const sio::client::close_reason &)>(&onClose));
   cli->set_fail_listener(static_cast<void (*)()>(&onFail));
+  cli->set_reconnect_listener(static_cast<void(*)(unsigned, unsigned)>(&ws::registerAP));
 }
 
-void ws::bindEvents(sio::socket::ptr soc)
+void ws::bindEvents()
 {
   // Bind "on" events
-  soc->on("regResult", [&](sio::event &data) {
+  ws::soc->on("regResult", [&](sio::event &data) {
     sio::message::ptr msg = data.get_message();
     if (sio::message::flag::flag_string == msg->get_flag()) {
       auto smsg = dynamic_cast<sio::string_message*>(msg.get());
@@ -66,9 +67,9 @@ void ws::bindEvents(sio::socket::ptr soc)
   });
 }
 
-void ws::registerAP(sio::socket::ptr soc)
+void ws::registerAP(unsigned ph1, unsigned ph2)
 {
   // Emit registration
   // TODO: Authentication based on keypair
-  soc->emit("reg", "\"" + apName + "\"");
+  ws::soc->emit("reg", "\"" + apName + "\"");
 }

@@ -28,8 +28,8 @@ extern sio::socket::ptr soc;
 extern sio::client cli;
 
 void bindListeners(sio::client *);
-void bindEvents(sio::socket::ptr);
-void registerAP(sio::socket::ptr);
+void bindEvents();
+void registerAP(unsigned ph1 = 0, unsigned ph2 = 0);
 
 void init();
 void send(unsigned long long, uint8_t *);
