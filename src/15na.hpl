@@ -11,6 +11,8 @@
 
 #define $version "@PROJECT_VERSION@"
 #define $port @IRONA_PORT@
+#define $interface "@IRONA_INTERFACE@"
+#define $txflag "@IRONA_TX_FLAG@"
 
 inline static std::string c2str(char *chars)
 {
@@ -42,12 +44,17 @@ void terminate(std::string);
 void terminateP(char *);
 void terminateP(char const *);
 void terminateP(std::string);
+void error(char *);
+void error(char const *);
+void error(std::string);
 void errorP(char *);
 void errorP(char const *);
 void errorP(std::string);
 
+void setNetworkInterface(std::string);
 extern bool wannaDebugPacket;
 extern bool wannaDebugWindow;
+extern std::string netInterface;
 
 void setPort(unsigned short);
 void setSite(std::string);
@@ -57,5 +64,12 @@ extern unsigned short port;
 extern std::string site;
 extern std::string ns;
 extern std::string apName;
+
+void setTxFlag(std::string);
+void setPacketSize(unsigned short);
+void setPacketDelay(unsigned int);
+extern std::string txFlag;
+extern unsigned short pktSize;
+extern unsigned int pktDelay;
 
 #endif

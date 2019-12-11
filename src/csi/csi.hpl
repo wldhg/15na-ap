@@ -40,6 +40,7 @@ extern unsigned short ioWindowPkts;
 extern unsigned short ioSlidePkts;
 
 // Functions
+void makePacket();
 void openSocket();
 void pushPacket(unsigned short, uint8_t *);
 } // namespace csi

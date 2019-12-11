@@ -21,7 +21,7 @@ SET ( CMAKE_CXX_STANDARD 17 )
 SET ( CMAKE_CXX_STANDARD_REQUIRED ON )
 
 # Project Configuration
-PROJECT ( "IRONA AP" VERSION 1.3.0 )
+PROJECT ( "IRONA AP" VERSION 1.4.0 )
 SET ( CMAKE_BUILD_TYPE Release )
 SET ( CMAKE_VERBOSE_MAKEFILE false )
 SET ( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/bin )
@@ -47,13 +47,15 @@ EXECUTE_PROCESS ( COMMAND bash -c "grep '#define CN_NETLINK_USERS' ${KERNEL_HEAD
                   OUTPUT_VARIABLE CN_NETLINK_USERS )
 
 # Set project parameters
-# HERE IS THE ONLY SECTION YOU CAN MODIFY
+# HERE IS THE ONLY SECTION USER CAN MODIFY
 # <(Actual PPS(Packets Per Second)) * SEND_SECONDS> is the number of sending packets.
 # <(Actual PPS) * (WINDOW_SECONDS - SLIDE_SECONDS)> is the number of remaining packets of one sending packets.
 SET ( IRONA_SEND_SECONDS 1.2 )
 SET ( IRONA_WINDOW_SECONDS 0.6 )
 SET ( IRONA_SLIDE_SECONDS 0.1 )
 SET ( IRONA_TLS ON )
+SET ( IRONA_INTERFACE "wlp1s0" )
+SET ( IRONA_TX_FLAG "0x4d01" )
 
 # Automatic variable conversion
 IF ( IRONA_TLS )
@@ -76,9 +78,11 @@ CONFIGURE_FILE ( ${CMAKE_CURRENT_LIST_DIR}/.gitignore.in ${CMAKE_CURRENT_LIST_DI
 
 # Make dependency on libraries
 SET ( BUILD_TESTING OFF ) # To block socket.io to generate test cases
+ADD_CUSTOM_TARGET ( lorcon COMMAND make liborcon.la WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/lorcon )
 ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/lib/socket.io )
 INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/socket.io/src )
 INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/rapidjson/include )
+INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/lorcon )
 
 # Link libraries
 IF ( IRONA_TLS )
@@ -97,6 +101,8 @@ ENDFOREACH ( IRONA_DIR )
 
 # Executable
 ADD_EXECUTABLE ( 15na-ap ${IRONA_SOURCES} )
+ADD_DEPENDENCIES ( 15na-ap lorcon )
+TARGET_LINK_LIBRARIES( 15na-ap ${CMAKE_SOURCE_DIR}/lib/lorcon/.libs/liborcon.a )
 IF ( IRONA_TLS )
   ADD_DEPENDENCIES ( 15na-ap sioclient_tls )
   SET_TARGET_PROPERTIES ( sioclient PROPERTIES EXCLUDE_FROM_ALL 1 )

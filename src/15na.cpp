@@ -14,15 +14,27 @@ using std::hex;
 using std::size_t;
 using std::string;
 
-// 15na program flags
+// 15na program settings
 bool wannaDebugPacket = false;
 bool wannaDebugWindow = false;
+string netInterface = $interface;
+
+// Packet injection configuration
+string txFlag = $txflag;
+unsigned short pktSize = 100;
+unsigned int pktDelay = 0;
 
 // Websocket server configuration
 unsigned short port = $port;
 string site = "localhost";
 string ns = "15na-ws/in";
 string apName = "";
+
+void setNetworkInterface(string newInterface)
+{
+  netInterface = string(newInterface);
+  $info << "Set network interface to: " << netInterface << endl;
+}
 
 void setPort(unsigned short newPort)
 {
@@ -46,6 +58,22 @@ void setAPName(string concatName)
   } else {
     apName += concatName;
   }
+}
+
+void setTxFlag(string newFlag)
+{
+  txFlag = string(newFlag);
+  $info << "Set txFlag to: " << txFlag << endl;
+}
+void setPacketSize(unsigned short newSize)
+{
+  pktSize = newSize;
+  $info << "Set emitting packet size to: " << pktSize << " bytes" << endl;
+}
+void setPacketDelay(unsigned int newDelay)
+{
+  pktDelay = newDelay;
+  $info << "Set emission delay to: " << pktDelay << " us" << endl;
 }
 
 // At exit or on error
@@ -104,6 +132,20 @@ void terminateP(string err)
 void terminate(string err)
 {
   terminate(err, false, false);
+}
+void error(string err)
+{
+  terminate(err, false, true);
+}
+void error(char const* err)
+{
+  string str(err);
+  terminate(str, false, true);
+}
+void error(char* err)
+{
+  string str(err);
+  terminate(str, false, true);
 }
 void errorP(string err)
 {

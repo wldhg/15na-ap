@@ -2,8 +2,7 @@
 
 <i>IRONA CSI Uploader for Access Points</i>
 
-This is a program sends `BFEE_NOTIF` packets to [`15na-server`](https://github.com/wldh-g/15na-server).\
-This does not include a function of injecting `BFEE_NOTIF` packets.\
+This is a program sends & collects & sends `BFEE_NOTIF` packets to [`15na-server`](https://github.com/wldh-g/15na-server).\
 This works on Linux environment.
 
 ## Requirements
@@ -12,6 +11,8 @@ This works on Linux environment.
 -   **GCC/G++ 7+**
 -   **Boost C++**: `boost`, `boost_sytem`, `boost_date_time`, `boost_random` (for `socket.io-client-cpp`)
 -   **OpenSSL Library** (for `socket.io-client-cpp`)
+
+Other used libraries are included in this repository as a form of submodule.
 
 ## How To Build
 
@@ -24,34 +25,28 @@ Then, there may be a executable file named `15na-ap` in `bin` directory.
 
 ## How To Run
 
-This application is based on [dhalperi's CSI tool](https://dhalperi.github.io/linux-80211n-csitool/).\
-So to use this app, Dan Halperin's CSI tool driver & firmware must be installed and wlan driver must be loaded with flag `connector_log=0x1`.\
-Also, on both Tx & Rx device, you may need [DataCollector](https://github.com/wldh-g/BPI-R2-CSITool-DataCollector).
+This application works with [dhalperi's CSI tool](https://dhalperi.github.io/linux-80211n-csitool/).\
+So to use this app, Dan Halperin's CSI tool driver & firmware must be installed and wlan driver must be loaded with flag `connector_log=0x1`.
 
-My own experiment device is BPI-R2. Customized kernel & tools for BPI-R2 is available on [BPI-R2-CSITool-Kernel](https://github.com/wldh-g/BPI-R2-CSITool-Kernel) and [BPI-R2-CSITool-DataCollector](https://github.com/wldh-g/BPI-R2-CSITool-DataCollector).
+My own device is [BPI-R2](http://www.banana-pi.org/r2.html). Customized kernel & tools for BPI-R2 is available on [BPI-R2-CSITool-Kernel](https://github.com/wldh-g/BPI-R2-CSITool-Kernel) and [BPI-R2-CSITool-DataCollector](https://github.com/wldh-g/BPI-R2-CSITool-DataCollector).
+
+For more information and options, run `15na-ap --help`.
 
 #### On Transmitter
 
-For now, packet injection is not available with this app. This app just captures packets and sends it to the server.
-So you have to run `random_packets` binary of [DataCollector](https://github.com/wldh-g/BPI-R2-CSITool-DataCollector).
-
-1. Do `make` on `injection` directory of *DataCollector*.
-2. Run `prepare_tx.sh` of root directory of *DataCollector*.
-3. Run `./random_packets` of `injection` directory.
+1. Run `15na-ap -t`.
 
 #### On Receiver
 
-1. Run `prepare_rx.sh` of *[DataCollector](https://github.com/wldh-g/BPI-R2-CSITool-DataCollector)*.
-2. Run `./15na-ap` of `bin` directory of this repository.
-
-## What's Next?
-
-I'll remove dependency with *DataCollector* and integrate Tx features to this app.
+1. Register new AP and get `APID` from [`15na-server`](https://github.com/wldh-g/15na-server).
+2. Run `15na-ap [APID] -p=[PORT of 15na-server] -n=[ADDR of 15na-server]`.
 
 ## License
 
-This program is under **MPL-2.0** license. Read [LICENSE.md](LICENSE.md) for more informations.
+This program is under **MPL-2.0** license. Read [LICENSE.md](LICENSE.md) for more informations and check [here](https://en.wikipedia.org/wiki/Comparison_of_free_and_open-source_software_licenses#General_comparison) for comparison of general licenses.
 
 `socket.io-client-cpp` is licensed under [MIT license](https://github.com/socketio/socket.io-client-cpp/blob/master/LICENSE).
 
 `rapidjson` is licensed under [MIT license](https://github.com/Tencent/rapidjson/blob/master/license.txt).
+
+`lorcon` is licensed under [GPL-2.0](https://github.com/dhalperi/lorcon-old/blob/master/COPYING).

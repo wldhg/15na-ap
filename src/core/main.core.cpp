@@ -2,6 +2,8 @@
  * You can obtain a copy of MPL at LICENSE.md of root directory. */
 // main.core.cpp
 
+#include <unistd.h>
+
 #include "core.hpp"
 
 using std::atexit;
@@ -14,12 +16,14 @@ int main(int argc, char **argv)
 {
   std::cout.setf(std::ios::unitbuf);
 
-  $info << "Initializing " << bold << "IRONA AP Program" << def << endl;
-
-  atexit(_terminate);
+  // Check is run with root mode
+  if (geteuid()) {
+    terminate("Root privilege is required to bind socket with kernel and inject packets.");
+  }
 
   // Analyzing arguments
   bool isAPNamed = false;
+  bool isTxMode = false;
   for (int i = 1; i < argc; i++)
   {
     string arg = c2str(argv[i]);
@@ -33,7 +37,7 @@ int main(int argc, char **argv)
       if (divPosition == string::npos)
       {
         // Flag option
-        (isFullArg ? procFlagOption : procShortFlagOption)(arg);
+        isTxMode = (isFullArg ? procFlagOption : procShortFlagOption)(arg);
       }
       else
       {
@@ -50,17 +54,29 @@ int main(int argc, char **argv)
     }
   }
 
-  if (isAPNamed) {
-    $success << "Checked arguments" << endl;
+  if (isTxMode) {
+    $success << "Checked arguments, running in transmitter mode." << endl;
+  } else if (isAPNamed) {
+    $success << "Checked arguments, running in receiver mode." << endl;
   } else {
-    terminate("No AP ID provided");
+    terminate("No AP ID provided or Tx flag not detected!");
   }
 
-  // Start websocket server
-  ws::init();
+  // Initialize network interface
+  $info << "Initializing " << bold << "IRONA AP " << pink << "❤" << def << endl;
+  atexit(_terminate);
+  init(isTxMode);
 
-  // Open linux connector socket
-  csi::openSocket();
+  if (isTxMode) {
+    // Start to send packets
+    csi::makePacket();
+  } else {
+    // Start websocket server
+    ws::init();
+
+    // Open linux connector socket
+    csi::openSocket();
+  }
 
   return 0;
 }

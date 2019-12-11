@@ -12,8 +12,9 @@
 namespace core
 {
 
-void procFlagOption(std::string);
-void procShortFlagOption(std::string);
+void init(bool);
+bool procFlagOption(std::string);
+bool procShortFlagOption(std::string);
 void procDataOption(std::string, std::string);
 void procShortDataOption(std::string, std::string);
 void procAPName(std::string);
