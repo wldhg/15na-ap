@@ -8,6 +8,8 @@
 #include <unistd.h>
 #include <tx80211.h>
 #include <tx80211_packet.h>
+//#include "../../lib/lorcon/tx80211.h"
+//#include "../../lib/lorcon/tx80211_packet.h"
 
 #include "csi.hpp"
 
@@ -26,8 +28,8 @@ typedef struct _lorcon_packet {
 void csi::makePacket()
 {
   $info << $ns("csi") << "Preparing transmission...";
-  struct tx80211 tx;
-  struct tx80211_packet txPacket;
+  tx80211_t tx;
+  tx80211_packet_t txPacket;
   uint8_t *payloadBuffer;
   lorcon_packet *packet;
 

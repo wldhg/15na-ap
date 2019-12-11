@@ -23,7 +23,7 @@ SET ( CMAKE_CXX_STANDARD_REQUIRED ON )
 # Project Configuration
 PROJECT ( "IRONA AP" VERSION 1.4.0 )
 SET ( CMAKE_BUILD_TYPE Release )
-SET ( CMAKE_VERBOSE_MAKEFILE false )
+SET ( CMAKE_VERBOSE_MAKEFILE true )
 SET ( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/bin )
 
 # Get CN_NETLINK_USERS
@@ -78,11 +78,22 @@ CONFIGURE_FILE ( ${CMAKE_CURRENT_LIST_DIR}/.gitignore.in ${CMAKE_CURRENT_LIST_DI
 
 # Make dependency on libraries
 SET ( BUILD_TESTING OFF ) # To block socket.io to generate test cases
-ADD_CUSTOM_TARGET ( lorcon COMMAND make liborcon.la WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/lorcon )
+ADD_CUSTOM_TARGET ( lorcon_make
+                    COMMAND make liborcon.la
+                    WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/lorcon )
+ADD_CUSTOM_TARGET ( lorcon_install
+                    COMMAND sudo make install
+                    WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/lorcon )
 ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/lib/socket.io )
 INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/socket.io/src )
 INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/rapidjson/include )
-INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/lorcon )
+# INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/lorcon )
+# LINK_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/lorcon/.libs )
+
+# Additionally set lorcon
+# ADD_LIBRARY ( lorcon STATIC IMPORTED )
+# SET_PROPERTY ( TARGET lorcon PROPERTY
+#                IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/lib/lorcon/.libs/liborcon.a )
 
 # Link libraries
 IF ( IRONA_TLS )
@@ -91,6 +102,8 @@ ELSE ()
   LINK_LIBRARIES ( sioclient )
 ENDIF ()
 LINK_LIBRARIES ( pthread )
+# LINK_LIBRARIES ( lorcon )
+LINK_LIBRARIES ( orcon )
 
 # Use subdirectories
 SET ( IRONA_DIRECTORIES . core csi ws )
@@ -101,8 +114,7 @@ ENDFOREACH ( IRONA_DIR )
 
 # Executable
 ADD_EXECUTABLE ( 15na-ap ${IRONA_SOURCES} )
-ADD_DEPENDENCIES ( 15na-ap lorcon )
-TARGET_LINK_LIBRARIES( 15na-ap ${CMAKE_SOURCE_DIR}/lib/lorcon/.libs/liborcon.a )
+ADD_DEPENDENCIES ( 15na-ap lorcon_make lorcon_install )
 IF ( IRONA_TLS )
   ADD_DEPENDENCIES ( 15na-ap sioclient_tls )
   SET_TARGET_PROPERTIES ( sioclient PROPERTIES EXCLUDE_FROM_ALL 1 )
