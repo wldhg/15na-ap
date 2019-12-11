@@ -1,9 +1,9 @@
 [submodule "lib/socket.io"]
 	path = lib/socket.io
-	url = https://github.com/widh/socket.io-client-cpp.git
+	url = https://github.com/wldh-g/socket.io-client-cpp.git
 [submodule "lib/rapidjson"]
 	path = lib/rapidjson
 	url = https://github.com/Tencent/rapidjson.git
 [submodule "lib/lorcon"]
 	path = lib/lorcon
-	url = https://github.com/dhalperi/lorcon-old.git
+	url = https://github.com/wldh-g/lorcon-old.git
