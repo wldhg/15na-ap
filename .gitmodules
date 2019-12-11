@@ -4,3 +4,6 @@
 [submodule "lib/rapidjson"]
 	path = lib/rapidjson
 	url = https://github.com/Tencent/rapidjson.git
+[submodule "lib/lorcon"]
+	path = lib/lorcon
+	url = https://github.com/dhalperi/lorcon-old.git
