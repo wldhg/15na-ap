@@ -21,7 +21,7 @@ SET ( CMAKE_CXX_STANDARD 17 )
 SET ( CMAKE_CXX_STANDARD_REQUIRED ON )
 
 # Project Configuration
-PROJECT ( "IRONA AP" VERSION 1.2.1 )
+PROJECT ( "IRONA AP" VERSION 1.3.0 )
 SET ( CMAKE_BUILD_TYPE Release )
 SET ( CMAKE_VERBOSE_MAKEFILE false )
 SET ( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/bin )
@@ -48,9 +48,8 @@ EXECUTE_PROCESS ( COMMAND bash -c "grep '#define CN_NETLINK_USERS' ${KERNEL_HEAD
 
 # Set project parameters
 # HERE IS THE ONLY SECTION YOU CAN MODIFY
-# <ACTUAL_PPS_APPROX * SEND_SECONDS> is the number of sending packets.
-# <ACTUAL_PPS_APPROX * (WINDOW_SECONDS - SLIDE_SECONDS)> is the number of remaining packets of one sending packets.
-SET ( IRONA_ACTUAL_PPS_APPROX 4700 )
+# <(Actual PPS(Packets Per Second)) * SEND_SECONDS> is the number of sending packets.
+# <(Actual PPS) * (WINDOW_SECONDS - SLIDE_SECONDS)> is the number of remaining packets of one sending packets.
 SET ( IRONA_SEND_SECONDS 1.2 )
 SET ( IRONA_WINDOW_SECONDS 0.6 )
 SET ( IRONA_SLIDE_SECONDS 0.1 )

@@ -20,13 +20,16 @@ using std::thread;
 // Global Variables
 size_t bufSize = 11460;
 int soc = -1;
-unsigned short csi::ioWindowPkts = (unsigned short) (IRONA_SEND * IRONA_PPS + 0.5);
-unsigned short csi::ioSlidePkts = (unsigned short) ((IRONA_SEND - IRONA_WINDOW + IRONA_SLIDE) * IRONA_PPS + 0.5);
+
+// CSI window size-related variables: these are initialized in here and updated in window.csi.cpp
+unsigned short csi::actualPPS = 4700;
+unsigned short csi::ioWindowPkts = (unsigned short) (IRONA_SEND * csi::actualPPS + 0.5);
+unsigned short csi::ioSlidePkts = (unsigned short) ((IRONA_SEND - IRONA_WINDOW + IRONA_SLIDE) * csi::actualPPS + 0.5);
 
 void csi::openSocket()
 {
-  $debug << $ns("csi") << "In one window, " << csi::ioWindowPkts << " packets will be included." << endl;
-  $debug << $ns("csi") << "Each windows has " << csi::ioSlidePkts << " of packet interval." << endl;
+  $debug << $ns("csi") << "Initialized: Packet count in a window, " << csi::ioWindowPkts << endl;
+  $debug << $ns("csi") << "Initialized: Sliding window packet interval, " << csi::ioSlidePkts << endl;
   $info << $ns("csi") << "Initializing connector socket..." << endl;
 
   // Create new thread to capture packets

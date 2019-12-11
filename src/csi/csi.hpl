@@ -20,7 +20,6 @@
 #define CN_IDX_IWLAGN (CN_NETLINK_USERS + 0xf)
 #define CN_VAL_IWLAGN 0x1
 
-#define IRONA_PPS @IRONA_ACTUAL_PPS_APPROX@
 #define IRONA_SEND @IRONA_SEND_SECONDS@
 #define IRONA_SLIDE @IRONA_SLIDE_SECONDS@
 #define IRONA_WINDOW @IRONA_WINDOW_SECONDS@
@@ -32,6 +31,9 @@ namespace csi
 {
 // Public Packet & Length Store
 extern PacketList pacStore;
+
+// Packets per second
+extern unsigned short actualPPS;
 
 // Sending packet count
 extern unsigned short ioWindowPkts;

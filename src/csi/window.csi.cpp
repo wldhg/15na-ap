@@ -3,6 +3,7 @@
 // window.csi.cpp
 
 #include <cstring>
+#include <cstdint>
 
 #include "csi.hpp"
 #include "ws.hpp"
@@ -24,7 +25,7 @@ void csi::pushPacket(unsigned short len, uint8_t *bytes)
   stMutex.lock();
   pacStore.push_back(Packet(len, bytes));
   windowAllSize += len + 2; // length(2) + message data(len)
-  if (++pacIter == csi::ioWindowPkts)
+  if (++pacIter >= csi::ioWindowPkts)
   {
     // Reset counter
     unsigned long long tempWinAllSize = windowAllSize;
@@ -37,13 +38,14 @@ void csi::pushPacket(unsigned short len, uint8_t *bytes)
       unsigned long long currentWindowCount = windowCount++;
       if (wannaDebugWindow)
       {
-        $debug << $ns("csi") << "W" << currentWindowCount << ": Sending started" << endl;
+        $debug << $ns("csi") << "W" << currentWindowCount + 1 << ": Sending started" << endl;
       }
+      // Get first packet's timestamp
+      uint32_t frontTimestamp = *((uint32_t*)&get<1>(pacStore.front())[1]);
       // Gather window
       uint8_t *csis = (uint8_t *)malloc(tempWinAllSize);
       unsigned long long cursor = 0;
       stMutex.lock();
-      Packet& target = pacStore.front();
       PacketList::iterator pacIt = pacStore.begin();
       for (unsigned short i = 0; i < csi::ioWindowPkts; i += 1)
       {
@@ -57,6 +59,9 @@ void csi::pushPacket(unsigned short len, uint8_t *bytes)
         // Iterate
         ++pacIt;
       }
+      // Get last packet's timestamp
+      --pacIt;
+      uint32_t backTimestamp = *((uint32_t*)&get<1>(*pacIt)[1]);
       for (unsigned short i = 0; i < csi::ioSlidePkts; i += 1)
       {
         free(get<1>(pacStore.front()));
@@ -66,10 +71,28 @@ void csi::pushPacket(unsigned short len, uint8_t *bytes)
       stMutex.unlock();
       if (wannaDebugWindow)
       {
-        $debug << $ns("csi") << "W" << currentWindowCount << ": Packet collected" << endl;
+        $debug << $ns("csi") << "W" << currentWindowCount + 1 << ": Packet collected" << endl;
       }
-      // Request socketio sending
+      // Request socket.io data emission
       ws::send(tempWinAllSize, csis);
+      // Update PPS and window/slide size
+      uint64_t timestampDiff = backTimestamp - frontTimestamp;
+      if (backTimestamp <= frontTimestamp) {
+        // Overflow in timestamp! -- resolve it
+        timestampDiff += UINT32_MAX;
+      }
+      double timeDiff = ((double)timestampDiff) * 1.0E-6;
+      stMutex.lock();
+      csi::actualPPS = (unsigned short) (((double) csi::ioWindowPkts) / timeDiff);
+      csi::ioWindowPkts = (unsigned short) (IRONA_SEND * csi::actualPPS + 0.5);
+      csi::ioSlidePkts = (unsigned short) ((IRONA_SEND - IRONA_WINDOW + IRONA_SLIDE) * csi::actualPPS + 0.5);
+      stMutex.unlock();
+      if (wannaDebugWindow)
+      {
+        $debug << $ns("csi") << "W" << currentWindowCount + 1 << ": Config = "
+               << "[timeDiff] " << timeDiff << ", [actualPPS] " << csi::actualPPS
+               << ", [ioWindowPkts] " << csi::ioWindowPkts << ", [ioSlidePkts] " << csi::ioSlidePkts << endl;
+      }
     });
     thProcSend.detach();
   } else {
