@@ -11,6 +11,7 @@ This works on Linux environment.
 -   **GCC/G++ 7+**
 -   **Boost C++**: `boost`, `boost_sytem`, `boost_date_time`, `boost_random` (for `socket.io-client-cpp`)
 -   **OpenSSL Library** (for `socket.io-client-cpp`)
+-   **PCAP Library** (for `lorcon-old`)
 
 Other used libraries are included in this repository as a form of submodule.
 

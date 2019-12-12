@@ -6,10 +6,8 @@
 #include <functional>
 #include <ctime>
 #include <unistd.h>
-#include <tx80211.h>
-#include <tx80211_packet.h>
-//#include "../../lib/lorcon/tx80211.h"
-//#include "../../lib/lorcon/tx80211_packet.h"
+#include <lorcon/tx80211.h>
+#include <lorcon/tx80211_packet.h>
 
 #include "csi.hpp"
 

@@ -1,8 +1,21 @@
 # IRONA AP Program is subject to the terms of the Mozilla Public License 2.0.
 # You can obtain a copy of MPL at LICENSE.md of root directory.
+CMAKE_MINIMUM_REQUIRED ( VERSION 3.8 )
+
+# Set project parameters
+# HERE IS THE ONLY SECTION USER CAN MODIFY
+# <(Actual PPS(Packets Per Second)) * SEND_SECONDS> is the number of sending packets.
+# <(Actual PPS) * (WINDOW_SECONDS - SLIDE_SECONDS)> is the number of remaining packets of one sending packets.
+SET ( IRONA_SEND_SECONDS 1.2 )
+SET ( IRONA_WINDOW_SECONDS 0.6 )
+SET ( IRONA_SLIDE_SECONDS 0.1 )
+SET ( IRONA_TLS ON )
+SET ( IRONA_INTERFACE "wlp1s0" )
+SET ( IRONA_TX_FLAG "0x4d01" )
+
+# BELOW HERE IS DEVELOPER ONLY!
 
 # CMake Configuration
-CMAKE_MINIMUM_REQUIRED ( VERSION 3.8 )
 CMAKE_POLICY ( SET CMP0048 NEW )
 IF ( NOT ${CMAKE_VERSION} VERSION_LESS "3.13.0" )
   CMAKE_POLICY ( SET CMP0077 OLD )
@@ -15,7 +28,7 @@ IF ( NOT ${CMAKE_HOST_SYSTEM_VERSION} MATCHES "BPI-R2" )
   SET ( CMAKE_CXX_COMPILER /usr/bin/arm-linux-gnueabihf-g++ )
   ADD_COMPILE_OPTIONS ( -march=armv7-a+vfpv4 -mtune=cortex-a7 )
 ENDIF ()
-ADD_COMPILE_OPTIONS ( -O3 )
+ADD_COMPILE_OPTIONS ( -O3 -Wl,-v )
 SET ( CMAKE_C_FLAGS_DEBUG "-g" )
 SET ( CMAKE_CXX_STANDARD 17 )
 SET ( CMAKE_CXX_STANDARD_REQUIRED ON )
@@ -29,7 +42,11 @@ SET ( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/bin )
 # Get CN_NETLINK_USERS
 EXECUTE_PROCESS ( COMMAND uname -r
                   OUTPUT_VARIABLE KERNEL )
-STRING ( STRIP ${KERNEL} KERNEL )
+IF ( KERNEL )
+  # If unix-based environment, strip.
+  # If not and it's not debugging purpose, fatal error will be raised below.
+  STRING ( STRIP ${KERNEL} KERNEL )
+ENDIF ()
 SET ( KERNEL_SOURCE /lib/modules/${KERNEL}/build )
 IF ( EXISTS ${KERNEL_SOURCE}/include/uapi )
   MESSAGE ( "Using headers inside kernel source with uapi" )
@@ -41,21 +58,16 @@ ELSEIF ( EXISTS /usr/include/linux/connector.h )
   MESSAGE ( "Using headers inside /usr/include" )
   SET ( KERNEL_HEADERS /usr/include )
 ELSE ()
+  # Comment below line if want to debug in an environment without linux kernel header
   MESSAGE ( FATAL_ERROR "Kernel headers not found!" )
 ENDIF ()
-EXECUTE_PROCESS ( COMMAND bash -c "grep '#define CN_NETLINK_USERS' ${KERNEL_HEADERS}/linux/connector.h | cut -f 3"
-                  OUTPUT_VARIABLE CN_NETLINK_USERS )
-
-# Set project parameters
-# HERE IS THE ONLY SECTION USER CAN MODIFY
-# <(Actual PPS(Packets Per Second)) * SEND_SECONDS> is the number of sending packets.
-# <(Actual PPS) * (WINDOW_SECONDS - SLIDE_SECONDS)> is the number of remaining packets of one sending packets.
-SET ( IRONA_SEND_SECONDS 1.2 )
-SET ( IRONA_WINDOW_SECONDS 0.6 )
-SET ( IRONA_SLIDE_SECONDS 0.1 )
-SET ( IRONA_TLS ON )
-SET ( IRONA_INTERFACE "wlp1s0" )
-SET ( IRONA_TX_FLAG "0x4d01" )
+IF ( KERNEL_HEADERS )
+  EXECUTE_PROCESS ( COMMAND bash -c "grep '#define CN_NETLINK_USERS' ${KERNEL_HEADERS}/linux/connector.h | cut -f 3"
+                    OUTPUT_VARIABLE CN_NETLINK_USERS )
+ELSE ()
+  # Only if a FATAL_ERROR above is commented for debugging
+  SET ( CN_NETLINK_USERS 0 )
+ENDIF ()
 
 # Automatic variable conversion
 IF ( IRONA_TLS )
@@ -78,32 +90,19 @@ CONFIGURE_FILE ( ${CMAKE_CURRENT_LIST_DIR}/.gitignore.in ${CMAKE_CURRENT_LIST_DI
 
 # Make dependency on libraries
 SET ( BUILD_TESTING OFF ) # To block socket.io to generate test cases
-ADD_CUSTOM_TARGET ( lorcon_make
-                    COMMAND make liborcon.la
-                    WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/lorcon )
-ADD_CUSTOM_TARGET ( lorcon_install
-                    COMMAND sudo make install
-                    WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/lib/lorcon )
+ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/lib/lorcon )
 ADD_SUBDIRECTORY ( ${CMAKE_CURRENT_LIST_DIR}/lib/socket.io )
+INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib )
 INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/socket.io/src )
 INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/rapidjson/include )
-# INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/lorcon )
-# LINK_DIRECTORIES ( ${CMAKE_CURRENT_LIST_DIR}/lib/lorcon/.libs )
-
-# Additionally set lorcon
-# ADD_LIBRARY ( lorcon STATIC IMPORTED )
-# SET_PROPERTY ( TARGET lorcon PROPERTY
-#                IMPORTED_LOCATION ${CMAKE_CURRENT_LIST_DIR}/lib/lorcon/.libs/liborcon.a )
 
 # Link libraries
+LINK_LIBRARIES ( lorcon pthread )
 IF ( IRONA_TLS )
   LINK_LIBRARIES ( sioclient_tls )
 ELSE ()
   LINK_LIBRARIES ( sioclient )
 ENDIF ()
-LINK_LIBRARIES ( pthread )
-# LINK_LIBRARIES ( lorcon )
-LINK_LIBRARIES ( orcon )
 
 # Use subdirectories
 SET ( IRONA_DIRECTORIES . core csi ws )
@@ -114,7 +113,7 @@ ENDFOREACH ( IRONA_DIR )
 
 # Executable
 ADD_EXECUTABLE ( 15na-ap ${IRONA_SOURCES} )
-ADD_DEPENDENCIES ( 15na-ap lorcon_make lorcon_install )
+ADD_DEPENDENCIES ( 15na-ap lorcon )
 IF ( IRONA_TLS )
   ADD_DEPENDENCIES ( 15na-ap sioclient_tls )
   SET_TARGET_PROPERTIES ( sioclient PROPERTIES EXCLUDE_FROM_ALL 1 )
