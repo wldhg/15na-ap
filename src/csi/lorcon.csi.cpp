@@ -113,8 +113,8 @@ void csi::makePacket()
     // Send packet!
     if (tx80211_txpacket(&tx, &txPacket) < 0) {
       $warn << $ns("csi") << "Failed to transmit a packet." << endl;
-    } else if (((pkti + 1) % 5000) == 0) {
-      $info << $ns("csi") << (pkti + 1) / 1000 << " k th packet emitted." << endl;
+    } else if (((pkti + 1) % 1000) == 0) {
+      $info << $ns("csi") << (pkti + 1) / 1000 << gray << "k" << def << " packets were emitted." << endl;
     }
 
     pkti += 1;

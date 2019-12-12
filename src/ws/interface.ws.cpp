@@ -31,16 +31,21 @@ void ws::init()
 
 void ws::con2Central()
 {
-  cli.connect(url.c_str());
-  unique_lock<mutex> lock(it);
-  if (!connOK)
-  {
-    cond.wait(lock);
+  try {
+    cli.connect(url.c_str());
+    unique_lock<mutex> lock(it);
+    if (!connOK)
+    {
+      cond.wait(lock);
+    }
+    lock.unlock();
+    soc = cli.socket(string("/") + ns);
+    $info << $ns("ws") << "Namespace changed to /" << ns << endl;
+    ws::bindEvents();
+    ws::registerAP();
+    $info << $ns("ws") << "Socket session successfully opened" << endl;
+  } catch (...) {
+    $error << $ns("ws") << "Failed to connect to central server. Retry..." << endl;
+    con2Central();
   }
-  lock.unlock();
-  soc = cli.socket(string("/") + ns);
-  $info << $ns("ws") << "Namespace changed to /" << ns << endl;
-  ws::bindEvents();
-  ws::registerAP();
-  $info << $ns("ws") << "Socket session successfully opened" << endl;
 }

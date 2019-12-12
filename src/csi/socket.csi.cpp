@@ -22,7 +22,7 @@ size_t bufSize = 11460;
 int soc = -1;
 
 // CSI window size-related variables: these are initialized in here and updated in window.csi.cpp
-unsigned short csi::actualPPS = 4700;
+unsigned short csi::actualPPS = 100;
 unsigned short csi::ioWindowPkts = (unsigned short) (IRONA_SEND * csi::actualPPS + 0.5);
 unsigned short csi::ioSlidePkts = (unsigned short) ((IRONA_SEND - IRONA_WINDOW + IRONA_SLIDE) * csi::actualPPS + 0.5);
 

@@ -19,6 +19,7 @@ PacketList csi::pacStore;
 unsigned short pacIter = 0;
 unsigned long long windowAllSize = 0;
 unsigned long long windowCount = 0; // Just for logging
+bool isFirstWindow = true;
 
 void csi::pushPacket(unsigned short len, uint8_t *bytes)
 {
@@ -36,7 +37,7 @@ void csi::pushPacket(unsigned short len, uint8_t *bytes)
     // Create new thread to copy packets
     thread thProcSend([=]() {
       unsigned long long currentWindowCount = windowCount++;
-      if (wannaDebugWindow)
+      if (wannaDebugWindow && !isFirstWindow)
       {
         $debug << $ns("csi") << "W" << currentWindowCount + 1 << ": Sending started" << endl;
       }
@@ -69,12 +70,12 @@ void csi::pushPacket(unsigned short len, uint8_t *bytes)
         pacStore.pop_front();
       }
       stMutex.unlock();
-      if (wannaDebugWindow)
+      if (wannaDebugWindow && !isFirstWindow)
       {
         $debug << $ns("csi") << "W" << currentWindowCount + 1 << ": Packet collected" << endl;
       }
-      // Request socket.io data emission
-      ws::send(tempWinAllSize, csis);
+      // Request socket.io data emission -- first one is used to calc PPS
+      if (!isFirstWindow) ws::send(tempWinAllSize, csis);
       // Update PPS and window/slide size
       uint64_t timestampDiff = backTimestamp - frontTimestamp;
       if (backTimestamp <= frontTimestamp) {
@@ -89,10 +90,17 @@ void csi::pushPacket(unsigned short len, uint8_t *bytes)
       stMutex.unlock();
       if (wannaDebugWindow)
       {
-        $debug << $ns("csi") << "W" << currentWindowCount + 1 << ": Config = "
-               << "[timeDiff] " << timeDiff << ", [actualPPS] " << csi::actualPPS
-               << ", [ioWindowPkts] " << csi::ioWindowPkts << ", [ioSlidePkts] " << csi::ioSlidePkts << endl;
+        if (isFirstWindow) {
+          $debug << $ns("csi") << "Init: Config = "
+                 << "[timeDiff] " << timeDiff << ", [actualPPS] " << csi::actualPPS
+                 << ", [ioWindowPkts] " << csi::ioWindowPkts << ", [ioSlidePkts] " << csi::ioSlidePkts << endl;
+        } else {
+          $debug << $ns("csi") << "W" << currentWindowCount + 1 << ": Config = "
+                 << "[timeDiff] " << timeDiff << ", [actualPPS] " << csi::actualPPS
+                 << ", [ioWindowPkts] " << csi::ioWindowPkts << ", [ioSlidePkts] " << csi::ioSlidePkts << endl;
+        }
       }
+      isFirstWindow = false;
     });
     thProcSend.detach();
   } else {
