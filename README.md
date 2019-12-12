@@ -5,15 +5,13 @@
 This is a program sends & collects & sends `BFEE_NOTIF` packets to [`15na-server`](https://github.com/wldh-g/15na-server).\
 This works on Linux environment.
 
-## Requirements
+## Prerequisites
 
 -   **CMake 3.8+**
 -   **GCC/G++ 7+**
 -   **Boost C++**: `boost`, `boost_sytem`, `boost_date_time`, `boost_random` (for `socket.io-client-cpp`)
 -   **OpenSSL Library** (for `socket.io-client-cpp`)
 -   **PCAP Library** (for `lorcon-old`)
-
-Other used libraries are included in this repository as a form of submodule.
 
 ## How To Build
 

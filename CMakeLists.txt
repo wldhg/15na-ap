@@ -24,11 +24,9 @@ INCLUDE ( ${CMAKE_ROOT}/Modules/ExternalProject.cmake )
 
 # Build/CXX Options
 IF ( NOT ${CMAKE_HOST_SYSTEM_VERSION} MATCHES "BPI-R2" )
-  SET ( CMAKE_C_COMPILER /usr/bin/arm-linux-gnueabihf-gcc )
-  SET ( CMAKE_CXX_COMPILER /usr/bin/arm-linux-gnueabihf-g++ )
   ADD_COMPILE_OPTIONS ( -march=armv7-a+vfpv4 -mtune=cortex-a7 )
 ENDIF ()
-ADD_COMPILE_OPTIONS ( -O3 -static )
+ADD_COMPILE_OPTIONS ( -O3 -static -Wall )
 SET ( CMAKE_C_FLAGS_DEBUG "-g" )
 SET ( CMAKE_CXX_STANDARD 17 )
 SET ( CMAKE_CXX_STANDARD_REQUIRED ON )

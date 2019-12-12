@@ -14,6 +14,7 @@ void core::init(bool isTxMode)
 {
   // Write configuration sh file in /tmp
   ofstream sh("/tmp/irona-init.sh", std::ios_base::trunc | std::ios_base::out);
+  sh << "#!/bin/bash" << endl;
   sh << "systemctl stop network-manager 2>/dev/null 1>/dev/null" << endl;
   sh << "systemctl stop wicd 2>/dev/null 1>/dev/null" << endl;
   sh << "systemctl stop rsyslog 2>/dev/null 1>/dev/null" << endl;
@@ -41,6 +42,11 @@ void core::init(bool isTxMode)
     sh << "done" << endl;
     sh << "ifconfig " << netInterface << " up" << endl;
     sh << "iw " << netInterface << " set channel 64 HT40-" << endl;
+  }
+
+  // Chmod the script (a+x)
+  if (chmod("/tmp/irona-init.sh", S_IRWXU | S_IRGRP | S_IROTH)) {
+    terminate("Failed to change permission of initialization script.");
   }
 
   // Launch the initializing script

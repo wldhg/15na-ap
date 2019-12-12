@@ -28,28 +28,32 @@ typedef struct _lorcon_packet {
 
 void csi::makePacket()
 {
-  $info << $ns("csi") << "Preparing transmission...";
   tx80211_t tx;
   tx80211_packet_t txPacket;
   uint8_t *payloadBuffer;
   lorcon_packet *packet;
 
   // Initialize lorcon tx struct
+  $info << $ns("csi") << "Resolving mac80211-supported card..." << endl;
   int driverType = tx80211_resolvecard("iwlwifi");
+  $info << $ns("csi") << "Initializing mon0..." << endl;
   if (tx80211_init(&tx, "mon0", driverType) < 0)
   {
     $error << $ns("csi") << "LORCON error: " << tx80211_geterrstr(&tx) << endl;
     terminate("Failed to initialize lorcon.");
   }
+  $info << $ns("csi") << "Open LORCON interface for mon0..." << endl;
   if (tx80211_open(&tx) < 0)
   {
     terminate("Failed to open LORCON interface: mon0");
   }
 
   // Initialize lorcon tx packet struct
+  $info << $ns("csi") << "Initializing lorcon packet structure..." << endl;
   tx80211_initpacket(&txPacket);
 
   // Initialize payload buffer
+  $info << $ns("csi") << "Generating payload buffer..." << endl;
   unsigned int payloadBufferSize = pktSize * 10000;
   payloadBuffer = (uint8_t*)malloc(payloadBufferSize);
   if (payloadBuffer == NULL) {
@@ -59,7 +63,7 @@ void csi::makePacket()
   auto lsfr = [](uint32_t s) {
     return (s << 1) | (((s >> 31) ^ (s >> 29) ^ (s >> 25) ^ (s >> 24)) & 1);
   };
-  for (unsigned short i = 0; i < payloadBufferSize; i += 1) {
+  for (unsigned int i = 0; i < payloadBufferSize; i += 1) {
     seed = lsfr(seed);
     seed = lsfr(seed);
     seed = lsfr(seed);
@@ -67,6 +71,7 @@ void csi::makePacket()
   }
 
   // Initialize a packet
+  $info << $ns("csi") << "Set packet properties..." << endl;
   packet = (lorcon_packet*)malloc(sizeof(*packet) + pktSize);
   if (packet == NULL) {
     terminate("Failed to allocate packet.");
@@ -81,6 +86,7 @@ void csi::makePacket()
   txPacket.plen = sizeof(*packet) + pktSize;
 
   $success << $ns("csi") << "Transmission prepared. Starts to broadcast..." << endl;
+  $info << $ns("csi") << "[Packet Size] " << pktSize << " bytes, [Packet Delay] " << pktDelay << endl;
 
   // Send packets
   struct timespec startTime, nowTime;

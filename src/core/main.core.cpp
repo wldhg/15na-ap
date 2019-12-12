@@ -16,11 +16,6 @@ int main(int argc, char **argv)
 {
   std::cout.setf(std::ios::unitbuf);
 
-  // Check is run with root mode
-  if (geteuid()) {
-    terminate("Root privilege is required to bind socket with kernel and inject packets.");
-  }
-
   // Analyzing arguments
   bool isAPNamed = false;
   bool isTxMode = false;
@@ -63,7 +58,10 @@ int main(int argc, char **argv)
   }
 
   // Initialize network interface
-  $info << "Initializing " << bold << "IRONA AP " << pink << "❤" << def << endl;
+  $info << "Initializing " << bold << "IRONA AP " << (isTxMode ? pink : cyan) << "❤" << def << endl;
+  if (geteuid()) {
+    terminate("Root privilege is required to bind socket with kernel and inject packets.");
+  }
   atexit(_terminate);
   init(isTxMode);
 
