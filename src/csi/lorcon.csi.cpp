@@ -6,10 +6,13 @@
 #include <functional>
 #include <ctime>
 #include <unistd.h>
-#include <lorcon/tx80211.h>
-#include <lorcon/tx80211_packet.h>
 
 #include "csi.hpp"
+
+extern "C" {
+  #include <lorcon/tx80211.h>
+  #include <lorcon/tx80211_packet.h>
+}
 
 using std::endl;
 
