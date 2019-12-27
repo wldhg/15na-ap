@@ -17,6 +17,7 @@ using std::string;
 // 15na program settings
 bool wannaDebugPacket = false;
 bool wannaDebugWindow = false;
+bool watchMode = false;
 string netInterface = $interface;
 
 // Packet injection configuration

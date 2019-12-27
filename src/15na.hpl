@@ -55,6 +55,7 @@ void errorP(std::string);
 void setNetworkInterface(std::string);
 extern bool wannaDebugPacket;
 extern bool wannaDebugWindow;
+extern bool watchMode;
 extern std::string netInterface;
 
 void setPort(unsigned short);

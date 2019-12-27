@@ -86,7 +86,11 @@ void csi::pushPacket(unsigned short len, uint8_t *bytes)
       stMutex.lock();
       csi::actualPPS = (unsigned short) (((double) csi::ioWindowPkts) / timeDiff);
       csi::ioWindowPkts = (unsigned short) (IRONA_SEND * csi::actualPPS + 0.5);
-      csi::ioSlidePkts = (unsigned short) ((IRONA_SEND - IRONA_WINDOW + IRONA_SLIDE) * csi::actualPPS + 0.5);
+      if (watchMode) {
+        csi::ioSlidePkts = csi::ioWindowPkts;
+      } else {
+        csi::ioSlidePkts = (unsigned short) ((IRONA_SEND - IRONA_WINDOW + IRONA_SLIDE) * csi::actualPPS + 0.5);
+      }
       stMutex.unlock();
       if (wannaDebugWindow)
       {

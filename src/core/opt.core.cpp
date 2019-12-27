@@ -20,11 +20,13 @@ void showHelpMessage()
   cout << "  -f=<FLAG>, --flag=<FLAG>      Set tx_monitor_flag. " << gray << "(Default: " << $txflag << ")" << def << endl;
   cout << endl;
   cout << cyan << "[RX OPTIONS]" << def << endl;
-  cout << "  -p=<PORT>, --port=<PORT>      Set specific port which is used in socket.io communication. " << endl;
+  cout << "  -p=<PORT>, --port=<PORT>      Set specific port which is used in websocket communication. " << endl;
   cout << gray << "                                (Default: " << $port << ")" << def << endl;
-  cout << "  -n=<ADDR>, --name=<ADDR>      Set specific" << $protocol << " server name which is used in socket.io. " << endl;
+  cout << "  -n=<ADDR>, --name=<ADDR>      Set specific" << $protocol << " server name which is used in websocket. " << endl;
   cout << gray << "                                (Default: localhost)" << def << endl;
-  cout << "  -ns=<NS>, --namespace=<NS>    Set socket.io namespace. " << gray << "(Default: 15na-ws/in)" << def << endl;
+  cout << "  -ns=<NS>, --namespace=<NS>    Set websocket namespace. " << gray << "(Default: 15na-ws/in)" << def << endl;
+  cout << "  -w, --watch-raw               (Watch Mode) Stop leaving packets for sliding window" << endl;
+  cout << "                                and send packets linearly without duplications." << endl;
   cout << "  --debug-packet                Show detailed information for each packets." << endl;
   cout << "  --debug-window                Show detailed process for each windows." << endl;
   cout << endl;
@@ -36,7 +38,9 @@ void showHelpMessage()
   cout << endl;
   cout << "[AP ID]" << endl;
   cout << "  Distinguishable ID string for specify this access point." << endl;
-  cout << "  This can be issued by registering a new AP in 15na-serer." << endl;
+  cout << "  If you want to run this with 15na-server, you must issue the id by registering" << endl;
+  cout << "  a new AP using `auth-config` command of 15na-serer." << endl;
+  cout << "  In watcher mode (-w option), this works as a simple identifier for this AP." << endl;
   cout << endl;
 }
 
@@ -67,6 +71,11 @@ bool core::procFlagOption(string name)
     wannaDebugWindow = true;
     $info << "Each windows will be debugged." << endl;
   }
+  else if (name.compare("watch-raw") == 0)
+  {
+    watchMode = true;
+    $info << "Watcher mode enabled." << endl;
+  }
   else if (name.compare("transmit") == 0)
   {
     return true;
@@ -92,6 +101,11 @@ bool core::procShortFlagOption(string name)
   else if (name.compare("t") == 0)
   {
     return true;
+  }
+  else if (name.compare("w") == 0)
+  {
+    watchMode = true;
+    $info << "Watcher mode enabled." << endl;
   }
   else
   {

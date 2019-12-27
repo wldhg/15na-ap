@@ -28,6 +28,9 @@ unsigned short csi::ioSlidePkts = (unsigned short) ((IRONA_SEND - IRONA_WINDOW +
 
 void csi::openSocket()
 {
+  // Set ioSlidePkts same with ioWindowPkts in watch mode.
+  if (watchMode) csi::ioSlidePkts = csi::ioWindowPkts;
+
   $debug << $ns("csi") << "Initialized: Packet count in a window, " << csi::ioWindowPkts << endl;
   $debug << $ns("csi") << "Initialized: Sliding window packet interval, " << csi::ioSlidePkts << endl;
   $info << $ns("csi") << "Initializing connector socket..." << endl;
