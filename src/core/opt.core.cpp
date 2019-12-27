@@ -25,8 +25,8 @@ void showHelpMessage()
   cout << "  -n=<ADDR>, --name=<ADDR>      Set specific" << $protocol << " server name which is used in websocket. " << endl;
   cout << gray << "                                (Default: localhost)" << def << endl;
   cout << "  -ns=<NS>, --namespace=<NS>    Set websocket namespace. " << gray << "(Default: 15na-ws/in)" << def << endl;
-  cout << "  -w, --watch-raw               (Watch Mode) Stop leaving packets for sliding window" << endl;
-  cout << "                                and send packets linearly without duplications." << endl;
+  cout << "  -w, --watch-raw               (Watch Mode) Stop leaving packets for sliding window and" << endl;
+  cout << "                                send packets linearly without duplications." << endl;
   cout << "  --debug-packet                Show detailed information for each packets." << endl;
   cout << "  --debug-window                Show detailed process for each windows." << endl;
   cout << endl;
@@ -38,9 +38,9 @@ void showHelpMessage()
   cout << endl;
   cout << "[AP ID]" << endl;
   cout << "  Distinguishable ID string for specify this access point." << endl;
-  cout << "  If you want to run this with 15na-server, you must issue the id by registering" << endl;
-  cout << "  a new AP using `auth-config` command of 15na-serer." << endl;
-  cout << "  In watcher mode (-w option), this works as a simple identifier for this AP." << endl;
+  cout << "  * If you want to run this with 15na-server, you must issue the id by registering a new AP" << endl;
+  cout << "    using `auth-config` command of 15na-serer." << endl;
+  cout << "  * In watcher mode (-w option), this works as a simple identifier for this AP." << endl;
   cout << endl;
 }
 
