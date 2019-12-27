@@ -11,6 +11,7 @@
 
 #define $version "@PROJECT_VERSION@"
 #define $port @IRONA_PORT@
+#define $protocol "@IRONA_PROTOCOL@"
 #define $interface "@IRONA_INTERFACE@"
 #define $txflag "@IRONA_TX_FLAG@"
 

@@ -24,7 +24,7 @@ bool ws::connOK = false;
 void ws::init()
 {
   bindListeners(&cli);
-  url = $sioProtocol + site + ":" + to_string(port) + "/";
+  url = $protocol + string("://") + site + ":" + to_string(port) + "/";
   $info << $ns("ws") << "Trying to connect to " << url << " ..." << endl;
   con2Central();
 }

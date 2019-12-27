@@ -21,8 +21,8 @@ void showHelpMessage()
   cout << endl;
   cout << cyan << "[RX OPTIONS]" << def << endl;
   cout << "  -p=<PORT>, --port=<PORT>      Set specific port which is used in socket.io communication. " << endl;
-  cout << gray << "                                (Default: " << $sioPortString << ")" << def << endl;
-  cout << "  -n=<ADDR>, --name=<ADDR>      Set specific" << $sioProtocolName << " server name which is used in socket.io. " << endl;
+  cout << gray << "                                (Default: " << $port << ")" << def << endl;
+  cout << "  -n=<ADDR>, --name=<ADDR>      Set specific" << $protocol << " server name which is used in socket.io. " << endl;
   cout << gray << "                                (Default: localhost)" << def << endl;
   cout << "  -ns=<NS>, --namespace=<NS>    Set socket.io namespace. " << gray << "(Default: 15na-ws/in)" << def << endl;
   cout << "  --debug-packet                Show detailed information for each packets." << endl;
